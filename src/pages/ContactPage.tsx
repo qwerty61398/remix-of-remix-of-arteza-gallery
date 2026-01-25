@@ -1,0 +1,161 @@
+import { useState } from "react";
+import { Mail, Phone, MapPin, Send, Instagram, Youtube, Facebook } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { useToast } from "@/hooks/use-toast";
+
+const socialLinks = [
+  { name: "Instagram", icon: Instagram, url: "https://instagram.com" },
+  { name: "YouTube", icon: Youtube, url: "https://youtube.com" },
+  { name: "Facebook", icon: Facebook, url: "https://facebook.com" },
+];
+
+export default function ContactPage() {
+  const { toast } = useToast();
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    subject: "",
+    message: "",
+  });
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    // In a real app, this would send to a backend
+    toast({
+      title: "Message Sent!",
+      description: "Thank you for reaching out. We'll get back to you soon.",
+    });
+    setFormData({ name: "", email: "", subject: "", message: "" });
+  };
+
+  return (
+    <div className="py-12">
+      <div className="container px-4">
+        {/* Header */}
+        <div className="text-center mb-16">
+          <h1 className="font-serif text-4xl md:text-5xl font-bold text-foreground mb-4">
+            Get in Touch
+          </h1>
+          <p className="text-muted-foreground max-w-2xl mx-auto">
+            Have a question about a painting? Interested in a commission? 
+            We'd love to hear from you.
+          </p>
+        </div>
+
+        <div className="grid md:grid-cols-2 gap-12 max-w-5xl mx-auto">
+          {/* Contact Info */}
+          <div className="space-y-8">
+            <div>
+              <h2 className="font-serif text-2xl font-bold text-foreground mb-6">
+                Contact Information
+              </h2>
+              
+              <div className="space-y-4">
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
+                    <Phone className="h-5 w-5 text-primary" />
+                  </div>
+                  <div>
+                    <h3 className="font-medium text-foreground">Phone</h3>
+                    <p className="text-muted-foreground">+91 98765 43210</p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
+                    <Mail className="h-5 w-5 text-primary" />
+                  </div>
+                  <div>
+                    <h3 className="font-medium text-foreground">Email</h3>
+                    <p className="text-muted-foreground">hello@arteza.com</p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
+                    <MapPin className="h-5 w-5 text-primary" />
+                  </div>
+                  <div>
+                    <h3 className="font-medium text-foreground">Studio Address</h3>
+                    <p className="text-muted-foreground">
+                      Artist Studio, Creative Lane<br />
+                      New Delhi, India 110001
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <h3 className="font-medium text-foreground mb-4">Follow Us</h3>
+              <div className="flex gap-4">
+                {socialLinks.map((social) => (
+                  <a
+                    key={social.name}
+                    href={social.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-12 h-12 rounded-lg bg-card border border-border flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary transition-colors"
+                  >
+                    <social.icon className="h-5 w-5" />
+                  </a>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Contact Form */}
+          <div className="bg-card border border-border rounded-xl p-8">
+            <h2 className="font-serif text-2xl font-bold text-foreground mb-6">
+              Send a Message
+            </h2>
+
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div className="grid sm:grid-cols-2 gap-4">
+                <div>
+                  <Input
+                    placeholder="Your Name"
+                    value={formData.name}
+                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                    required
+                  />
+                </div>
+                <div>
+                  <Input
+                    type="email"
+                    placeholder="Your Email"
+                    value={formData.email}
+                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                    required
+                  />
+                </div>
+              </div>
+
+              <Input
+                placeholder="Subject"
+                value={formData.subject}
+                onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
+                required
+              />
+
+              <Textarea
+                placeholder="Your Message"
+                rows={5}
+                value={formData.message}
+                onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                required
+              />
+
+              <Button type="submit" className="w-full gap-2">
+                <Send className="h-4 w-4" />
+                Send Message
+              </Button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}

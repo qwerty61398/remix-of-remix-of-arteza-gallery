@@ -1,0 +1,126 @@
+import { useParams, Link } from "react-router-dom";
+import { ArrowLeft, ShoppingBag, Check } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { getPaintingById, paintings, getPaintingsByCollection } from "@/data/paintings";
+import { useCart } from "@/contexts/CartContext";
+import { ArtworkCard } from "@/components/artwork/ArtworkCard";
+
+export default function PaintingDetailPage() {
+  const { id } = useParams();
+  const { addToCart } = useCart();
+  const painting = getPaintingById(id || "");
+
+  if (!painting) {
+    return (
+      <div className="container px-4 py-20 text-center">
+        <h1 className="font-serif text-2xl font-bold mb-4">Painting not found</h1>
+        <Link to="/shop">
+          <Button variant="outline">
+            <ArrowLeft className="h-4 w-4 mr-2" />
+            Back to Shop
+          </Button>
+        </Link>
+      </div>
+    );
+  }
+
+  const relatedPaintings = getPaintingsByCollection(painting.collection)
+    .filter(p => p.id !== painting.id)
+    .slice(0, 3);
+
+  const formatPrice = (price: number) => {
+    return new Intl.NumberFormat("en-IN", {
+      style: "currency",
+      currency: "INR",
+      maximumFractionDigits: 0,
+    }).format(price);
+  };
+
+  return (
+    <div className="py-8">
+      <div className="container px-4">
+        {/* Back Link */}
+        <Link to="/shop" className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground mb-8 transition-colors">
+          <ArrowLeft className="h-4 w-4" />
+          Back to Shop
+        </Link>
+
+        {/* Main Content */}
+        <div className="grid md:grid-cols-2 gap-12">
+          {/* Image */}
+          <div className="aspect-[3/4] rounded-xl overflow-hidden bg-muted">
+            <img
+              src={painting.image}
+              alt={painting.title}
+              className="h-full w-full object-cover"
+            />
+          </div>
+
+          {/* Details */}
+          <div className="space-y-8">
+            <div>
+              <p className="text-sm text-primary font-medium mb-2">{painting.collection}</p>
+              <h1 className="font-serif text-3xl md:text-4xl font-bold text-foreground mb-4">
+                {painting.title}
+              </h1>
+              <p className="text-muted-foreground leading-relaxed">
+                {painting.description}
+              </p>
+            </div>
+
+            <div className="space-y-4">
+              <div className="flex items-baseline gap-4">
+                <span className="text-3xl font-bold text-foreground">{formatPrice(painting.price)}</span>
+                {painting.available && (
+                  <span className="text-sm text-green-600 flex items-center gap-1">
+                    <Check className="h-4 w-4" />
+                    Available
+                  </span>
+                )}
+              </div>
+
+              <div className="flex gap-4 text-sm text-muted-foreground">
+                <span>Size: {painting.dimensions}</span>
+              </div>
+            </div>
+
+            <Button
+              size="lg"
+              onClick={() => addToCart(painting)}
+              disabled={!painting.available}
+              className="w-full gap-2"
+            >
+              <ShoppingBag className="h-5 w-5" />
+              Add to Cart
+            </Button>
+
+            <div className="border-t border-border pt-8 space-y-4">
+              <h3 className="font-semibold text-foreground">About this Painting</h3>
+              <ul className="space-y-2 text-sm text-muted-foreground">
+                <li>• Original hand-painted artwork</li>
+                <li>• Signed by the artist</li>
+                <li>• Certificate of authenticity included</li>
+                <li>• Secure packaging for shipping</li>
+                <li>• Free shipping across India</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        {/* Related Paintings */}
+        {relatedPaintings.length > 0 && (
+          <div className="mt-20">
+            <h2 className="font-serif text-2xl font-bold text-foreground mb-8">
+              More from {painting.collection}
+            </h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+              {relatedPaintings.map((p) => (
+                <ArtworkCard key={p.id} painting={p} variant="compact" />
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}

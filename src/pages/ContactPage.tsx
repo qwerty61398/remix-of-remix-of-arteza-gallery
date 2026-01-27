@@ -4,34 +4,44 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
-
-const socialLinks = [
-  { name: "Instagram", icon: Instagram, url: "https://instagram.com" },
-  { name: "YouTube", icon: Youtube, url: "https://youtube.com" },
-  { name: "Facebook", icon: Facebook, url: "https://facebook.com" },
-];
-
+const socialLinks = [{
+  name: "Instagram",
+  icon: Instagram,
+  url: "https://instagram.com"
+}, {
+  name: "YouTube",
+  icon: Youtube,
+  url: "https://youtube.com"
+}, {
+  name: "Facebook",
+  icon: Facebook,
+  url: "https://facebook.com"
+}];
 export default function ContactPage() {
-  const { toast } = useToast();
+  const {
+    toast
+  } = useToast();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     subject: "",
-    message: "",
+    message: ""
   });
-
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // In a real app, this would send to a backend
     toast({
       title: "Message Sent!",
-      description: "Thank you for reaching out. We'll get back to you soon.",
+      description: "Thank you for reaching out. We'll get back to you soon."
     });
-    setFormData({ name: "", email: "", subject: "", message: "" });
+    setFormData({
+      name: "",
+      email: "",
+      subject: "",
+      message: ""
+    });
   };
-
-  return (
-    <div className="py-12">
+  return <div className="py-12">
       <div className="container px-4">
         {/* Header */}
         <div className="text-center mb-16">
@@ -59,7 +69,7 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <h3 className="font-medium text-foreground">Phone</h3>
-                    <p className="text-muted-foreground">+91 98765 43210</p>
+                    <p className="text-muted-foreground">+91 97118 04497</p>
                   </div>
                 </div>
 
@@ -91,17 +101,9 @@ export default function ContactPage() {
             <div>
               <h3 className="font-medium text-foreground mb-4">Follow Us</h3>
               <div className="flex gap-4">
-                {socialLinks.map((social) => (
-                  <a
-                    key={social.name}
-                    href={social.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-12 h-12 rounded-lg bg-card border border-border flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary transition-colors"
-                  >
+                {socialLinks.map(social => <a key={social.name} href={social.url} target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-lg bg-card border border-border flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary transition-colors">
                     <social.icon className="h-5 w-5" />
-                  </a>
-                ))}
+                  </a>)}
               </div>
             </div>
           </div>
@@ -115,38 +117,28 @@ export default function ContactPage() {
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
-                  <Input
-                    placeholder="Your Name"
-                    value={formData.name}
-                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    required
-                  />
+                  <Input placeholder="Your Name" value={formData.name} onChange={e => setFormData({
+                  ...formData,
+                  name: e.target.value
+                })} required />
                 </div>
                 <div>
-                  <Input
-                    type="email"
-                    placeholder="Your Email"
-                    value={formData.email}
-                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    required
-                  />
+                  <Input type="email" placeholder="Your Email" value={formData.email} onChange={e => setFormData({
+                  ...formData,
+                  email: e.target.value
+                })} required />
                 </div>
               </div>
 
-              <Input
-                placeholder="Subject"
-                value={formData.subject}
-                onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
-                required
-              />
+              <Input placeholder="Subject" value={formData.subject} onChange={e => setFormData({
+              ...formData,
+              subject: e.target.value
+            })} required />
 
-              <Textarea
-                placeholder="Your Message"
-                rows={5}
-                value={formData.message}
-                onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                required
-              />
+              <Textarea placeholder="Your Message" rows={5} value={formData.message} onChange={e => setFormData({
+              ...formData,
+              message: e.target.value
+            })} required />
 
               <Button type="submit" className="w-full gap-2">
                 <Send className="h-4 w-4" />
@@ -156,6 +148,5 @@ export default function ContactPage() {
           </div>
         </div>
       </div>
-    </div>
-  );
+    </div>;
 }

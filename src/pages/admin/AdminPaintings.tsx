@@ -31,6 +31,7 @@ import {
 import { Switch } from "@/components/ui/switch";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import { ImageUpload } from "@/components/admin/ImageUpload";
 
 interface Painting {
   id: string;
@@ -283,14 +284,24 @@ export function AdminPaintings() {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="image_url">Image URL *</Label>
-                <Input
-                  id="image_url"
-                  value={formData.image_url}
-                  onChange={(e) => setFormData({ ...formData, image_url: e.target.value })}
-                  placeholder="https://..."
-                  required
-                />
+                <Label>Painting Image *</Label>
+                <div className="flex items-start gap-4">
+                  <ImageUpload
+                    value={formData.image_url}
+                    onChange={(url) => setFormData({ ...formData, image_url: url })}
+                  />
+                  <div className="flex-1 space-y-2">
+                    <Label htmlFor="image_url" className="text-xs text-muted-foreground">
+                      Or enter URL directly
+                    </Label>
+                    <Input
+                      id="image_url"
+                      value={formData.image_url}
+                      onChange={(e) => setFormData({ ...formData, image_url: e.target.value })}
+                      placeholder="https://..."
+                    />
+                  </div>
+                </div>
               </div>
 
               <div className="space-y-2">

@@ -22,6 +22,8 @@ import BlogPage from "./pages/BlogPage";
 import ClassesPage from "./pages/ClassesPage";
 import CartPage from "./pages/CartPage";
 import AuthPage from "./pages/AuthPage";
+import ForgotPasswordPage from "./pages/ForgotPasswordPage";
+import ResetPasswordPage from "./pages/ResetPasswordPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 
@@ -50,6 +52,8 @@ const App = () => (
                   <Route path="/classes" element={<ClassesPage />} />
                   <Route path="/cart" element={<CartPage />} />
                   <Route path="/auth" element={<AuthPage />} />
+                  <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+                  <Route path="/reset-password" element={<ResetPasswordPage />} />
                   <Route
                     path="/admin"
                     element={

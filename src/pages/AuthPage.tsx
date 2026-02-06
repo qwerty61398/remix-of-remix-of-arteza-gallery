@@ -170,6 +170,14 @@ export default function AuthPage() {
                 {errors.password && <p className="text-sm text-destructive">{errors.password}</p>}
               </div>
 
+              {isLogin && (
+                <div className="text-right">
+                  <a href="/forgot-password" className="text-sm text-primary font-medium hover:underline">
+                    Forgot password?
+                  </a>
+                </div>
+              )}
+
               <Button type="submit" className="w-full gap-2" disabled={isSubmitting}>
                 {isSubmitting ? (
                   <Loader2 className="h-4 w-4 animate-spin" />

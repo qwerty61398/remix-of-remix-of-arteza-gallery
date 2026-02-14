@@ -1,10 +1,11 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ShoppingBag, Trash2, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useCart } from "@/contexts/CartContext";
 
 export default function CartPage() {
   const { items, removeFromCart, totalPrice, clearCart } = useCart();
+  const navigate = useNavigate();
 
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat("en-IN", {
@@ -116,7 +117,7 @@ export default function CartPage() {
                 </div>
               </div>
 
-              <Button className="w-full mt-6 gap-2">
+              <Button className="w-full mt-6 gap-2" onClick={() => navigate("/checkout")}>
                 Proceed to Checkout
                 <ArrowRight className="h-4 w-4" />
               </Button>

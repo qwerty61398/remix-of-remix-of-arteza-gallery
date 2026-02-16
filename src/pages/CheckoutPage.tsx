@@ -87,39 +87,28 @@ export default function CheckoutPage() {
   const onSubmit = async (values: CheckoutFormValues) => {
     setIsSubmitting(true);
     try {
-      // 1. Insert order
-      const { data: order, error: orderError } = await supabase
-        .from("orders")
-        .insert({
+      const session = await supabase.auth.getSession();
+      const token = session.data.session?.access_token;
+
+      const response = await supabase.functions.invoke("create-order", {
+        body: {
           customer_name: values.name,
           customer_email: values.email,
           customer_phone: values.phone || null,
           shipping_address: values.shipping_address,
           total_amount: totalPrice,
-          user_id: user?.id || null,
           notes: values.notes || null,
-        })
-        .select("id")
-        .single();
+          items: items.map((item) => ({
+            painting_title: item.painting.title,
+            price: item.painting.price,
+            quantity: item.quantity,
+          })),
+        },
+      });
 
-      if (orderError) throw orderError;
+      if (response.error) throw response.error;
+      const order = response.data;
 
-      // 2. Insert order items
-      const orderItems = items.map((item) => ({
-        order_id: order.id,
-        painting_id: null,
-        painting_title: item.painting.title,
-        price: item.painting.price,
-        quantity: item.quantity,
-      }));
-
-      const { error: itemsError } = await supabase
-        .from("order_items")
-        .insert(orderItems);
-
-      if (itemsError) throw itemsError;
-
-      // 3. Clear cart and navigate
       clearCart();
       navigate(`/order-confirmation/${order.id}`);
     } catch (error: any) {

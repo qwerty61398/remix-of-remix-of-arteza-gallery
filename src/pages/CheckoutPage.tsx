@@ -110,7 +110,24 @@ export default function CheckoutPage() {
       const order = response.data;
 
       clearCart();
-      navigate(`/order-confirmation/${order.id}`);
+      navigate(`/order-confirmation/${order.id}`, {
+        state: {
+          order: {
+            id: order.id,
+            customer_name: values.name,
+            customer_email: values.email,
+            customer_phone: values.phone || null,
+            shipping_address: values.shipping_address,
+            total_amount: totalPrice,
+            created_at: new Date().toISOString(),
+          },
+          items: items.map((item) => ({
+            painting_title: item.painting.title,
+            price: item.painting.price,
+            quantity: item.quantity,
+          })),
+        },
+      });
     } catch (error: any) {
       toast({
         title: "Order failed",

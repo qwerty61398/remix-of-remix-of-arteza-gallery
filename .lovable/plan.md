@@ -1,57 +1,44 @@
 
-
-# Checkout Flow Implementation
+# Enhanced Order Confirmation Page
 
 ## Overview
-Build a complete checkout page accessible from the cart, with a form collecting customer details and shipping address. Supports both guest and authenticated users. Orders and line items are saved to the existing database tables.
+Upgrade the order confirmation page from a minimal summary to a detailed receipt with itemized line items, shipping details, order date, and estimated delivery timeline.
 
-## What You'll Get
-- A new `/checkout` page with a clean, multi-section form
-- Pre-filled fields for logged-in users (name, email from profile)
-- Guest checkout without requiring an account
-- Order summary sidebar showing cart items and totals
-- Order confirmation page after successful submission
-- Input validation with clear error messages
-- Cart is cleared after successful order placement
+## What Changes
+
+### Visual Layout
+- Wider layout (max-w-2xl instead of max-w-md) to accommodate the receipt
+- Keep the success header (green checkmark, "Order Confirmed!" title)
+- Add a structured receipt card below with multiple sections
+
+### Receipt Sections
+1. **Order Header** -- Order ID, date placed, order status badge
+2. **Itemized Receipt** -- Table listing each item with title, quantity, unit price, and line total
+3. **Price Breakdown** -- Subtotal, shipping (free), and grand total
+4. **Shipping Details** -- Customer name, email, shipping address, and estimated delivery (order date + 7-10 business days)
+5. **Call to Action** -- "Continue Shopping" button (existing)
+
+### Data Fetching
+- Currently only fetches from `orders` table. Will also fetch from `order_items` (joined via order_id) and include `shipping_address` and `customer_name` in the orders query.
+- Since RLS restricts order viewing to the order's owner or admins, guest users (user_id = NULL) won't be able to re-fetch their order. To handle this, the confirmation page will also accept order data passed via React Router navigation state as a fallback (the checkout page already navigates here after order creation).
+
+### Estimated Delivery
+- Calculated client-side: order `created_at` + 7 business days for the start, + 10 business days for the end
+- Displayed as a date range (e.g., "Feb 27 -- Mar 4, 2026")
+
+---
 
 ## Technical Details
 
-### 1. New File: `src/pages/CheckoutPage.tsx`
-- Form with zod validation schema for: customer name, email, phone (optional), shipping address, and optional notes
-- Uses react-hook-form with existing UI components (Input, Textarea, Form, Button)
-- If user is authenticated, pre-fills name and email from auth context and sets `user_id` on the order
-- If guest, `user_id` is set to `null`
-- On submit:
-  1. Insert into `orders` table (customer_name, customer_email, customer_phone, shipping_address, total_amount, user_id, notes)
-  2. Insert into `order_items` table for each cart item (order_id, painting_id, painting_title, price, quantity)
-  3. Clear the cart
-  4. Navigate to `/order-confirmation/:orderId`
+### File: `src/pages/CheckoutPage.tsx`
+- Pass order details (items, total, customer info) via `navigate` state so the confirmation page has data even if the DB query fails (guest checkout RLS issue).
 
-### 2. New File: `src/pages/OrderConfirmationPage.tsx`
-- Displays a success message with the order ID
-- Shows order summary (items, total)
-- Link back to shop
-
-### 3. Update: `src/pages/CartPage.tsx`
-- Wire "Proceed to Checkout" button to navigate to `/checkout`
-
-### 4. Update: `src/App.tsx`
-- Add routes for `/checkout` and `/order-confirmation/:orderId`
-
-### 5. Validation Schema
-```
-name: required, max 100 chars
-email: required, valid email, max 255 chars
-phone: optional, max 20 chars
-shipping_address: required, max 500 chars
-notes: optional, max 1000 chars
-```
-
-### 6. Database
-No schema changes needed -- the existing `orders` and `order_items` tables and RLS policies already support this flow. The cart currently uses local static painting data (with string IDs like "1", "2"), so `painting_id` in `order_items` will be set to `null` (it's nullable) and the painting title/price will be stored directly.
-
-### 7. Security Considerations
-- All inputs validated client-side with zod before submission
-- RLS policies already protect order data appropriately
-- No sensitive data logged to console
-- Guest orders (user_id = NULL) are only visible to admins per existing RLS
+### File: `src/pages/OrderConfirmationPage.tsx`
+- Expand `OrderData` interface to include `shipping_address`, `customer_name`, `customer_phone`, `notes`
+- Add `OrderItem` interface (`painting_title`, `quantity`, `price`)
+- Fetch order items: `supabase.from("order_items").select("painting_title, quantity, price").eq("order_id", orderId)`
+- Accept `useLocation().state` as fallback data source
+- Add `addBusinessDays` helper to calculate estimated delivery range
+- Render itemized table using existing Table UI components
+- Use Separator between sections
+- Add a "Print Receipt" button using `window.print()`

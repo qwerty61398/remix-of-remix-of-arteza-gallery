@@ -177,7 +177,7 @@ export default function HomePage() {
             <div className="relative">
               <div className="aspect-[4/5] rounded-xl overflow-hidden">
                 <img
-                  src={paintings[9].image}
+                  src={paintings[8].image}
                   alt="Upasna's artwork"
                   className="h-full w-full object-cover"
                 />

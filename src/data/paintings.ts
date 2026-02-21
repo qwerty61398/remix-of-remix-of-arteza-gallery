@@ -6,8 +6,10 @@ import dawnLake from "@/assets/paintings/dawn-lake.jpg";
 import mountFuji from "@/assets/paintings/mount-fuji.jpg";
 import fireDragon from "@/assets/paintings/fire-dragon.jpg";
 import partnerEmbrace from "@/assets/paintings/partner-embrace.jpg";
+import unityPortrait from "@/assets/paintings/unity-portrait.jpg";
 import floralFace from "@/assets/paintings/floral-face.jpg";
 import culturalMadhubani from "@/assets/paintings/cultural-madhubani.jpg";
+import ajantaDancer from "@/assets/paintings/ajanta-dancer.jpg";
 
 export type CollectionType = 
   | "Abstract Expressions"
@@ -164,6 +166,30 @@ export const paintings: Painting[] = [
     collection: "Dreamscapes",
     available: true,
     medium: "Acrylic",
+    material: "Canvas"
+  },
+  {
+    id: "10",
+    title: "Whisper of the Ajanta: Grace in Stone and Color",
+    image: ajantaDancer,
+    dimensions: "24\" × 36\"",
+    price: 20000,
+    description: "Inspired by the iconic figures of Ajanta, this artwork portrays a dancer radiating quiet contemplation and poised beauty. The composition emphasizes flowing lines, detailed ornamentation, and a warm, earthy palette that evokes the ancient murals. It's an intimate homage to the skill and spiritual depth captured in India's most celebrated cave paintings.",
+    collection: "Cultural Chronicles",
+    available: true,
+    medium: "Oil",
+    material: "Canvas"
+  },
+  {
+    id: "11",
+    title: "Crimson Dreams",
+    image: unityPortrait,
+    dimensions: "24\" × 36\"",
+    price: 42000,
+    description: "A sensual portrait of feminine grace and strength. Warm earth tones and expressive brushwork capture a moment of quiet contemplation and inner peace.",
+    collection: "Portraits and Personalities",
+    available: true,
+    medium: "Oil",
     material: "Canvas"
   }
 ];

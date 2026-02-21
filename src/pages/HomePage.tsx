@@ -84,9 +84,11 @@ export default function HomePage() {
             </Link>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="columns-1 sm:columns-2 lg:columns-4 gap-6 space-y-6">
             {featuredPaintings.map((painting) => (
-              <ArtworkCard key={painting.id} painting={painting} variant="compact" />
+              <div key={painting.id} className="break-inside-avoid">
+                <ArtworkCard painting={painting} variant="compact" />
+              </div>
             ))}
           </div>
         </div>

@@ -48,11 +48,11 @@ export default function PaintingDetailPage() {
         {/* Main Content */}
         <div className="grid md:grid-cols-2 gap-12">
           {/* Image */}
-          <div className="aspect-[3/4] rounded-xl overflow-hidden bg-muted">
+          <div className="rounded-xl overflow-hidden bg-muted">
             <img
               src={painting.image}
               alt={painting.title}
-              className="h-full w-full object-cover"
+              className="w-full h-auto object-contain"
             />
           </div>
 
@@ -115,9 +115,11 @@ export default function PaintingDetailPage() {
             <h2 className="font-serif text-2xl font-bold text-foreground mb-8">
               More from {painting.collection}
             </h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="columns-1 sm:columns-2 lg:columns-3 gap-8 space-y-8">
               {relatedPaintings.map((p) => (
-                <ArtworkCard key={p.id} painting={p} variant="compact" />
+                <div key={p.id} className="break-inside-avoid">
+                  <ArtworkCard painting={p} variant="compact" />
+                </div>
               ))}
             </div>
           </div>

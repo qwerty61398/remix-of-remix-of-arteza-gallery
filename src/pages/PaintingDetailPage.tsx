@@ -79,8 +79,10 @@ export default function PaintingDetailPage() {
                 )}
               </div>
 
-              <div className="flex gap-4 text-sm text-muted-foreground">
+              <div className="flex flex-wrap gap-x-6 gap-y-1 text-sm text-muted-foreground">
                 <span>Size: {painting.dimensions}</span>
+                <span>Medium: {painting.medium}</span>
+                <span>Material: {painting.material}</span>
               </div>
             </div>
 

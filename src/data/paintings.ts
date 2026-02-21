@@ -6,7 +6,6 @@ import dawnLake from "@/assets/paintings/dawn-lake.jpg";
 import mountFuji from "@/assets/paintings/mount-fuji.jpg";
 import fireDragon from "@/assets/paintings/fire-dragon.jpg";
 import partnerEmbrace from "@/assets/paintings/partner-embrace.jpg";
-import unityPortrait from "@/assets/paintings/unity-portrait.jpg";
 import floralFace from "@/assets/paintings/floral-face.jpg";
 import culturalMadhubani from "@/assets/paintings/cultural-madhubani.jpg";
 
@@ -26,6 +25,8 @@ export interface Painting {
   description: string;
   collection: CollectionType;
   available: boolean;
+  medium: string;
+  material: string;
 }
 
 export const collections: { name: CollectionType; description: string; slug: string }[] = [
@@ -59,103 +60,111 @@ export const collections: { name: CollectionType; description: string; slug: str
 export const paintings: Painting[] = [
   {
     id: "1",
-    title: "Golden Bloom Symphony",
+    title: "Amber Harvest: Floral Libation",
     image: floralVase,
     dimensions: "24\" × 36\"",
-    price: 45000,
-    description: "A vibrant still life featuring an elegant terracotta vase overflowing with hydrangeas, roses, and lilies against a warm golden backdrop. The painting captures the essence of celebration with wine glasses and cherries, creating a feast for the senses.",
+    price: 23000,
+    description: "This luminous still life acrylic painting captures a bountiful bouquet spilling from a gleaming bronze vase, alive with the symphony of blooms—delicate pink and white roses, ethereal white lilies, vibrant purple alliums, and lush blue hydrangeas intertwined with verdant leaves, their petals unfurling in joyful abundance. Below, twin crystal goblets brim with ruby-red wine, their stems casting elegant shadows, while a scattering of glossy cherries adds a pop of crimson temptation on the sun-kissed ochre ground. Signed \"Upasna 24\" in the corner, this canvas radiates warmth and indulgence, blending the opulence of nature's palette with subtle hints of revelry—evoking intimate evenings and the sweet nectar of life's fleeting pleasures. A timeless piece for lovers of classical still life infused with modern vibrancy.",
     collection: "Nature's Palette",
-    available: true
+    available: true,
+    medium: "Acrylic",
+    material: "Canvas"
   },
   {
     id: "2",
-    title: "Autumn's Embrace",
-    image: autumnTree,
-    dimensions: "20\" × 24\"",
-    price: 35000,
-    description: "A bold expressionist landscape featuring a majestic tree with fiery autumn foliage against a brilliant blue sky. The dynamic brushstrokes convey the energy and movement of nature in transition.",
-    collection: "Nature's Palette",
-    available: true
+    title: "Lingering Embrace: Follower in Bloom",
+    image: partnerEmbrace,
+    dimensions: "24\" × 36\"",
+    price: 30000,
+    description: "In this vibrant abstract oil painting, two intimate nude figures—a graceful woman with her hair elegantly pinned in a bun and a tender man with tousled locks—share a profound, back-to-back embrace that speaks to the quiet poetry of connection. Their warm, ochre-toned skin contrasts against a kaleidoscope of patchwork colors: swirling blues, lush greens, soft pinks, and sunny yellows that evoke a dreamlike mosaic of emotions. Surrounding them, lush pink and crimson roses unfurl like symbols of passion and fragility, while intricate orange gears and mechanical motifs emerge from the edges, hinting at the tension between organic desire and the relentless churn of time.",
+    collection: "Portraits and Personalities",
+    available: true,
+    medium: "Mixed Media",
+    material: "Canvas"
   },
   {
     id: "3",
-    title: "Geometric Reverie",
+    title: "Fractured Verdure: Geometric Reverie",
     image: abstractBundle,
-    dimensions: "36\" × 48\"",
-    price: 65000,
-    description: "A striking abstract composition blending organic forms with geometric precision. Bold colors dance across the canvas in a symphony of structure and spontaneity.",
+    dimensions: "24\" × 36\"",
+    price: 23500,
+    description: "This dynamic geometric abstract oil painting reimagines form through a bold interplay of interlocking shapes and vivid hues, where earthy brown curves coil like ancient roots against a serene blue expanse, framed by crisp green squares that pulse with vitality. Sunny yellow bursts crown the composition, bleeding into fiery red and rust accents that drip with impulsive energy, while subtle grids of navy and teal weave a tapestry of tension and harmony. Evocative of cubist fragmentation meets modernist exuberance, the layered brushwork creates a rhythmic depth—inviting contemplation of nature's resilience amid urban dissection.",
     collection: "Abstract Expressions",
-    available: true
+    available: true,
+    medium: "Mixed Media",
+    material: "Canvas"
   },
   {
     id: "4",
-    title: "Lake at Dawn",
-    image: dawnLake,
-    dimensions: "30\" × 40\"",
-    price: 55000,
-    description: "A breathtaking landscape capturing the magical moment when first light kisses the mountain lake. The golden sunrise reflects off calm waters while wildflowers frame this serene scene.",
-    collection: "Dreamscapes",
-    available: true
+    title: "Harmony of Seasons",
+    image: mountFuji,
+    dimensions: "24\" × 36\"",
+    price: 18000,
+    description: "A striking original oil painting depicting a dramatic mountain peak blanketed in snow, framed by vivid autumn trees dusted with frost. Nestled in the valley are traditional-style buildings with glowing windows, surrounded by snow-covered paths and stone walls. This piece blends seasonal contrasts and architectural charm, offering a tranquil yet powerful visual experience perfect for home or office decor.",
+    collection: "Nature's Palette",
+    available: true,
+    medium: "Oil",
+    material: "Canvas"
   },
   {
     id: "5",
-    title: "Sakura in Snow",
-    image: mountFuji,
-    dimensions: "24\" × 32\"",
-    price: 48000,
-    description: "A peaceful scene of traditional Japanese architecture beneath the majestic Mount Fuji. Cherry blossoms frame the composition while snow blankets the landscape in tranquil beauty.",
-    collection: "Cultural Chronicles",
-    available: true
+    title: "Azure Veil: Blossom Reverie",
+    image: floralFace,
+    dimensions: "36\" × 36\"",
+    price: 25000,
+    description: "In this enchanting oil portrait, a poised woman's face emerges in tranquil repose, her eyes gently closed beneath lush lashes, evoking a dreamlike introspection. Her full red lips curve with subtle allure, while one cheek cascades with delicate blue filigree vines, like whispered secrets etched in sapphire. Encircling her, pristine white dahlias unfurl their petals with warm bronze hearts, their slender stems weaving through ochre leaves against a profound cobalt blue ground, hinting at hidden archways and ethereal depths. This canvas marries floral symbolism with ornate elegance.",
+    collection: "Dreamscapes",
+    available: true,
+    medium: "Oil",
+    material: "Canvas"
   },
   {
     id: "6",
-    title: "Phoenix Rising",
-    image: fireDragon,
-    dimensions: "36\" × 54\"",
-    price: 75000,
-    description: "An explosive abstract work featuring flowing flames of orange and red against a deep black void. The painting embodies the spirit of transformation and rebirth.",
-    collection: "Abstract Expressions",
-    available: true
+    title: "Ganesha: Madhubani Vision of Divine Joy",
+    image: culturalMadhubani,
+    dimensions: "24\" × 36\"",
+    price: 35000,
+    description: "Hand-painted in authentic Madhubani (Mithila) style, this artwork features Lord Ganesha seated gracefully with his loyal mouse beside him, surrounded by ornate floral patterns and symbolic motifs. Made using natural colors on handmade paper, it's a beautiful representation of India's living folk art tradition — ideal as a spiritual gift, home decor, or collector's item celebrating Hindu mythology and cultural heritage.",
+    collection: "Cultural Chronicles",
+    available: true,
+    medium: "Acrylic",
+    material: "Canvas"
   },
   {
     id: "7",
-    title: "Eternal Bond",
-    image: partnerEmbrace,
-    dimensions: "30\" × 40\"",
-    price: 58000,
-    description: "An intimate portrayal of two souls intertwined, surrounded by vibrant abstract patterns and roses. The painting celebrates love, connection, and the beauty of human relationships.",
-    collection: "Portraits and Personalities",
-    available: true
+    title: "Inferno's Whisper: Flames in Eclipse",
+    image: fireDragon,
+    dimensions: "24\" × 36\"",
+    price: 28000,
+    description: "This explosive abstract oil painting ignites the canvas with a torrent of fiery oranges, molten reds, and flickering golds that cascade upward like a phoenix's rebirth. Against a deep black void, the flames dance with raw energy and primal force, evoking the spirit of transformation and the beauty found in destruction's embrace.",
+    collection: "Abstract Expressions",
+    available: true,
+    medium: "Oil",
+    material: "Canvas"
   },
   {
     id: "8",
-    title: "Crimson Dreams",
-    image: unityPortrait,
-    dimensions: "24\" × 36\"",
-    price: 42000,
-    description: "A sensual portrait of feminine grace and strength. Warm earth tones and expressive brushwork capture a moment of quiet contemplation and inner peace.",
-    collection: "Portraits and Personalities",
-    available: true
+    title: "Sapphire Bloom: Crimson Canopy",
+    image: autumnTree,
+    dimensions: "24\" × 18\"",
+    price: 9500,
+    description: "This evocative landscape acrylic painting unfolds a surreal spring vista under a vast cerulean sky, where a majestic blue-trunked tree bursts into a crown of vivid crimson and pink blossoms, their petals dancing like flames against the azure expanse. Flanking it, a forest of emerald pines rises in rhythmic silhouettes, their tips kissed by subtle reds, while a turquoise meadow sweeps below, edged in golden yellows and fiery scarlets that evoke the earth's awakening pulse. Rippling blue waters at the base mirror the ethereal harmony, blending dreamlike abstraction with nature's raw poetry.",
+    collection: "Nature's Palette",
+    available: true,
+    medium: "Acrylic",
+    material: "Canvas"
   },
   {
     id: "9",
-    title: "Garden of Serenity",
-    image: floralFace,
-    dimensions: "30\" × 30\"",
-    price: 52000,
-    description: "A mesmerizing blend of portrait and floral elements. Delicate flowers and intricate lace-like patterns merge with serene feminine features in this dreamlike composition.",
-    collection: "Dreamscapes",
-    available: true
-  },
-  {
-    id: "10",
-    title: "Madhubani Heritage",
-    image: culturalMadhubani,
+    title: "Silent Dawn Over the Blue Mountains",
+    image: dawnLake,
     dimensions: "24\" × 36\"",
-    price: 68000,
-    description: "A stunning tribute to the traditional Madhubani art form of India. Rich colors and intricate patterns tell stories of mythology, nature, and daily life in this culturally significant piece.",
-    collection: "Cultural Chronicles",
-    available: true
+    price: 18000,
+    description: "In this expressive acrylic work, dawn unfolds in a symphony of color — fiery gold spills across the horizon, igniting the clouds and setting the lake ablaze with reflected light. Dark, majestic mountains stand as silent sentinels, while the foreground blooms with wildflowers and whispering reeds. It's not just a sunrise; it's an emotional experience — a moment of awe, renewal, and quiet joy painted with bold strokes and luminous hues.",
+    collection: "Dreamscapes",
+    available: true,
+    medium: "Acrylic",
+    material: "Canvas"
   }
 ];
 

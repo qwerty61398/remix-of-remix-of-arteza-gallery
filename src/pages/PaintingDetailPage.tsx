@@ -48,11 +48,11 @@ export default function PaintingDetailPage() {
         {/* Main Content */}
         <div className="grid md:grid-cols-2 gap-12">
           {/* Image */}
-          <div className="rounded-xl overflow-hidden bg-muted">
+          <div className="rounded-xl overflow-hidden">
             <img
               src={painting.image}
               alt={painting.title}
-              className="w-full h-auto object-contain"
+              className="w-full h-auto rounded-xl"
             />
           </div>
 

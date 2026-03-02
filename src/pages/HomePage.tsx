@@ -4,12 +4,16 @@ import { Button } from "@/components/ui/button";
 import { ArtworkCard } from "@/components/artwork/ArtworkCard";
 import { CollectionCard } from "@/components/artwork/CollectionCard";
 import { paintings, collections } from "@/data/paintings";
+import { useTypewriter } from "@/hooks/use-typewriter";
 
 // Import featured image for hero
 import heroImage from "@/assets/paintings/floral-face.jpg";
 
+const HERO_PHRASES = ["Your Soul", "Your Heart", "The World", "Every Emotion", "New Heights"];
+
 export default function HomePage() {
   const featuredPaintings = paintings.slice(0, 4);
+  const { text } = useTypewriter({ words: HERO_PHRASES });
 
   return (
     <div className="flex flex-col">
@@ -28,7 +32,9 @@ export default function HomePage() {
           <div className="max-w-2xl space-y-8">
             <div className="space-y-4">
               <h1 className="font-serif text-5xl md:text-7xl font-bold leading-tight text-foreground">
-                Art That <span className="text-primary">Speaks</span> to Your Soul
+                Art That <span className="text-primary">Speaks</span> to{" "}
+                <span className="text-primary">{text}</span>
+                <span className="animate-blink text-primary">|</span>
               </h1>
               <p className="text-lg text-muted-foreground leading-relaxed">
                 Discover original paintings that capture emotion, culture, and the breathtaking 

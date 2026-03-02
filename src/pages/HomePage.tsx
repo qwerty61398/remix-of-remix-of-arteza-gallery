@@ -24,7 +24,7 @@ export default function HomePage() {
           <div className="absolute inset-0 bg-gradient-to-r from-background via-background/95 to-background/60" />
         </div>
 
-        <div className="container px-4 py-20">
+        <div className="container px-4 py-20 flex flex-col items-center text-center">
           <div className="max-w-2xl space-y-8">
             <div className="space-y-4">
               <h1 className="font-serif text-5xl md:text-7xl font-bold leading-tight text-foreground">
@@ -36,7 +36,7 @@ export default function HomePage() {
               </p>
             </div>
 
-            <div className="flex flex-wrap gap-4">
+            <div className="flex flex-wrap justify-center gap-4">
               <Link to="/shop">
                 <Button size="lg" className="gap-2">
                   <span>Explore Collection</span>
@@ -51,7 +51,7 @@ export default function HomePage() {
               </Link>
             </div>
 
-            <div className="flex items-center gap-8 pt-4 text-sm text-muted-foreground">
+            <div className="flex items-center justify-center gap-8 pt-4 text-sm text-muted-foreground">
               <div className="flex items-center gap-2">
                 <Palette className="h-5 w-5 text-primary" />
                 <span>Original Paintings</span>

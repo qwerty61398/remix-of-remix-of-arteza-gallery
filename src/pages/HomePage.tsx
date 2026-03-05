@@ -32,10 +32,14 @@ export default function HomePage() {
           <div className="max-w-2xl space-y-8">
             <div className="space-y-4">
               <h1 className="font-serif text-5xl md:text-7xl font-bold leading-tight text-foreground">
-                Art That <span className="text-primary">Speaks</span> to{" "}
-                <span className="text-primary">{text}</span>
-                <span className="animate-blink text-primary">|</span>
+                Art That <span className="text-primary">Speaks</span> to
               </h1>
+              <div className="h-[1.2em] flex items-center justify-center">
+                <span className="font-serif text-5xl md:text-7xl font-bold text-primary">
+                  {text}
+                </span>
+                <span className="animate-blink font-serif text-5xl md:text-7xl font-bold text-primary">|</span>
+              </div>
               <p className="text-lg text-muted-foreground leading-relaxed">
                 Discover original paintings that capture emotion, culture, and the breathtaking 
                 beauty of our world. Each piece is handcrafted with love by artist Upasna.

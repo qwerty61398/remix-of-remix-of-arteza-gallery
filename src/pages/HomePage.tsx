@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { useEffect, useRef } from "react";
 import { ArrowRight, Palette, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ArtworkCard } from "@/components/artwork/ArtworkCard";
@@ -14,16 +15,31 @@ const HERO_PHRASES = ["the Future", "Your Potential", "a Better World", "the Noi
 export default function HomePage() {
   const featuredPaintings = paintings.slice(0, 4);
   const { text } = useTypewriter({ words: HERO_PHRASES });
+  const heroRef = useRef<HTMLElement>(null);
+  const imgRef = useRef<HTMLImageElement>(null);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (imgRef.current && heroRef.current) {
+        const rect = heroRef.current.getBoundingClientRect();
+        const scrollProgress = -rect.top;
+        imgRef.current.style.transform = `translateY(${scrollProgress * 0.4}px) scale(1.1)`;
+      }
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
     <div className="flex flex-col">
       {/* Hero Section */}
-      <section className="relative min-h-[90vh] flex items-center">
+      <section ref={heroRef} className="relative min-h-[90vh] flex items-center overflow-hidden">
         <div className="absolute inset-0 -z-10">
           <img
+            ref={imgRef}
             src={heroImage}
             alt="Featured artwork"
-            className="h-full w-full object-cover opacity-20"
+            className="h-full w-full object-cover opacity-20 will-change-transform scale-110"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-background via-background/95 to-background/60" />
         </div>

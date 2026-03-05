@@ -47,22 +47,22 @@ export default function HomePage() {
         <div className="container px-4 py-20 flex flex-col items-center text-center">
           <div className="max-w-2xl space-y-8">
             <div className="space-y-4">
-              <h1 className="font-serif text-5xl md:text-7xl font-bold leading-tight text-foreground">
+              <h1 className="font-serif text-5xl md:text-7xl font-bold leading-tight text-foreground animate-fade-up opacity-0 [animation-delay:200ms] [animation-fill-mode:forwards]">
                 Art That <span className="text-primary">Speaks</span> to
               </h1>
-              <div className="mt-2 md:mt-4 h-[4rem] md:h-[5.5rem] flex items-start justify-center">
+              <div className="mt-2 md:mt-4 h-[4rem] md:h-[5.5rem] flex items-start justify-center animate-fade-up opacity-0 [animation-delay:500ms] [animation-fill-mode:forwards]">
                 <span className="font-serif text-5xl md:text-7xl font-bold text-primary">
                   {text}
                 </span>
                 <span className="animate-blink font-serif text-5xl md:text-7xl font-bold text-primary">|</span>
               </div>
-              <p className="text-lg text-muted-foreground leading-relaxed">
+              <p className="text-lg text-muted-foreground leading-relaxed animate-fade-up opacity-0 [animation-delay:800ms] [animation-fill-mode:forwards]">
                 Discover original paintings that capture emotion, culture, and the breathtaking 
                 beauty of our world. Each piece is handcrafted with love by artist Upasna.
               </p>
             </div>
 
-            <div className="flex flex-wrap justify-center gap-4">
+            <div className="flex flex-wrap justify-center gap-4 animate-fade-up opacity-0 [animation-delay:1100ms] [animation-fill-mode:forwards]">
               <Link to="/shop">
                 <Button size="lg" className="gap-2">
                   <span>Explore Collection</span>
@@ -77,7 +77,7 @@ export default function HomePage() {
               </Link>
             </div>
 
-            <div className="flex items-center justify-center gap-8 pt-4 text-sm text-muted-foreground">
+            <div className="flex items-center justify-center gap-8 pt-4 text-sm text-muted-foreground animate-fade-up opacity-0 [animation-delay:1400ms] [animation-fill-mode:forwards]">
               <div className="flex items-center gap-2">
                 <Palette className="h-5 w-5 text-primary" />
                 <span>Original Paintings</span>

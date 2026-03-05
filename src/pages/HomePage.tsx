@@ -9,7 +9,7 @@ import { useTypewriter } from "@/hooks/use-typewriter";
 // Import featured image for hero
 import heroImage from "@/assets/paintings/floral-face.jpg";
 
-const HERO_PHRASES = ["Your Soul", "Your Heart", "The World", "Every Emotion", "New Heights"];
+const HERO_PHRASES = ["the Future", "Your Potential", "a Better World", "the Noise", "the Dreamer", "the Wanderer", "the Soul", "the Heart", "Your Story"];
 
 export default function HomePage() {
   const featuredPaintings = paintings.slice(0, 4);
@@ -34,7 +34,7 @@ export default function HomePage() {
               <h1 className="font-serif text-5xl md:text-7xl font-bold leading-tight text-foreground">
                 Art That <span className="text-primary">Speaks</span> to
               </h1>
-              <div className="h-[1.2em] flex items-center justify-center">
+              <div className="mt-2 md:mt-4 h-[4rem] md:h-[5.5rem] flex items-start justify-center">
                 <span className="font-serif text-5xl md:text-7xl font-bold text-primary">
                   {text}
                 </span>

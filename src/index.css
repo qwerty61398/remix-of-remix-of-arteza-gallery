@@ -183,5 +183,5 @@ All colors MUST be HSL.
 }
 
 .animate-fade-up {
-  animation: fade-up 0.8s ease-out;
+  animation: fade-up 0.8s ease-out forwards;
 }

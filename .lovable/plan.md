@@ -1,23 +1,31 @@
 
 
-## Plan: Update Social Links Across All Pages
+## Typewriter Effect on Hero Heading
 
-Two files contain social links that need updating:
+Add a typewriter animation to the hero section that cycles the ending phrase. The heading will read:
 
-### 1. `src/components/layout/Footer.tsx`
-- Replace the current socialLinks array (Instagram, YouTube, Facebook) with Facebook, WhatsApp, Instagram, Pinterest
-- Update lucide-react imports: remove `Youtube`, add `MessageCircle` (for WhatsApp) and a Pinterest icon (lucide has no Pinterest icon, so I'll use an inline SVG or a suitable alternative)
-- Note: Lucide doesn't have WhatsApp or Pinterest icons. I'll use `MessageCircle` for WhatsApp and create a small custom SVG component for Pinterest, or use text-based approach.
+**"Art That Speaks to [rotating text]"**
 
-### 2. `src/pages/ContactPage.tsx`
-- Same changes: replace socialLinks with Facebook, WhatsApp, Instagram, Pinterest
-- Update imports accordingly
+Where `[rotating text]` cycles through phrases like:
+- Your Soul
+- Your Heart
+- The World
+- Every Emotion
+- New Heights
 
-### Icon Strategy
-- **Facebook**: `Facebook` from lucide-react ✓
-- **WhatsApp**: No native lucide icon — use inline SVG
-- **Instagram**: `Instagram` from lucide-react ✓
-- **Pinterest**: No native lucide icon — use inline SVG
+### Implementation
 
-Both WhatsApp and Pinterest will use small inline SVG components for their icons to maintain visual consistency.
+1. **Create a `useTypewriter` hook** (`src/hooks/use-typewriter.ts`) that:
+   - Accepts an array of strings and typing/deleting speed config
+   - Types out each phrase character by character, pauses, then deletes it before moving to the next
+   - Returns the current displayed text and a blinking cursor state
+
+2. **Update `src/pages/HomePage.tsx`**:
+   - Import and use the hook with the phrase list
+   - Replace the static "Your Soul" span with the dynamic typewriter text
+   - Add a blinking cursor character (`|`) after the text using a CSS animation
+   - The primary color styling stays on the rotating text
+
+3. **Add cursor blink animation** in `src/index.css`:
+   - Simple `@keyframes blink` toggling opacity for the cursor
 

@@ -235,6 +235,12 @@ export default function OrderConfirmationPage() {
                 Share on WhatsApp
               </Button>
             </a>
+            <Link to="/track-order">
+              <Button variant="outline" className="gap-2">
+                <Package className="h-4 w-4" />
+                Track Order
+              </Button>
+            </Link>
             <Link to="/shop">
               <Button className="gap-2">
                 Continue Shopping

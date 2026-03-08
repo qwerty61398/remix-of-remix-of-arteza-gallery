@@ -3,6 +3,7 @@ import { ShoppingBag } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Painting } from "@/data/paintings";
 import { useCart } from "@/contexts/CartContext";
+import { ImageWithSkeleton } from "@/components/ImageWithSkeleton";
 import { cn } from "@/lib/utils";
 
 interface ArtworkCardProps {

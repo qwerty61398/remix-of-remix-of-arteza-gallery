@@ -10,6 +10,7 @@ import unityPortrait from "@/assets/paintings/unity-portrait.jpg";
 import floralFace from "@/assets/paintings/floral-face.jpg";
 import culturalMadhubani from "@/assets/paintings/cultural-madhubani.jpg";
 import ajantaDancer from "@/assets/paintings/ajanta-dancer.jpg";
+import palePortrait from "@/assets/paintings/pale-portrait.jpg";
 
 export type CollectionType = 
   | "Abstract Expressions"
@@ -187,6 +188,18 @@ export const paintings: Painting[] = [
     dimensions: "24\" × 36\"",
     price: 42000,
     description: "A sensual portrait of feminine grace and strength. Warm earth tones and expressive brushwork capture a moment of quiet contemplation and inner peace.",
+    collection: "Portraits and Personalities",
+    available: true,
+    medium: "Oil",
+    material: "Canvas"
+  },
+  {
+    id: "12",
+    title: "Veiled Gaze: Shadows of Identity",
+    image: palePortrait,
+    dimensions: "18\" × 24\"",
+    price: 11000,
+    description: "A haunting and evocative oil portrait emerges from the depths of a pitch-black void, commanding attention with its raw emotional intensity. The subject's pale, sculptural face is rendered in sweeping strokes of ivory, ash, and muted rose, while deep charcoal shadows pool dramatically around piercing blue eyes that seem to hold an unspoken narrative. Bold crimson lips provide the sole burst of warm color, a striking counterpoint to the cool, spectral palette. Flashes of gold and amber dance atop the head like fleeting thoughts or fragile crowns, adding a surreal, almost otherworldly dimension. Signed \"Upasna '23,\" this piece masterfully balances vulnerability and defiance — a meditation on identity, perception, and the masks we wear beneath the surface.",
     collection: "Portraits and Personalities",
     available: true,
     medium: "Oil",

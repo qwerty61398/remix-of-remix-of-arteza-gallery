@@ -118,7 +118,7 @@ export default function CartPage() {
               </div>
 
               <Button className="w-full mt-6 gap-2" onClick={() => navigate("/checkout")}>
-                Proceed to Checkout
+                Proceed to Payment
                 <ArrowRight className="h-4 w-4" />
               </Button>
 

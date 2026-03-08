@@ -23,6 +23,7 @@ import ClassesPage from "./pages/ClassesPage";
 import CartPage from "./pages/CartPage";
 import CheckoutPage from "./pages/CheckoutPage";
 import OrderConfirmationPage from "./pages/OrderConfirmationPage";
+import TrackOrderPage from "./pages/TrackOrderPage";
 
 import AuthPage from "./pages/AuthPage";
 import ForgotPasswordPage from "./pages/ForgotPasswordPage";

@@ -185,3 +185,141 @@ All colors MUST be HSL.
 .animate-fade-up {
   animation: fade-up 0.8s ease-out forwards;
 }
+
+/* ========== Page Transition ========== */
+.page-transition {
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 0.4s ease-out, transform 0.4s ease-out;
+}
+.page-transition--visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ========== Scroll Reveal Variants ========== */
+.scroll-reveal {
+  transition-property: opacity, transform, filter;
+  transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.scroll-reveal--fade-up {
+  opacity: 0;
+  transform: translateY(40px);
+}
+.scroll-reveal--fade-down {
+  opacity: 0;
+  transform: translateY(-40px);
+}
+.scroll-reveal--fade-left {
+  opacity: 0;
+  transform: translateX(-40px);
+}
+.scroll-reveal--fade-right {
+  opacity: 0;
+  transform: translateX(40px);
+}
+.scroll-reveal--zoom-in {
+  opacity: 0;
+  transform: scale(0.9);
+}
+.scroll-reveal--blur-in {
+  opacity: 0;
+  filter: blur(10px);
+}
+
+.scroll-reveal--visible.scroll-reveal--fade-up,
+.scroll-reveal--visible.scroll-reveal--fade-down,
+.scroll-reveal--visible.scroll-reveal--fade-left,
+.scroll-reveal--visible.scroll-reveal--fade-right {
+  opacity: 1;
+  transform: translate(0);
+}
+.scroll-reveal--visible.scroll-reveal--zoom-in {
+  opacity: 1;
+  transform: scale(1);
+}
+.scroll-reveal--visible.scroll-reveal--blur-in {
+  opacity: 1;
+  filter: blur(0);
+}
+
+/* ========== Interactive Hover Effects ========== */
+.hover-lift {
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
+}
+.hover-lift:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-lg);
+}
+
+.hover-glow {
+  transition: box-shadow 0.3s ease;
+}
+.hover-glow:hover {
+  box-shadow: 0 0 20px hsl(var(--primary) / 0.2);
+}
+
+/* ========== Button Press Effect ========== */
+@layer components {
+  .btn-press {
+    transition: transform 0.15s ease;
+  }
+  .btn-press:active {
+    transform: scale(0.96);
+  }
+}
+
+/* ========== Focus Ring Animation ========== */
+@layer components {
+  .focus-ring-animated:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 2px hsl(var(--background)), 0 0 0 4px hsl(var(--ring));
+    transition: box-shadow 0.2s ease;
+  }
+}
+
+/* ========== Smooth Image Zoom ========== */
+.img-zoom {
+  overflow: hidden;
+}
+.img-zoom img {
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.img-zoom:hover img {
+  transform: scale(1.07);
+}
+
+/* ========== Mobile Menu Animation ========== */
+@keyframes slide-down {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.animate-slide-down {
+  animation: slide-down 0.25s ease-out;
+}
+
+/* ========== Floating Animation ========== */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+/* ========== Pulse Subtle ========== */
+@keyframes pulse-subtle {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+.animate-pulse-subtle {
+  animation: pulse-subtle 2s ease-in-out infinite;
+}

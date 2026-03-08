@@ -2,6 +2,7 @@ import { useParams, Link } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 import { ArtworkCard } from "@/components/artwork/ArtworkCard";
 import { getCollectionBySlug, getPaintingsByCollection, CollectionType } from "@/data/paintings";
+import { ScrollReveal, StaggerItem } from "@/components/animations/ScrollReveal";
 
 export default function CollectionPage() {
   const { slug } = useParams();
@@ -23,31 +24,30 @@ export default function CollectionPage() {
   return (
     <div className="py-12">
       <div className="container px-4">
-        {/* Back Link */}
-        <Link 
-          to="/gallery" 
+        <Link
+          to="/gallery"
           className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground mb-8 transition-colors"
         >
           <ArrowLeft className="h-4 w-4" />
           Back to Gallery
         </Link>
 
-        {/* Header */}
-        <div className="text-center mb-12">
-          <h1 className="font-serif text-4xl md:text-5xl font-bold text-foreground mb-4">
-            {collection.name}
-          </h1>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
-            {collection.description}
-          </p>
-        </div>
+        <ScrollReveal>
+          <div className="text-center mb-12">
+            <h1 className="font-serif text-4xl md:text-5xl font-bold text-foreground mb-4">
+              {collection.name}
+            </h1>
+            <p className="text-muted-foreground max-w-2xl mx-auto">
+              {collection.description}
+            </p>
+          </div>
+        </ScrollReveal>
 
-        {/* Paintings Grid */}
         <div className="columns-1 sm:columns-2 lg:columns-3 gap-8 space-y-8">
-          {paintings.map((painting) => (
-            <div key={painting.id} className="break-inside-avoid">
+          {paintings.map((painting, i) => (
+            <StaggerItem key={painting.id} index={i} className="break-inside-avoid">
               <ArtworkCard painting={painting} />
-            </div>
+            </StaggerItem>
           ))}
         </div>
 

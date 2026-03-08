@@ -218,14 +218,31 @@ export default function OrderConfirmationPage() {
           </div>
         )}
 
-        <div className="text-center mt-8">
-          <Link to="/shop">
-            <Button className="gap-2">
-              Continue Shopping
-              <ArrowRight className="h-4 w-4" />
-            </Button>
-          </Link>
-        </div>
+        {order && (
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mt-8">
+            <a
+              href={(() => {
+                const shortId = order.id.slice(0, 8).toUpperCase();
+                const itemsList = items.map(i => `• ${i.painting_title} (x${i.quantity}) — ${formatPrice(i.price * i.quantity)}`).join("\n");
+                const message = `Hi! I just placed an order on Arteza.\n\n*Order ID:* ${shortId}\n*Items:*\n${itemsList}\n\n*Total:* ${formatPrice(order.total_amount)}\n\nPlease confirm my order. Thank you!`;
+                return `https://wa.me/?text=${encodeURIComponent(message)}`;
+              })()}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Button variant="outline" className="gap-2 text-green-600 border-green-600 hover:bg-green-50 dark:hover:bg-green-950">
+                <FaWhatsapp className="h-4 w-4" />
+                Share on WhatsApp
+              </Button>
+            </a>
+            <Link to="/shop">
+              <Button className="gap-2">
+                Continue Shopping
+                <ArrowRight className="h-4 w-4" />
+              </Button>
+            </Link>
+          </div>
+        )}
       </div>
     </div>
   );

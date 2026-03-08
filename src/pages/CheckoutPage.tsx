@@ -259,7 +259,7 @@ export default function CheckoutPage() {
                       Placing Order...
                     </>
                   ) : (
-                    `Proceed to Payment — ${formatPrice(totalPrice)}`
+                    `Place Order — ${formatPrice(totalPrice)}`
                   )}
                 </Button>
               </form>

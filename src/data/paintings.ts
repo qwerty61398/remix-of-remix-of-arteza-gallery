@@ -10,6 +10,7 @@ import unityPortrait from "@/assets/paintings/unity-portrait.jpg";
 import floralFace from "@/assets/paintings/floral-face.jpg";
 import culturalMadhubani from "@/assets/paintings/cultural-madhubani.jpg";
 import ajantaDancer from "@/assets/paintings/ajanta-dancer.jpg";
+import palePortrait from "@/assets/paintings/pale-portrait.jpg";
 
 export type CollectionType = 
   | "Abstract Expressions"

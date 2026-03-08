@@ -1,1 +1,4 @@
 project_id = "imglastrlnxbnjrkmihp"
+
+[functions.generate-upi-qr]
+verify_jwt = false

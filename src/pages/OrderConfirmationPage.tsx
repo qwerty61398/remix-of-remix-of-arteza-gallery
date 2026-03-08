@@ -124,7 +124,7 @@ export default function OrderConfirmationPage() {
                   {formatDate(order.created_at)}
                 </p>
               </div>
-              <Badge variant="secondary">Processing</Badge>
+              <Badge variant="secondary">Payment Verification</Badge>
             </div>
 
             <Separator />

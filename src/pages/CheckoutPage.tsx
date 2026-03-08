@@ -114,7 +114,7 @@ export default function CheckoutPage() {
           customer_email: values.email,
           customer_phone: values.phone || null,
           shipping_address: values.shipping_address,
-          total_amount: totalPrice,
+          total_amount: order.total_amount ?? totalPrice,
           created_at: new Date().toISOString(),
         },
         items: items.map((item) => ({

@@ -123,9 +123,7 @@ export default function OrderConfirmationPage() {
                   {formatDate(order.created_at)}
                 </p>
               </div>
-              <Badge variant={isConfirmed ? "default" : "secondary"}>
-                {isConfirmed ? "Payment Confirmed" : "Payment Verification"}
-              </Badge>
+              <Badge variant="default">Order Placed</Badge>
             </div>
 
             <Separator />

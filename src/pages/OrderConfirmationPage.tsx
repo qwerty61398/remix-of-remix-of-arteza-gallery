@@ -95,35 +95,17 @@ export default function OrderConfirmationPage() {
   return (
     <div className="min-h-[60vh] flex items-center justify-center py-12">
       <div className="w-full max-w-2xl mx-auto px-4">
-        {/* Payment Status Banner */}
-        {isConfirmed ? (
-          <div className="text-center mb-8">
-            <div className="w-20 h-20 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center mx-auto mb-6 animate-in fade-in zoom-in duration-500">
-              <CheckCircle className="h-10 w-10 text-green-600" />
-            </div>
-            <h1 className="font-serif text-2xl md:text-3xl font-bold text-foreground mb-2">
-              Payment Confirmed!
-            </h1>
-            <p className="text-muted-foreground">
-              Your payment has been verified. Your order is now being processed.
-            </p>
+        <div className="text-center mb-8">
+          <div className="w-20 h-20 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center mx-auto mb-6 animate-in fade-in zoom-in duration-500">
+            <CheckCircle className="h-10 w-10 text-green-600" />
           </div>
-        ) : (
-          <div className="text-center mb-8">
-            <div className="w-20 h-20 rounded-full bg-amber-100 dark:bg-amber-900/30 flex items-center justify-center mx-auto mb-6">
-              <Clock className="h-10 w-10 text-amber-600" />
-            </div>
-            <h1 className="font-serif text-2xl md:text-3xl font-bold text-foreground mb-2">
-              Order Placed!
-            </h1>
-            <p className="text-muted-foreground">
-              Thank you! Your payment is being verified. We'll confirm your order shortly.
-            </p>
-            <p className="text-xs text-muted-foreground mt-2">
-              This page will update automatically when your payment is confirmed.
-            </p>
-          </div>
-        )}
+          <h1 className="font-serif text-2xl md:text-3xl font-bold text-foreground mb-2">
+            Order Placed Successfully!
+          </h1>
+          <p className="text-muted-foreground">
+            Thank you for your order. We'll get in touch with you shortly to confirm the details.
+          </p>
+        </div>
 
         {order && (
           <div className="bg-card border border-border rounded-xl p-6 space-y-6">

@@ -109,25 +109,25 @@ export default function CheckoutPage() {
       if (response.error) throw response.error;
       const order = response.data;
 
-      clearCart();
-      navigate(`/order-confirmation/${order.id}`, {
-        state: {
-          order: {
-            id: order.id,
-            customer_name: values.name,
-            customer_email: values.email,
-            customer_phone: values.phone || null,
-            shipping_address: values.shipping_address,
-            total_amount: totalPrice,
-            created_at: new Date().toISOString(),
-          },
-          items: items.map((item) => ({
-            painting_title: item.painting.title,
-            price: item.painting.price,
-            quantity: item.quantity,
-          })),
+      const orderState = {
+        order: {
+          id: order.id,
+          customer_name: values.name,
+          customer_email: values.email,
+          customer_phone: values.phone || null,
+          shipping_address: values.shipping_address,
+          total_amount: totalPrice,
+          created_at: new Date().toISOString(),
         },
-      });
+        items: items.map((item) => ({
+          painting_title: item.painting.title,
+          price: item.painting.price,
+          quantity: item.quantity,
+        })),
+      };
+
+      clearCart();
+      navigate(`/payment/${order.id}`, { state: orderState });
     } catch (error: any) {
       toast({
         title: "Order failed",
@@ -259,7 +259,7 @@ export default function CheckoutPage() {
                       Placing Order...
                     </>
                   ) : (
-                    `Place Order — ${formatPrice(totalPrice)}`
+                    `Proceed to Payment — ${formatPrice(totalPrice)}`
                   )}
                 </Button>
               </form>

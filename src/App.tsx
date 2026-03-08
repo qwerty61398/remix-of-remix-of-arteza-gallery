@@ -23,6 +23,7 @@ import ClassesPage from "./pages/ClassesPage";
 import CartPage from "./pages/CartPage";
 import CheckoutPage from "./pages/CheckoutPage";
 import OrderConfirmationPage from "./pages/OrderConfirmationPage";
+import PaymentPage from "./pages/PaymentPage";
 import AuthPage from "./pages/AuthPage";
 import ForgotPasswordPage from "./pages/ForgotPasswordPage";
 import ResetPasswordPage from "./pages/ResetPasswordPage";
@@ -54,6 +55,7 @@ const App = () => (
                   <Route path="/classes" element={<ClassesPage />} />
                   <Route path="/cart" element={<CartPage />} />
                   <Route path="/checkout" element={<CheckoutPage />} />
+                  <Route path="/payment/:orderId" element={<PaymentPage />} />
                   <Route path="/order-confirmation/:orderId" element={<OrderConfirmationPage />} />
                   <Route path="/auth" element={<AuthPage />} />
                   <Route path="/forgot-password" element={<ForgotPasswordPage />} />

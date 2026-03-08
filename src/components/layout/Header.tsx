@@ -128,7 +128,7 @@ export function Header() {
 
       {/* Mobile Navigation */}
       {mobileMenuOpen && (
-        <nav className="md:hidden border-t border-border bg-background p-4">
+        <nav className="md:hidden border-t border-border bg-background p-4 animate-slide-down">
           <div className="flex flex-col gap-4">
             {navLinks.map((link) => (
               <Link

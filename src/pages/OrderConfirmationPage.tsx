@@ -101,10 +101,10 @@ export default function OrderConfirmationPage() {
             <CheckCircle className="h-10 w-10 text-green-600" />
           </div>
           <h1 className="font-serif text-2xl md:text-3xl font-bold text-foreground mb-2">
-            Order Confirmed!
+            Order Placed!
           </h1>
           <p className="text-muted-foreground">
-            Thank you for your purchase. A summary of your order is below.
+            Thank you! Your payment is being verified. We'll confirm your order shortly.
           </p>
         </div>
 

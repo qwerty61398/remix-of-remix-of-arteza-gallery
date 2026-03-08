@@ -26,7 +26,7 @@ export function ArtworkCard({ painting, variant = "default" }: ArtworkCardProps)
     <article className="group relative hover-lift rounded-lg">
       <Link to={`/shop/${painting.id}`} className="block">
         <div className="relative overflow-hidden rounded-lg bg-muted img-zoom">
-          <img
+          <ImageWithSkeleton
             src={painting.image}
             alt={painting.title}
             className="w-full h-auto object-contain"

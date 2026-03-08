@@ -43,6 +43,7 @@ export function Footer() {
               <Link to="/about" className="text-sm text-muted-foreground hover:text-primary transition-colors">About the Artist</Link>
               <Link to="/blog" className="text-sm text-muted-foreground hover:text-primary transition-colors">Blog</Link>
               <Link to="/contact" className="text-sm text-muted-foreground hover:text-primary transition-colors">Contact</Link>
+              <Link to="/track-order" className="text-sm text-muted-foreground hover:text-primary transition-colors">Track Order</Link>
             </nav>
           </div>
 

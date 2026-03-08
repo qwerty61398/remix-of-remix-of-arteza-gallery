@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams, useLocation, Link } from "react-router-dom";
-import { CheckCircle, ArrowRight, Printer } from "lucide-react";
+import { CheckCircle, ArrowRight, Printer, Package } from "lucide-react";
 import { FaWhatsapp } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -235,6 +235,12 @@ export default function OrderConfirmationPage() {
                 Share on WhatsApp
               </Button>
             </a>
+            <Link to="/track-order">
+              <Button variant="outline" className="gap-2">
+                <Package className="h-4 w-4" />
+                Track Order
+              </Button>
+            </Link>
             <Link to="/shop">
               <Button className="gap-2">
                 Continue Shopping

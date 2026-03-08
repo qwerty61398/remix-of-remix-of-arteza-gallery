@@ -23,6 +23,7 @@ import ClassesPage from "./pages/ClassesPage";
 import CartPage from "./pages/CartPage";
 import CheckoutPage from "./pages/CheckoutPage";
 import OrderConfirmationPage from "./pages/OrderConfirmationPage";
+import TrackOrderPage from "./pages/TrackOrderPage";
 
 import AuthPage from "./pages/AuthPage";
 import ForgotPasswordPage from "./pages/ForgotPasswordPage";
@@ -57,6 +58,7 @@ const App = () => (
                   <Route path="/checkout" element={<CheckoutPage />} />
                   
                   <Route path="/order-confirmation/:orderId" element={<OrderConfirmationPage />} />
+                  <Route path="/track-order" element={<TrackOrderPage />} />
                   <Route path="/auth" element={<AuthPage />} />
                   <Route path="/forgot-password" element={<ForgotPasswordPage />} />
                   <Route path="/reset-password" element={<ResetPasswordPage />} />

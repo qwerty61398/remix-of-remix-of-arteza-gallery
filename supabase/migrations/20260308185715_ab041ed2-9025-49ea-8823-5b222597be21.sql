@@ -1,0 +1,1 @@
+UPDATE public.paintings SET collection = 'Nature''s Palette', updated_at = now() WHERE id = '5a181500-776a-4d6b-b3a1-303d19bd13d9';

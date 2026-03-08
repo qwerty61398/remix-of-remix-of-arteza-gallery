@@ -96,11 +96,9 @@ export default function CheckoutPage() {
           customer_email: values.email,
           customer_phone: values.phone || null,
           shipping_address: values.shipping_address,
-          total_amount: totalPrice,
           notes: values.notes || null,
           items: items.map((item) => ({
             painting_title: item.painting.title,
-            price: item.painting.price,
             quantity: item.quantity,
           })),
         },

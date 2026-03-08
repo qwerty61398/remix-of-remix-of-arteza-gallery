@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import { getPaintingsByCollection, CollectionType } from "@/data/paintings";
+import { ImageWithSkeleton } from "@/components/ImageWithSkeleton";
 
 interface CollectionCardProps {
   name: CollectionType;
@@ -16,7 +17,7 @@ export function CollectionCard({ name, description, slug }: CollectionCardProps)
     <Link to={`/gallery/${slug}`} className="group relative block overflow-hidden rounded-xl bg-card hover-lift">
       <div className="aspect-[4/3] overflow-hidden img-zoom">
         {featuredImage && (
-          <img src={featuredImage} alt={name} className="h-full w-full object-cover" />
+          <ImageWithSkeleton src={featuredImage} alt={name} className="h-full w-full object-cover" />
         )}
         <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/20 to-transparent" />
       </div>

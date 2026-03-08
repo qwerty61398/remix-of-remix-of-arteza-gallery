@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import { getPaintingsByCollection, CollectionType } from "@/data/paintings";
+import { ImageWithSkeleton } from "@/components/ImageWithSkeleton";
 
 interface CollectionCardProps {
   name: CollectionType;

@@ -127,7 +127,7 @@ export default function CheckoutPage() {
       };
 
       clearCart();
-      navigate(`/payment/${order.id}`, { state: orderState });
+      navigate(`/order-confirmation/${order.id}`, { state: orderState });
     } catch (error: any) {
       toast({
         title: "Order failed",

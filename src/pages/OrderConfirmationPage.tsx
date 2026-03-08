@@ -50,22 +50,17 @@ export default function OrderConfirmationPage() {
 
   const [order, setOrder] = useState<OrderData | null>(navState?.order ?? null);
   const [items, setItems] = useState<OrderItem[]>(navState?.items ?? []);
-  const [paymentStatus, setPaymentStatus] = useState<string>("pending");
-
   useEffect(() => {
     if (!orderId || (order && items.length > 0)) return;
 
     const fetchOrder = async () => {
       const { data: orderData } = await supabase
         .from("orders")
-        .select("id, customer_name, customer_email, customer_phone, shipping_address, total_amount, created_at, payment_status")
+        .select("id, customer_name, customer_email, customer_phone, shipping_address, total_amount, created_at")
         .eq("id", orderId)
         .single();
 
-      if (orderData) {
-        setOrder(orderData);
-        setPaymentStatus(orderData.payment_status);
-      }
+      if (orderData) setOrder(orderData);
 
       const { data: itemsData } = await supabase
         .from("order_items")
@@ -77,34 +72,6 @@ export default function OrderConfirmationPage() {
 
     fetchOrder();
   }, [orderId]);
-
-  // Real-time subscription for payment status updates
-  useEffect(() => {
-    if (!orderId) return;
-
-    const channel = supabase
-      .channel(`order-${orderId}`)
-      .on(
-        "postgres_changes",
-        {
-          event: "UPDATE",
-          schema: "public",
-          table: "orders",
-          filter: `id=eq.${orderId}`,
-        },
-        (payload) => {
-          const newStatus = (payload.new as any).payment_status;
-          if (newStatus) setPaymentStatus(newStatus);
-        }
-      )
-      .subscribe();
-
-    return () => {
-      supabase.removeChannel(channel);
-    };
-  }, [orderId]);
-
-  const isConfirmed = paymentStatus === "confirmed" || paymentStatus === "paid";
 
   const formatPrice = (price: number) =>
     new Intl.NumberFormat("en-IN", {

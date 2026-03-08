@@ -164,7 +164,7 @@ export const paintings: Painting[] = [
     dimensions: "24\" × 36\"",
     price: 18000,
     description: "In this expressive acrylic work, dawn unfolds in a symphony of color — fiery gold spills across the horizon, igniting the clouds and setting the lake ablaze with reflected light. Dark, majestic mountains stand as silent sentinels, while the foreground blooms with wildflowers and whispering reeds. It's not just a sunrise; it's an emotional experience — a moment of awe, renewal, and quiet joy painted with bold strokes and luminous hues.",
-    collection: "Dreamscapes",
+    collection: "Nature's Palette",
     available: true,
     medium: "Acrylic",
     material: "Canvas"

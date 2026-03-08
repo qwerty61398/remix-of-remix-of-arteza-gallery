@@ -191,12 +191,12 @@ export function AdminClasses() {
   };
 
   const updateBookingStatus = async (bookingId: string, status: string) => {
-    const { error } = await supabase.from("class_bookings").update({ status }).eq("id", bookingId);
-    if (error) {
-      toast({ title: "Error updating booking status", description: error.message, variant: "destructive" });
-    } else {
+    try {
+      await adminMutation({ action: "update", table: "class_bookings", data: { status }, id: bookingId });
       toast({ title: "Booking status updated" });
       fetchData();
+    } catch (error: any) {
+      toast({ title: "Error updating booking status", description: error.message, variant: "destructive" });
     }
   };
 

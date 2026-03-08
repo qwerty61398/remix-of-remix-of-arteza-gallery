@@ -173,17 +173,12 @@ export function AdminPaintings() {
   const handleDelete = async (id: string) => {
     if (!confirm("Are you sure you want to delete this painting?")) return;
 
-    const { error } = await supabase.from("paintings").delete().eq("id", id);
-
-    if (error) {
-      toast({
-        title: "Error deleting painting",
-        description: error.message,
-        variant: "destructive",
-      });
-    } else {
+    try {
+      await adminMutation({ action: "delete", table: "paintings", id });
       toast({ title: "Painting deleted successfully" });
       fetchPaintings();
+    } catch (error: any) {
+      toast({ title: "Error deleting painting", description: error.message, variant: "destructive" });
     }
   };
 

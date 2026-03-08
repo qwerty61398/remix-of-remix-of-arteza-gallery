@@ -166,23 +166,20 @@ export function AdminBlogPosts() {
   };
 
   const togglePublish = async (post: BlogPost) => {
-    const { error } = await supabase
-      .from("blog_posts")
-      .update({
-        is_published: !post.is_published,
-        published_at: !post.is_published ? new Date().toISOString() : null,
-      })
-      .eq("id", post.id);
-
-    if (error) {
-      toast({
-        title: "Error updating blog post",
-        description: error.message,
-        variant: "destructive",
+    try {
+      await adminMutation({
+        action: "update",
+        table: "blog_posts",
+        data: {
+          is_published: !post.is_published,
+          published_at: !post.is_published ? new Date().toISOString() : null,
+        },
+        id: post.id,
       });
-    } else {
       toast({ title: `Blog post ${!post.is_published ? "published" : "unpublished"}` });
       fetchPosts();
+    } catch (error: any) {
+      toast({ title: "Error updating blog post", description: error.message, variant: "destructive" });
     }
   };
 

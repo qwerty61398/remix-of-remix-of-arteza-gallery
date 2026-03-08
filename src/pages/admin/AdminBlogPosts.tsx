@@ -129,37 +129,24 @@ export function AdminBlogPosts() {
     };
 
     if (editingPost) {
-      const { error } = await supabase
-        .from("blog_posts")
-        .update(postData)
-        .eq("id", editingPost.id);
-
-      if (error) {
-        toast({
-          title: "Error updating blog post",
-          description: error.message,
-          variant: "destructive",
-        });
-      } else {
+      try {
+        await adminMutation({ action: "update", table: "blog_posts", data: postData, id: editingPost.id });
         toast({ title: "Blog post updated successfully" });
         setIsDialogOpen(false);
         resetForm();
         fetchPosts();
+      } catch (error: any) {
+        toast({ title: "Error updating blog post", description: error.message, variant: "destructive" });
       }
     } else {
-      const { error } = await supabase.from("blog_posts").insert(postData);
-
-      if (error) {
-        toast({
-          title: "Error creating blog post",
-          description: error.message,
-          variant: "destructive",
-        });
-      } else {
+      try {
+        await adminMutation({ action: "insert", table: "blog_posts", data: postData });
         toast({ title: "Blog post created successfully" });
         setIsDialogOpen(false);
         resetForm();
         fetchPosts();
+      } catch (error: any) {
+        toast({ title: "Error creating blog post", description: error.message, variant: "destructive" });
       }
     }
 

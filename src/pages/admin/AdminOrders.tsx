@@ -154,6 +154,7 @@ export function AdminOrders() {
   const getPaymentBadgeVariant = (status: string) => {
     switch (status) {
       case "paid":
+      case "confirmed":
         return "default";
       case "refunded":
         return "secondary";

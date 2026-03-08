@@ -318,6 +318,35 @@ export function AdminOrders() {
                   ))}
                 </div>
               </div>
+
+              {/* Quick Payment Actions */}
+              {selectedOrder.payment_status === "pending" && (
+                <div className="flex gap-2 pt-2">
+                  <Button
+                    className="flex-1 gap-2"
+                    onClick={() => {
+                      updatePaymentStatus(selectedOrder.id, "confirmed");
+                      updateOrderStatus(selectedOrder.id, "processing");
+                      setIsDetailsOpen(false);
+                    }}
+                  >
+                    <CheckCircle className="h-4 w-4" />
+                    Confirm Payment
+                  </Button>
+                  <Button
+                    variant="destructive"
+                    className="flex-1 gap-2"
+                    onClick={() => {
+                      updatePaymentStatus(selectedOrder.id, "failed");
+                      updateOrderStatus(selectedOrder.id, "cancelled");
+                      setIsDetailsOpen(false);
+                    }}
+                  >
+                    <XCircle className="h-4 w-4" />
+                    Reject Payment
+                  </Button>
+                </div>
+              )}
             </div>
           )}
         </DialogContent>

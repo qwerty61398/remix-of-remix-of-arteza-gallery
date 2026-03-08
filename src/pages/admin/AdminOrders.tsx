@@ -49,7 +49,7 @@ interface OrderItem {
 }
 
 const STATUS_OPTIONS = ["pending", "processing", "shipped", "delivered", "cancelled"];
-const PAYMENT_STATUS_OPTIONS = ["pending", "paid", "refunded", "failed"];
+const PAYMENT_STATUS_OPTIONS = ["pending", "confirmed", "paid", "refunded", "failed"];
 
 export function AdminOrders() {
   const [orders, setOrders] = useState<Order[]>([]);

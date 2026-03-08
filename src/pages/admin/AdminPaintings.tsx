@@ -30,6 +30,7 @@ import {
 } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 import { supabase } from "@/integrations/supabase/client";
+import { adminMutation } from "@/lib/admin-api";
 import { useToast } from "@/hooks/use-toast";
 import { ImageUpload } from "@/components/admin/ImageUpload";
 
@@ -146,37 +147,24 @@ export function AdminPaintings() {
     };
 
     if (editingPainting) {
-      const { error } = await supabase
-        .from("paintings")
-        .update(paintingData)
-        .eq("id", editingPainting.id);
-
-      if (error) {
-        toast({
-          title: "Error updating painting",
-          description: error.message,
-          variant: "destructive",
-        });
-      } else {
+      try {
+        await adminMutation({ action: "update", table: "paintings", data: paintingData, id: editingPainting.id });
         toast({ title: "Painting updated successfully" });
         setIsDialogOpen(false);
         resetForm();
         fetchPaintings();
+      } catch (error: any) {
+        toast({ title: "Error updating painting", description: error.message, variant: "destructive" });
       }
     } else {
-      const { error } = await supabase.from("paintings").insert(paintingData);
-
-      if (error) {
-        toast({
-          title: "Error creating painting",
-          description: error.message,
-          variant: "destructive",
-        });
-      } else {
+      try {
+        await adminMutation({ action: "insert", table: "paintings", data: paintingData });
         toast({ title: "Painting created successfully" });
         setIsDialogOpen(false);
         resetForm();
         fetchPaintings();
+      } catch (error: any) {
+        toast({ title: "Error creating painting", description: error.message, variant: "destructive" });
       }
     }
 
@@ -186,17 +174,12 @@ export function AdminPaintings() {
   const handleDelete = async (id: string) => {
     if (!confirm("Are you sure you want to delete this painting?")) return;
 
-    const { error } = await supabase.from("paintings").delete().eq("id", id);
-
-    if (error) {
-      toast({
-        title: "Error deleting painting",
-        description: error.message,
-        variant: "destructive",
-      });
-    } else {
+    try {
+      await adminMutation({ action: "delete", table: "paintings", id });
       toast({ title: "Painting deleted successfully" });
       fetchPaintings();
+    } catch (error: any) {
+      toast({ title: "Error deleting painting", description: error.message, variant: "destructive" });
     }
   };
 

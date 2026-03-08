@@ -31,6 +31,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { supabase } from "@/integrations/supabase/client";
+import { adminMutation } from "@/lib/admin-api";
 import { useToast } from "@/hooks/use-toast";
 import { format } from "date-fns";
 
@@ -153,24 +154,24 @@ export function AdminClasses() {
     };
 
     if (editingClass) {
-      const { error } = await supabase.from("classes").update(classData).eq("id", editingClass.id);
-      if (error) {
-        toast({ title: "Error updating class", description: error.message, variant: "destructive" });
-      } else {
+      try {
+        await adminMutation({ action: "update", table: "classes", data: classData, id: editingClass.id });
         toast({ title: "Class updated successfully" });
         setIsDialogOpen(false);
         resetForm();
         fetchData();
+      } catch (error: any) {
+        toast({ title: "Error updating class", description: error.message, variant: "destructive" });
       }
     } else {
-      const { error } = await supabase.from("classes").insert(classData);
-      if (error) {
-        toast({ title: "Error creating class", description: error.message, variant: "destructive" });
-      } else {
+      try {
+        await adminMutation({ action: "insert", table: "classes", data: classData });
         toast({ title: "Class created successfully" });
         setIsDialogOpen(false);
         resetForm();
         fetchData();
+      } catch (error: any) {
+        toast({ title: "Error creating class", description: error.message, variant: "destructive" });
       }
     }
 
@@ -180,22 +181,22 @@ export function AdminClasses() {
   const handleDelete = async (id: string) => {
     if (!confirm("Are you sure you want to delete this class?")) return;
 
-    const { error } = await supabase.from("classes").delete().eq("id", id);
-    if (error) {
-      toast({ title: "Error deleting class", description: error.message, variant: "destructive" });
-    } else {
+    try {
+      await adminMutation({ action: "delete", table: "classes", id });
       toast({ title: "Class deleted successfully" });
       fetchData();
+    } catch (error: any) {
+      toast({ title: "Error deleting class", description: error.message, variant: "destructive" });
     }
   };
 
   const updateBookingStatus = async (bookingId: string, status: string) => {
-    const { error } = await supabase.from("class_bookings").update({ status }).eq("id", bookingId);
-    if (error) {
-      toast({ title: "Error updating booking status", description: error.message, variant: "destructive" });
-    } else {
+    try {
+      await adminMutation({ action: "update", table: "class_bookings", data: { status }, id: bookingId });
       toast({ title: "Booking status updated" });
       fetchData();
+    } catch (error: any) {
+      toast({ title: "Error updating booking status", description: error.message, variant: "destructive" });
     }
   };
 

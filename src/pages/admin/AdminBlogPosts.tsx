@@ -23,6 +23,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { supabase } from "@/integrations/supabase/client";
+import { adminMutation } from "@/lib/admin-api";
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/contexts/AuthContext";
 import { format } from "date-fns";
@@ -128,37 +129,24 @@ export function AdminBlogPosts() {
     };
 
     if (editingPost) {
-      const { error } = await supabase
-        .from("blog_posts")
-        .update(postData)
-        .eq("id", editingPost.id);
-
-      if (error) {
-        toast({
-          title: "Error updating blog post",
-          description: error.message,
-          variant: "destructive",
-        });
-      } else {
+      try {
+        await adminMutation({ action: "update", table: "blog_posts", data: postData, id: editingPost.id });
         toast({ title: "Blog post updated successfully" });
         setIsDialogOpen(false);
         resetForm();
         fetchPosts();
+      } catch (error: any) {
+        toast({ title: "Error updating blog post", description: error.message, variant: "destructive" });
       }
     } else {
-      const { error } = await supabase.from("blog_posts").insert(postData);
-
-      if (error) {
-        toast({
-          title: "Error creating blog post",
-          description: error.message,
-          variant: "destructive",
-        });
-      } else {
+      try {
+        await adminMutation({ action: "insert", table: "blog_posts", data: postData });
         toast({ title: "Blog post created successfully" });
         setIsDialogOpen(false);
         resetForm();
         fetchPosts();
+      } catch (error: any) {
+        toast({ title: "Error creating blog post", description: error.message, variant: "destructive" });
       }
     }
 
@@ -168,38 +156,30 @@ export function AdminBlogPosts() {
   const handleDelete = async (id: string) => {
     if (!confirm("Are you sure you want to delete this blog post?")) return;
 
-    const { error } = await supabase.from("blog_posts").delete().eq("id", id);
-
-    if (error) {
-      toast({
-        title: "Error deleting blog post",
-        description: error.message,
-        variant: "destructive",
-      });
-    } else {
+    try {
+      await adminMutation({ action: "delete", table: "blog_posts", id });
       toast({ title: "Blog post deleted successfully" });
       fetchPosts();
+    } catch (error: any) {
+      toast({ title: "Error deleting blog post", description: error.message, variant: "destructive" });
     }
   };
 
   const togglePublish = async (post: BlogPost) => {
-    const { error } = await supabase
-      .from("blog_posts")
-      .update({
-        is_published: !post.is_published,
-        published_at: !post.is_published ? new Date().toISOString() : null,
-      })
-      .eq("id", post.id);
-
-    if (error) {
-      toast({
-        title: "Error updating blog post",
-        description: error.message,
-        variant: "destructive",
+    try {
+      await adminMutation({
+        action: "update",
+        table: "blog_posts",
+        data: {
+          is_published: !post.is_published,
+          published_at: !post.is_published ? new Date().toISOString() : null,
+        },
+        id: post.id,
       });
-    } else {
       toast({ title: `Blog post ${!post.is_published ? "published" : "unpublished"}` });
       fetchPosts();
+    } catch (error: any) {
+      toast({ title: "Error updating blog post", description: error.message, variant: "destructive" });
     }
   };
 

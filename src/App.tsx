@@ -55,7 +55,7 @@ const App = () => (
                   <Route path="/classes" element={<ClassesPage />} />
                   <Route path="/cart" element={<CartPage />} />
                   <Route path="/checkout" element={<CheckoutPage />} />
-                  <Route path="/payment/:orderId" element={<PaymentPage />} />
+                  
                   <Route path="/order-confirmation/:orderId" element={<OrderConfirmationPage />} />
                   <Route path="/auth" element={<AuthPage />} />
                   <Route path="/forgot-password" element={<ForgotPasswordPage />} />

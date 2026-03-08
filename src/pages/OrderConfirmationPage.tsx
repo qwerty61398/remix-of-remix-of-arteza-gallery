@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams, useLocation, Link } from "react-router-dom";
-import { CheckCircle, Clock, ArrowRight, Printer } from "lucide-react";
+import { CheckCircle, ArrowRight, Printer } from "lucide-react";
+import { FaWhatsapp } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
@@ -49,22 +50,17 @@ export default function OrderConfirmationPage() {
 
   const [order, setOrder] = useState<OrderData | null>(navState?.order ?? null);
   const [items, setItems] = useState<OrderItem[]>(navState?.items ?? []);
-  const [paymentStatus, setPaymentStatus] = useState<string>("pending");
-
   useEffect(() => {
     if (!orderId || (order && items.length > 0)) return;
 
     const fetchOrder = async () => {
       const { data: orderData } = await supabase
         .from("orders")
-        .select("id, customer_name, customer_email, customer_phone, shipping_address, total_amount, created_at, payment_status")
+        .select("id, customer_name, customer_email, customer_phone, shipping_address, total_amount, created_at")
         .eq("id", orderId)
         .single();
 
-      if (orderData) {
-        setOrder(orderData);
-        setPaymentStatus(orderData.payment_status);
-      }
+      if (orderData) setOrder(orderData);
 
       const { data: itemsData } = await supabase
         .from("order_items")
@@ -76,34 +72,6 @@ export default function OrderConfirmationPage() {
 
     fetchOrder();
   }, [orderId]);
-
-  // Real-time subscription for payment status updates
-  useEffect(() => {
-    if (!orderId) return;
-
-    const channel = supabase
-      .channel(`order-${orderId}`)
-      .on(
-        "postgres_changes",
-        {
-          event: "UPDATE",
-          schema: "public",
-          table: "orders",
-          filter: `id=eq.${orderId}`,
-        },
-        (payload) => {
-          const newStatus = (payload.new as any).payment_status;
-          if (newStatus) setPaymentStatus(newStatus);
-        }
-      )
-      .subscribe();
-
-    return () => {
-      supabase.removeChannel(channel);
-    };
-  }, [orderId]);
-
-  const isConfirmed = paymentStatus === "confirmed" || paymentStatus === "paid";
 
   const formatPrice = (price: number) =>
     new Intl.NumberFormat("en-IN", {
@@ -127,35 +95,17 @@ export default function OrderConfirmationPage() {
   return (
     <div className="min-h-[60vh] flex items-center justify-center py-12">
       <div className="w-full max-w-2xl mx-auto px-4">
-        {/* Payment Status Banner */}
-        {isConfirmed ? (
-          <div className="text-center mb-8">
-            <div className="w-20 h-20 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center mx-auto mb-6 animate-in fade-in zoom-in duration-500">
-              <CheckCircle className="h-10 w-10 text-green-600" />
-            </div>
-            <h1 className="font-serif text-2xl md:text-3xl font-bold text-foreground mb-2">
-              Payment Confirmed!
-            </h1>
-            <p className="text-muted-foreground">
-              Your payment has been verified. Your order is now being processed.
-            </p>
+        <div className="text-center mb-8">
+          <div className="w-20 h-20 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center mx-auto mb-6 animate-in fade-in zoom-in duration-500">
+            <CheckCircle className="h-10 w-10 text-green-600" />
           </div>
-        ) : (
-          <div className="text-center mb-8">
-            <div className="w-20 h-20 rounded-full bg-amber-100 dark:bg-amber-900/30 flex items-center justify-center mx-auto mb-6">
-              <Clock className="h-10 w-10 text-amber-600" />
-            </div>
-            <h1 className="font-serif text-2xl md:text-3xl font-bold text-foreground mb-2">
-              Order Placed!
-            </h1>
-            <p className="text-muted-foreground">
-              Thank you! Your payment is being verified. We'll confirm your order shortly.
-            </p>
-            <p className="text-xs text-muted-foreground mt-2">
-              This page will update automatically when your payment is confirmed.
-            </p>
-          </div>
-        )}
+          <h1 className="font-serif text-2xl md:text-3xl font-bold text-foreground mb-2">
+            Order Placed Successfully!
+          </h1>
+          <p className="text-muted-foreground">
+            Thank you for your order. We'll get in touch with you shortly to confirm the details.
+          </p>
+        </div>
 
         {order && (
           <div className="bg-card border border-border rounded-xl p-6 space-y-6">
@@ -173,9 +123,7 @@ export default function OrderConfirmationPage() {
                   {formatDate(order.created_at)}
                 </p>
               </div>
-              <Badge variant={isConfirmed ? "default" : "secondary"}>
-                {isConfirmed ? "Payment Confirmed" : "Payment Verification"}
-              </Badge>
+              <Badge variant="default">Order Placed</Badge>
             </div>
 
             <Separator />
@@ -270,14 +218,31 @@ export default function OrderConfirmationPage() {
           </div>
         )}
 
-        <div className="text-center mt-8">
-          <Link to="/shop">
-            <Button className="gap-2">
-              Continue Shopping
-              <ArrowRight className="h-4 w-4" />
-            </Button>
-          </Link>
-        </div>
+        {order && (
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mt-8">
+            <a
+              href={(() => {
+                const shortId = order.id.slice(0, 8).toUpperCase();
+                const itemsList = items.map(i => `• ${i.painting_title} (x${i.quantity}) — ${formatPrice(i.price * i.quantity)}`).join("\n");
+                const message = `Hi! I just placed an order on Arteza.\n\n*Order ID:* ${shortId}\n*Items:*\n${itemsList}\n\n*Total:* ${formatPrice(order.total_amount)}\n\nPlease confirm my order. Thank you!`;
+                return `https://wa.me/?text=${encodeURIComponent(message)}`;
+              })()}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Button variant="outline" className="gap-2 text-green-600 border-green-600 hover:bg-green-50 dark:hover:bg-green-950">
+                <FaWhatsapp className="h-4 w-4" />
+                Share on WhatsApp
+              </Button>
+            </a>
+            <Link to="/shop">
+              <Button className="gap-2">
+                Continue Shopping
+                <ArrowRight className="h-4 w-4" />
+              </Button>
+            </Link>
+          </div>
+        )}
       </div>
     </div>
   );

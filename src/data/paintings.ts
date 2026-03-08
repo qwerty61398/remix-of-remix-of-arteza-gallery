@@ -192,6 +192,18 @@ export const paintings: Painting[] = [
     available: true,
     medium: "Oil",
     material: "Canvas"
+  },
+  {
+    id: "12",
+    title: "Veiled Gaze: Shadows of Identity",
+    image: palePortrait,
+    dimensions: "18\" × 24\"",
+    price: 11000,
+    description: "A haunting and evocative oil portrait emerges from the depths of a pitch-black void, commanding attention with its raw emotional intensity. The subject's pale, sculptural face is rendered in sweeping strokes of ivory, ash, and muted rose, while deep charcoal shadows pool dramatically around piercing blue eyes that seem to hold an unspoken narrative. Bold crimson lips provide the sole burst of warm color, a striking counterpoint to the cool, spectral palette. Flashes of gold and amber dance atop the head like fleeting thoughts or fragile crowns, adding a surreal, almost otherworldly dimension. Signed \"Upasna '23,\" this piece masterfully balances vulnerability and defiance — a meditation on identity, perception, and the masks we wear beneath the surface.",
+    collection: "Portraits and Personalities",
+    available: true,
+    medium: "Oil",
+    material: "Canvas"
   }
 ];
 

@@ -154,24 +154,24 @@ export function AdminClasses() {
     };
 
     if (editingClass) {
-      const { error } = await supabase.from("classes").update(classData).eq("id", editingClass.id);
-      if (error) {
-        toast({ title: "Error updating class", description: error.message, variant: "destructive" });
-      } else {
+      try {
+        await adminMutation({ action: "update", table: "classes", data: classData, id: editingClass.id });
         toast({ title: "Class updated successfully" });
         setIsDialogOpen(false);
         resetForm();
         fetchData();
+      } catch (error: any) {
+        toast({ title: "Error updating class", description: error.message, variant: "destructive" });
       }
     } else {
-      const { error } = await supabase.from("classes").insert(classData);
-      if (error) {
-        toast({ title: "Error creating class", description: error.message, variant: "destructive" });
-      } else {
+      try {
+        await adminMutation({ action: "insert", table: "classes", data: classData });
         toast({ title: "Class created successfully" });
         setIsDialogOpen(false);
         resetForm();
         fetchData();
+      } catch (error: any) {
+        toast({ title: "Error creating class", description: error.message, variant: "destructive" });
       }
     }
 

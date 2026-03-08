@@ -146,37 +146,24 @@ export function AdminPaintings() {
     };
 
     if (editingPainting) {
-      const { error } = await supabase
-        .from("paintings")
-        .update(paintingData)
-        .eq("id", editingPainting.id);
-
-      if (error) {
-        toast({
-          title: "Error updating painting",
-          description: error.message,
-          variant: "destructive",
-        });
-      } else {
+      try {
+        await adminMutation({ action: "update", table: "paintings", data: paintingData, id: editingPainting.id });
         toast({ title: "Painting updated successfully" });
         setIsDialogOpen(false);
         resetForm();
         fetchPaintings();
+      } catch (error: any) {
+        toast({ title: "Error updating painting", description: error.message, variant: "destructive" });
       }
     } else {
-      const { error } = await supabase.from("paintings").insert(paintingData);
-
-      if (error) {
-        toast({
-          title: "Error creating painting",
-          description: error.message,
-          variant: "destructive",
-        });
-      } else {
+      try {
+        await adminMutation({ action: "insert", table: "paintings", data: paintingData });
         toast({ title: "Painting created successfully" });
         setIsDialogOpen(false);
         resetForm();
         fetchPaintings();
+      } catch (error: any) {
+        toast({ title: "Error creating painting", description: error.message, variant: "destructive" });
       }
     }
 

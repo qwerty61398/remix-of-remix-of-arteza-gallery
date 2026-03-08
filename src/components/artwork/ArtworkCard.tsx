@@ -22,13 +22,13 @@ export function ArtworkCard({ painting, variant = "default" }: ArtworkCardProps)
   };
 
   return (
-    <article className="group relative">
+    <article className="group relative hover-lift rounded-lg">
       <Link to={`/shop/${painting.id}`} className="block">
-        <div className="relative overflow-hidden rounded-lg bg-muted">
+        <div className="relative overflow-hidden rounded-lg bg-muted img-zoom">
           <img
             src={painting.image}
             alt={painting.title}
-            className="w-full h-auto object-contain transition-transform duration-500 group-hover:scale-105"
+            className="w-full h-auto object-contain"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
         </div>
@@ -57,7 +57,7 @@ export function ArtworkCard({ painting, variant = "default" }: ArtworkCardProps)
             size="sm"
             onClick={() => addToCart(painting)}
             disabled={!painting.available}
-            className="gap-1.5"
+            className="gap-1.5 btn-press"
           >
             <ShoppingBag className="h-4 w-4" />
             <span className="hidden sm:inline">Add</span>

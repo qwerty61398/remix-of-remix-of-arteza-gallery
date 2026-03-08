@@ -181,12 +181,12 @@ export function AdminClasses() {
   const handleDelete = async (id: string) => {
     if (!confirm("Are you sure you want to delete this class?")) return;
 
-    const { error } = await supabase.from("classes").delete().eq("id", id);
-    if (error) {
-      toast({ title: "Error deleting class", description: error.message, variant: "destructive" });
-    } else {
+    try {
+      await adminMutation({ action: "delete", table: "classes", id });
       toast({ title: "Class deleted successfully" });
       fetchData();
+    } catch (error: any) {
+      toast({ title: "Error deleting class", description: error.message, variant: "destructive" });
     }
   };
 

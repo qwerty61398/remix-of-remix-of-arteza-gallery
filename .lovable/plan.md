@@ -1,31 +1,26 @@
 
 
-## Typewriter Effect on Hero Heading
+## Plan: Auto-redirect to WhatsApp after checkout
 
-Add a typewriter animation to the hero section that cycles the ending phrase. The heading will read:
+### Current behavior
+After checkout, the user lands on `/order-confirmation/{orderId}` which shows a receipt and a manual "Share on WhatsApp" button. The WhatsApp link currently uses `https://wa.me/?text=...` without a phone number (should be `https://wa.me/919711804497?text=...`).
 
-**"Art That Speaks to [rotating text]"**
+### Network issue
+The latest checkout attempt failed with "Failed to fetch" on the `create-order` function. This is likely a transient network/deployment issue — the function config and code look correct.
 
-Where `[rotating text]` cycles through phrases like:
-- Your Soul
-- Your Heart
-- The World
-- Every Emotion
-- New Heights
+### Changes
 
-### Implementation
+**1. `src/pages/CheckoutPage.tsx`** — Auto-redirect to WhatsApp after successful order
+- After clearing the cart and receiving the order response, construct the WhatsApp URL with the order details (Order ID, items, total) and the studio phone number `919711804497`
+- Use `window.location.href` to redirect to WhatsApp directly
+- Still navigate to the confirmation page as a fallback (via `window.open` for WhatsApp + `navigate` for confirmation, so user has a record)
 
-1. **Create a `useTypewriter` hook** (`src/hooks/use-typewriter.ts`) that:
-   - Accepts an array of strings and typing/deleting speed config
-   - Types out each phrase character by character, pauses, then deletes it before moving to the next
-   - Returns the current displayed text and a blinking cursor state
+**2. `src/pages/OrderConfirmationPage.tsx`** — Fix WhatsApp link
+- Change `https://wa.me/?text=...` to `https://wa.me/919711804497?text=...` so the button also works if users visit the confirmation page directly
 
-2. **Update `src/pages/HomePage.tsx`**:
-   - Import and use the hook with the phrase list
-   - Replace the static "Your Soul" span with the dynamic typewriter text
-   - Add a blinking cursor character (`|`) after the text using a CSS animation
-   - The primary color styling stays on the rotating text
-
-3. **Add cursor blink animation** in `src/index.css`:
-   - Simple `@keyframes blink` toggling opacity for the cursor
+### Flow after changes
+1. User fills checkout form → clicks "Place Order"
+2. Edge function creates order, returns order ID + total
+3. Browser opens WhatsApp with pre-filled order message to the studio number
+4. User also lands on the order confirmation page (as a backup/receipt)
 

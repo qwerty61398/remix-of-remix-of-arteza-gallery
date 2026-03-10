@@ -3,11 +3,11 @@ import { Instagram, Facebook, Phone, MapPin } from "lucide-react";
 import { FaWhatsapp, FaPinterestP } from "react-icons/fa";
 
 const socialLinks = [
-  { name: "Facebook", icon: ({ className }: { className?: string }) => <Facebook className={className} />, url: "https://facebook.com" },
-  { name: "WhatsApp", icon: ({ className }: { className?: string }) => <FaWhatsapp className={className} />, url: "https://wa.me/919711804497" },
-  { name: "Instagram", icon: ({ className }: { className?: string }) => <Instagram className={className} />, url: "https://instagram.com" },
-  { name: "Pinterest", icon: ({ className }: { className?: string }) => <FaPinterestP className={className} />, url: "https://pinterest.com" },
-];
+{ name: "Facebook", icon: ({ className }: {className?: string;}) => <Facebook className={className} />, url: "https://facebook.com" },
+{ name: "WhatsApp", icon: ({ className }: {className?: string;}) => <FaWhatsapp className={className} />, url: "https://wa.me/919711804497" },
+{ name: "Instagram", icon: ({ className }: {className?: string;}) => <Instagram className={className} />, url: "https://instagram.com" },
+{ name: "Pinterest", icon: ({ className }: {className?: string;}) => <FaPinterestP className={className} />, url: "https://pinterest.com" }];
+
 
 export function Footer() {
   return (
@@ -53,7 +53,7 @@ export function Footer() {
             <div className="flex flex-col gap-3">
               <div className="flex items-center gap-2 text-sm text-muted-foreground">
                 <Phone className="h-4 w-4" />
-                <span>+91 98765 43210</span>
+                <span>+91 97118 04497</span>
               </div>
               <div className="flex items-start gap-2 text-sm text-muted-foreground">
                 <MapPin className="h-4 w-4 mt-0.5" />
@@ -61,17 +61,17 @@ export function Footer() {
               </div>
             </div>
             <div className="flex gap-4 pt-2">
-              {socialLinks.map((social) => (
-                <a
-                  key={social.name}
-                  href={social.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-muted-foreground hover:text-primary transition-colors"
-                >
+              {socialLinks.map((social) =>
+              <a
+                key={social.name}
+                href={social.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-muted-foreground hover:text-primary transition-colors">
+                
                   <social.icon className="h-5 w-5" />
                 </a>
-              ))}
+              )}
             </div>
           </div>
         </div>
@@ -82,6 +82,6 @@ export function Footer() {
           </p>
         </div>
       </div>
-    </footer>
-  );
+    </footer>);
+
 }

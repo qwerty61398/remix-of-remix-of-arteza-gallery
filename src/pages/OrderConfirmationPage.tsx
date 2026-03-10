@@ -225,7 +225,7 @@ export default function OrderConfirmationPage() {
                 const shortId = order.id.slice(0, 8).toUpperCase();
                 const itemsList = items.map(i => `• ${i.painting_title} (x${i.quantity}) — ${formatPrice(i.price * i.quantity)}`).join("\n");
                 const message = `Hi! I just placed an order on Arteza.\n\n*Order ID:* ${shortId}\n*Items:*\n${itemsList}\n\n*Total:* ${formatPrice(order.total_amount)}\n\nPlease confirm my order. Thank you!`;
-                return `https://wa.me/?text=${encodeURIComponent(message)}`;
+                return `https://wa.me/919711804497?text=${encodeURIComponent(message)}`;
               })()}
               target="_blank"
               rel="noopener noreferrer"

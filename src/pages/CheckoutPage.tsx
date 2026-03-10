@@ -125,7 +125,19 @@ export default function CheckoutPage() {
       };
 
       clearCart();
+
+      // Build WhatsApp message
+      const shortId = order.id.slice(0, 8).toUpperCase();
+      const itemsList = items.map(i => `• ${i.painting.title} (x${i.quantity}) — ${formatPrice(i.painting.price * i.quantity)}`).join("\n");
+      const total = formatPrice(order.total_amount ?? totalPrice);
+      const waMessage = `Hi! I just placed an order on Arteza.\n\n*Order ID:* ${shortId}\n*Items:*\n${itemsList}\n\n*Total:* ${total}\n\nPlease confirm my order. Thank you!`;
+      const waUrl = `https://wa.me/919711804497?text=${encodeURIComponent(waMessage)}`;
+
+      // Navigate to confirmation page first, then redirect to WhatsApp
       navigate(`/order-confirmation/${order.id}`, { state: orderState });
+      setTimeout(() => {
+        window.open(waUrl, "_blank");
+      }, 500);
     } catch (error: any) {
       toast({
         title: "Order failed",

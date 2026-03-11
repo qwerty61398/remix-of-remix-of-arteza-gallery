@@ -1,32 +1,31 @@
 
 
-## Verification: WhatsApp Button
+## Typewriter Effect on Hero Heading
 
-The WhatsApp share button on the order confirmation page (line 228) already contains the correct phone number: `https://wa.me/919711804497?text=...`. No fix needed.
+Add a typewriter animation to the hero section that cycles the ending phrase. The heading will read:
 
-## Plan: Order Confirmation Emails
+**"Art That Speaks to [rotating text]"**
 
-To send order confirmation emails to customers, we need to set up a custom sender domain first. Lovable Cloud provides built-in email sending, but it requires a verified email domain so emails come from your brand (e.g., `orders@yourdomain.com`) instead of being blocked as spam.
+Where `[rotating text]` cycles through phrases like:
+- Your Soul
+- Your Heart
+- The World
+- Every Emotion
+- New Heights
 
-### Step 1: Set up an email domain
+### Implementation
 
-You'll need to configure a sender domain through the email setup dialog. This involves adding a few DNS records to your domain — the dialog walks you through it.
+1. **Create a `useTypewriter` hook** (`src/hooks/use-typewriter.ts`) that:
+   - Accepts an array of strings and typing/deleting speed config
+   - Types out each phrase character by character, pauses, then deletes it before moving to the next
+   - Returns the current displayed text and a blinking cursor state
 
-### Step 2: Create a transactional email template
+2. **Update `src/pages/HomePage.tsx`**:
+   - Import and use the hook with the phrase list
+   - Replace the static "Your Soul" span with the dynamic typewriter text
+   - Add a blinking cursor character (`|`) after the text using a CSS animation
+   - The primary color styling stays on the rotating text
 
-After the domain is verified, I'll create:
-- A `send-order-confirmation` Edge Function that renders a branded HTML email with the order details (Order ID, itemized list, total, shipping info, estimated delivery)
-- The email will be sent automatically from within the `create-order` function after an order is successfully placed
-
-### Step 3: Wire it into checkout
-
-Update the `create-order` Edge Function to call the email-sending function after inserting the order, so the customer receives a confirmation email immediately.
-
----
-
-**First step**: Let's set up your email domain. Click below to get started — you'll need access to your domain's DNS settings.
-
-<lov-actions>
-<lov-open-email-setup>Set up email domain</lov-open-email-setup>
-</lov-actions>
+3. **Add cursor blink animation** in `src/index.css`:
+   - Simple `@keyframes blink` toggling opacity for the cursor
 

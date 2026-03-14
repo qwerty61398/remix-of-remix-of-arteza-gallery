@@ -39,9 +39,9 @@ export default function HomePage() {
             ref={imgRef}
             src={heroImage}
             alt="Featured artwork"
-            className="h-full w-full object-cover opacity-20 will-change-transform scale-110"
+            className="h-full w-full object-cover opacity-40 will-change-transform scale-110"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-background via-background/95 to-background/60" />
+          <div className="absolute inset-0 bg-gradient-to-r from-background via-background/90 to-background/40" />
         </div>
 
         <div className="container px-4 py-20 flex flex-col items-center text-center">

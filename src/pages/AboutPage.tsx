@@ -1,4 +1,4 @@
-import { Palette, Award, Heart } from "lucide-react";
+import { Frame, Award, Heart } from "lucide-react";
 import { paintings } from "@/data/paintings";
 import { ScrollReveal, StaggerItem } from "@/components/animations/ScrollReveal";
 

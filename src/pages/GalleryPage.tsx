@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { CollectionCard } from "@/components/artwork/CollectionCard";
 import { collections } from "@/data/paintings";
-import { Sparkles } from "lucide-react";
+import { Lightbulb } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ScrollReveal, StaggerItem } from "@/components/animations/ScrollReveal";
 
@@ -20,7 +20,7 @@ export default function GalleryPage() {
             </p>
             <Link to="/quiz">
               <Button variant="outline" className="gap-2 btn-press">
-                <Sparkles className="h-4 w-4" />
+                <Lightbulb className="h-4 w-4" />
                 Not sure which collection suits you? Take our Art Style Quiz
               </Button>
             </Link>

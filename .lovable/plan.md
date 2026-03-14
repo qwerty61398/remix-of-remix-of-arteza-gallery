@@ -1,24 +1,31 @@
 
 
-## Plan: Replace Quiz and Paintings Icons
+## Typewriter Effect on Hero Heading
 
-### Changes
+Add a typewriter animation to the hero section that cycles the ending phrase. The heading will read:
 
-**1. `src/pages/HomePage.tsx`**
-- Replace `Sparkles` import with `Lightbulb` from lucide-react
-- Replace `Palette` import with `Frame` from lucide-react
-- Update all 3 usages: quiz button (line 74), quiz CTA section (line 170), and "Original Paintings" (line 82)
+**"Art That Speaks to [rotating text]"**
 
-**2. `src/pages/GalleryPage.tsx`**
-- Replace `Sparkles` import with `Lightbulb`
-- Update quiz button icon (line 23)
+Where `[rotating text]` cycles through phrases like:
+- Your Soul
+- Your Heart
+- The World
+- Every Emotion
+- New Heights
 
-**3. `src/pages/QuizPage.tsx`**
-- Replace `Sparkles` import with `Lightbulb`
-- Update quiz header icon (line 178)
+### Implementation
 
-**4. `src/pages/AboutPage.tsx`**
-- Replace `Palette` with `Frame` in the "Authentic Artistry" card (line 54)
+1. **Create a `useTypewriter` hook** (`src/hooks/use-typewriter.ts`) that:
+   - Accepts an array of strings and typing/deleting speed config
+   - Types out each phrase character by character, pauses, then deletes it before moving to the next
+   - Returns the current displayed text and a blinking cursor state
 
-These are all straightforward icon swaps — no logic changes needed.
+2. **Update `src/pages/HomePage.tsx`**:
+   - Import and use the hook with the phrase list
+   - Replace the static "Your Soul" span with the dynamic typewriter text
+   - Add a blinking cursor character (`|`) after the text using a CSS animation
+   - The primary color styling stays on the rotating text
+
+3. **Add cursor blink animation** in `src/index.css`:
+   - Simple `@keyframes blink` toggling opacity for the cursor
 

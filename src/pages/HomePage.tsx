@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { useEffect, useRef } from "react";
-import { ArrowRight, Palette, Sparkles } from "lucide-react";
+import { ArrowRight, Frame, Lightbulb } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ArtworkCard } from "@/components/artwork/ArtworkCard";
 import { CollectionCard } from "@/components/artwork/CollectionCard";
@@ -71,7 +71,7 @@ export default function HomePage() {
               </Link>
               <Link to="/quiz">
                 <Button size="lg" variant="outline" className="gap-2 btn-press">
-                  <Sparkles className="h-4 w-4" />
+                  <Lightbulb className="h-4 w-4" />
                   <span>Find Your Style</span>
                 </Button>
               </Link>
@@ -79,7 +79,7 @@ export default function HomePage() {
 
             <div className="flex items-center justify-center gap-8 pt-4 text-sm text-muted-foreground animate-fade-up opacity-0 [animation-delay:1400ms] [animation-fill-mode:forwards]">
               <div className="flex items-center gap-2">
-                <Palette className="h-5 w-5 text-primary" />
+                <Frame className="h-5 w-5 text-primary" />
                 <span>Original Paintings</span>
               </div>
               <div>
@@ -167,7 +167,7 @@ export default function HomePage() {
         <div className="container px-4">
           <ScrollReveal variant="zoom-in">
             <div className="max-w-3xl mx-auto text-center">
-              <Sparkles className="h-12 w-12 text-primary mx-auto mb-6 animate-float" />
+              <Lightbulb className="h-12 w-12 text-primary mx-auto mb-6 animate-float" />
               <h2 className="font-serif text-3xl md:text-4xl font-bold text-foreground mb-4">
                 Discover Your Perfect Art Match
               </h2>

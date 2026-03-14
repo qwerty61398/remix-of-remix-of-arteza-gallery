@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Sparkles, ArrowRight, ArrowLeft, Check } from "lucide-react";
+import { Lightbulb, ArrowRight, ArrowLeft, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
@@ -175,7 +175,7 @@ export default function QuizPage() {
           {/* Header */}
           <div className="text-center mb-8">
             <div className="inline-flex items-center gap-2 text-primary mb-4">
-              <Sparkles className="h-5 w-5" />
+              <Lightbulb className="h-5 w-5" />
               <span className="text-sm font-medium">Art Style Quiz</span>
             </div>
             <h1 className="font-serif text-3xl md:text-4xl font-bold text-foreground">

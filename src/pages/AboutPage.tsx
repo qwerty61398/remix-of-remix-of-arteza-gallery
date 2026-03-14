@@ -1,4 +1,4 @@
-import { Palette, Award, Heart } from "lucide-react";
+import { Frame, Award, Heart } from "lucide-react";
 import { paintings } from "@/data/paintings";
 import { ScrollReveal, StaggerItem } from "@/components/animations/ScrollReveal";
 
@@ -51,7 +51,7 @@ export default function AboutPage() {
         {/* Values */}
         <div className="grid md:grid-cols-3 gap-8 mb-20">
           {[
-            { icon: Palette, title: "Authentic Artistry", desc: "Every piece is an original, hand-painted work of art, created with passion and attention to detail." },
+            { icon: Frame, title: "Authentic Artistry", desc: "Every piece is an original, hand-painted work of art, created with passion and attention to detail." },
             { icon: Award, title: "Cultural Heritage", desc: "Celebrating India's rich artistic traditions while pushing the boundaries of contemporary expression." },
             { icon: Heart, title: "Emotional Connection", desc: "Creating art that resonates with viewers on a deeply personal and emotional level." },
           ].map((item, i) => (

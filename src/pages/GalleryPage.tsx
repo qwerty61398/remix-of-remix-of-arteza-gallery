@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { CollectionCard } from "@/components/artwork/CollectionCard";
 import { collections } from "@/data/paintings";
-import { Sparkles } from "lucide-react";
+import { Lightbulb } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ScrollReveal, StaggerItem } from "@/components/animations/ScrollReveal";
 

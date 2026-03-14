@@ -167,7 +167,7 @@ export default function HomePage() {
         <div className="container px-4">
           <ScrollReveal variant="zoom-in">
             <div className="max-w-3xl mx-auto text-center">
-              <Sparkles className="h-12 w-12 text-primary mx-auto mb-6 animate-float" />
+              <Lightbulb className="h-12 w-12 text-primary mx-auto mb-6 animate-float" />
               <h2 className="font-serif text-3xl md:text-4xl font-bold text-foreground mb-4">
                 Discover Your Perfect Art Match
               </h2>

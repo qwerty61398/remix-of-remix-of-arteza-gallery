@@ -71,7 +71,7 @@ export default function HomePage() {
               </Link>
               <Link to="/quiz">
                 <Button size="lg" variant="outline" className="gap-2 btn-press">
-                  <Sparkles className="h-4 w-4" />
+                  <Lightbulb className="h-4 w-4" />
                   <span>Find Your Style</span>
                 </Button>
               </Link>

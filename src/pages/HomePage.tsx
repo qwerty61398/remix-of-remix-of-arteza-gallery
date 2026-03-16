@@ -70,9 +70,9 @@ export default function HomePage() {
                 </Button>
               </Link>
               <Link to="/quiz">
-                <Button size="lg" variant="outline" className="gap-2 btn-press">
-                  <Lightbulb className="h-4 w-4" />
-                  <span>Find Your Style</span>
+                <Button size="lg" variant="outline" className="gap-2 btn-press border-primary/30 bg-primary/5 hover:bg-primary/10 hover:border-primary/50 transition-all">
+                  <Lightbulb className="h-4 w-4 text-primary" />
+                  <span>Get Inspired</span>
                 </Button>
               </Link>
             </div>
@@ -167,18 +167,20 @@ export default function HomePage() {
         <div className="container px-4">
           <ScrollReveal variant="zoom-in">
             <div className="max-w-3xl mx-auto text-center">
-              <Lightbulb className="h-12 w-12 text-primary mx-auto mb-6 animate-float" />
+              <div className="w-20 h-20 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-6">
+                <Lightbulb className="h-10 w-10 text-primary animate-float" />
+              </div>
               <h2 className="font-serif text-3xl md:text-4xl font-bold text-foreground mb-4">
-                Discover Your Perfect Art Match
+                Light Up Your Art Journey
               </h2>
               <p className="text-lg text-muted-foreground mb-8">
-                Take our interactive quiz and find artwork that resonates with your
-                unique taste and style preferences.
+                Take our interactive quiz and discover artwork that sparks
+                your imagination and matches your unique taste.
               </p>
               <Link to="/quiz">
-                <Button size="lg" className="gap-2 btn-press">
-                  Take the Quiz
-                  <ArrowRight className="h-4 w-4" />
+                <Button size="lg" className="gap-2 btn-press bg-primary hover:bg-primary/90 shadow-[0_0_20px_hsl(258_89%_66%/0.3)] hover:shadow-[0_0_30px_hsl(258_89%_66%/0.4)] transition-all">
+                  <Lightbulb className="h-4 w-4" />
+                  Get Inspired
                 </Button>
               </Link>
             </div>

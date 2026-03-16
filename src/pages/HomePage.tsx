@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { useEffect, useRef } from "react";
-import { ArrowRight, Frame, Lightbulb } from "lucide-react";
+import { ArrowRight, Lightbulb, Palette } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ArtworkCard } from "@/components/artwork/ArtworkCard";
 import { CollectionCard } from "@/components/artwork/CollectionCard";

@@ -70,9 +70,9 @@ export default function HomePage() {
                 </Button>
               </Link>
               <Link to="/quiz">
-                <Button size="lg" variant="outline" className="gap-2 btn-press">
-                  <Lightbulb className="h-4 w-4" />
-                  <span>Find Your Style</span>
+                <Button size="lg" variant="outline" className="gap-2 btn-press border-primary/30 bg-primary/5 hover:bg-primary/10 hover:border-primary/50 transition-all">
+                  <Lightbulb className="h-4 w-4 text-primary" />
+                  <span>Get Inspired</span>
                 </Button>
               </Link>
             </div>

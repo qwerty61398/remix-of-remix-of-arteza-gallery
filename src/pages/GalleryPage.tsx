@@ -19,9 +19,9 @@ export default function GalleryPage() {
               form, and emotion. Click on any collection to discover the artworks within.
             </p>
             <Link to="/quiz">
-              <Button variant="outline" className="gap-2 btn-press">
-                <Lightbulb className="h-4 w-4" />
-                Not sure which collection suits you? Take our Art Style Quiz
+              <Button variant="outline" className="gap-2 btn-press border-primary/30 bg-primary/5 hover:bg-primary/10 hover:border-primary/50 transition-all">
+                <Lightbulb className="h-4 w-4 text-primary" />
+                Not sure? Get inspired — take our Art Style Quiz
               </Button>
             </Link>
           </div>

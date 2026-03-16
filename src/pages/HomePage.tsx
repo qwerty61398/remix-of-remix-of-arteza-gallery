@@ -79,7 +79,7 @@ export default function HomePage() {
 
             <div className="flex items-center justify-center gap-8 pt-4 text-sm text-muted-foreground animate-fade-up opacity-0 [animation-delay:1400ms] [animation-fill-mode:forwards]">
               <div className="flex items-center gap-2">
-                <Frame className="h-5 w-5 text-primary" />
+                <Palette className="h-5 w-5 text-primary" />
                 <span>Original Paintings</span>
               </div>
               <div>

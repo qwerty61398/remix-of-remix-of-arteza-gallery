@@ -1,31 +1,28 @@
 
 
-## Typewriter Effect on Hero Heading
+## Quiz Page Verification & Animation Plan
 
-Add a typewriter animation to the hero section that cycles the ending phrase. The heading will read:
+**Header Status**: The quiz page header is correctly implemented with:
+- Rounded `bg-primary/10` icon container with floating Lightbulb
+- "Get Inspired" subtitle in primary color
+- Full heading matching homepage CTA
+- Supporting description text
 
-**"Art That Speaks to [rotating text]"**
+All consistent with the homepage CTA styling.
 
-Where `[rotating text]` cycles through phrases like:
-- Your Soul
-- Your Heart
-- The World
-- Every Emotion
-- New Heights
+---
 
-### Implementation
+## Plan: Add Entrance Animation to Quiz Question Transitions
 
-1. **Create a `useTypewriter` hook** (`src/hooks/use-typewriter.ts`) that:
-   - Accepts an array of strings and typing/deleting speed config
-   - Types out each phrase character by character, pauses, then deletes it before moving to the next
-   - Returns the current displayed text and a blinking cursor state
+**File: `src/pages/QuizPage.tsx`**
 
-2. **Update `src/pages/HomePage.tsx`**:
-   - Import and use the hook with the phrase list
-   - Replace the static "Your Soul" span with the dynamic typewriter text
-   - Add a blinking cursor character (`|`) after the text using a CSS animation
-   - The primary color styling stays on the rotating text
+When `currentQuestion` changes, the question card should animate in with a subtle fade-up effect. This can be done with a CSS transition keyed on `currentQuestion`:
 
-3. **Add cursor blink animation** in `src/index.css`:
-   - Simple `@keyframes blink` toggling opacity for the cursor
+1. **Add a `key` prop** to the question card `div` (line 204) set to `currentQuestion` — this forces React to remount the element on each question change, triggering the CSS animation.
+
+2. **Add the `animate-fade-in` class** (already defined in tailwind config) to the question card, giving it a smooth fade+slide entrance on each transition.
+
+3. **Also animate the result screen** (the `showResult` block) with the same `animate-fade-in` class for consistency.
+
+This is a minimal change — just adding `key={currentQuestion}` and `className="animate-fade-in"` to the question card wrapper. No new CSS or hooks needed since `animate-fade-in` already exists.
 

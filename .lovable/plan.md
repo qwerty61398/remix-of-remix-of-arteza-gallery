@@ -1,16 +1,31 @@
-## Secrets Status
 
-All secrets look good — `LOVABLE_API_KEY` and `UPI_ID` are both configured. No additional secrets or configurations needed.
 
-## Plan: Update Quiz Page Header to "Get Inspired" Theme
+## Typewriter Effect on Hero Heading
 
-**File: `src/pages/QuizPage.tsx` (lines 176-183)**
+Add a typewriter animation to the hero section that cycles the ending phrase. The heading will read:
 
-Update the quiz header to match the inspiration theme used on the homepage:
+**"Art That Speaks to [rotating text]"**
 
-1. **Add a glowing icon container** — wrap the Lightbulb icon in a rounded circle with `bg-primary/10` and add the `animate-float` effect (matching the homepage CTA)
-2. **Change subtitle text** — from "Art Style Quiz" to "Get Inspired"
-3. **Update heading** — from "Find Your Perfect Art Match" to "Light Up Your Art Journey With A Collection That Speaks To You" (consistent with the homepage CTA section heading)
-4. **Add a subtitle** beneath the heading with supporting text like "Answer a few questions and discover artwork that matches your unique taste"
+Where `[rotating text]` cycles through phrases like:
+- Your Soul
+- Your Heart
+- The World
+- Every Emotion
+- New Heights
 
-This is a single-file, styling-only change — no logic modifications needed.
+### Implementation
+
+1. **Create a `useTypewriter` hook** (`src/hooks/use-typewriter.ts`) that:
+   - Accepts an array of strings and typing/deleting speed config
+   - Types out each phrase character by character, pauses, then deletes it before moving to the next
+   - Returns the current displayed text and a blinking cursor state
+
+2. **Update `src/pages/HomePage.tsx`**:
+   - Import and use the hook with the phrase list
+   - Replace the static "Your Soul" span with the dynamic typewriter text
+   - Add a blinking cursor character (`|`) after the text using a CSS animation
+   - The primary color styling stays on the rotating text
+
+3. **Add cursor blink animation** in `src/index.css`:
+   - Simple `@keyframes blink` toggling opacity for the cursor
+

@@ -70,18 +70,26 @@ export default function QuizPage() {
   const [selectedOption, setSelectedOption] = useState<number | null>(null);
   const [showResult, setShowResult] = useState(false);
 
-  const handleNext = () => {
-    if (selectedOption === null) return;
+  const isLastQuestion = currentQuestion === questions.length - 1;
 
+  const handleOptionSelect = (index: number) => {
+    setSelectedOption(index);
+
+    if (!isLastQuestion) {
+      setTimeout(() => {
+        const newAnswers = [...answers, index];
+        setAnswers(newAnswers);
+        setSelectedOption(null);
+        setCurrentQuestion(currentQuestion + 1);
+      }, 300);
+    }
+  };
+
+  const handleSubmit = () => {
+    if (selectedOption === null) return;
     const newAnswers = [...answers, selectedOption];
     setAnswers(newAnswers);
-    setSelectedOption(null);
-
-    if (currentQuestion < questions.length - 1) {
-      setCurrentQuestion(currentQuestion + 1);
-    } else {
-      setShowResult(true);
-    }
+    setShowResult(true);
   };
 
   const handleBack = () => {

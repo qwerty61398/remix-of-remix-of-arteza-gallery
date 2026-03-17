@@ -243,14 +243,16 @@ export default function QuizPage() {
               <ArrowLeft className="h-4 w-4" />
               Back
             </Button>
-            <Button
-              onClick={handleNext}
-              disabled={selectedOption === null}
-              className="gap-2"
-            >
-              {currentQuestion === questions.length - 1 ? "See Results" : "Next"}
-              <ArrowRight className="h-4 w-4" />
-            </Button>
+            {isLastQuestion && (
+              <Button
+                onClick={handleSubmit}
+                disabled={selectedOption === null}
+                className="gap-2"
+              >
+                See Results
+                <ArrowRight className="h-4 w-4" />
+              </Button>
+            )}
           </div>
         </div>
       </div>

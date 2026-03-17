@@ -174,13 +174,16 @@ export default function QuizPage() {
         <div className="max-w-2xl mx-auto">
           {/* Header */}
           <div className="text-center mb-8">
-            <div className="inline-flex items-center gap-2 text-primary mb-4">
-              <Lightbulb className="h-5 w-5" />
-              <span className="text-sm font-medium">Art Style Quiz</span>
+            <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
+              <Lightbulb className="h-8 w-8 text-primary animate-float" />
             </div>
-            <h1 className="font-serif text-3xl md:text-4xl font-bold text-foreground">
-              Find Your Perfect Art Match
+            <span className="text-sm font-medium text-primary">Get Inspired</span>
+            <h1 className="font-serif text-3xl md:text-4xl font-bold text-foreground mt-2">
+              Light Up Your Art Journey With A Collection That Speaks To You
             </h1>
+            <p className="text-muted-foreground mt-3 max-w-lg mx-auto">
+              Answer a few questions and discover artwork that matches your unique taste
+            </p>
           </div>
 
           {/* Progress */}

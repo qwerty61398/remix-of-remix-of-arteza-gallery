@@ -218,7 +218,7 @@ export default function QuizPage() {
               {question.options.map((option, index) => (
                 <button
                   key={index}
-                  onClick={() => setSelectedOption(index)}
+                  onClick={() => handleOptionSelect(index)}
                   className={cn(
                     "w-full p-4 rounded-lg border text-left transition-all",
                     selectedOption === index

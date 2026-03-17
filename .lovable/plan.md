@@ -1,31 +1,14 @@
 
 
-## Typewriter Effect on Hero Heading
+## Plan: Auto-advance Quiz on Option Select
 
-Add a typewriter animation to the hero section that cycles the ending phrase. The heading will read:
+**File: `src/pages/QuizPage.tsx`**
 
-**"Art That Speaks to [rotating text]"**
+1. **Modify `setSelectedOption` logic** — When an option is clicked, immediately record the answer and advance to the next question (with a brief ~300ms delay so the user sees their selection highlight before transitioning). On the last question, set the selection but don't auto-advance — show a "See Results" button instead.
 
-Where `[rotating text]` cycles through phrases like:
-- Your Soul
-- Your Heart
-- The World
-- Every Emotion
-- New Heights
+2. **Remove the "Next" button** — Only show the "Back" button and a "See Results" button on the final question.
 
-### Implementation
+3. **Keep the Back button** — Still allows users to go back and change answers.
 
-1. **Create a `useTypewriter` hook** (`src/hooks/use-typewriter.ts`) that:
-   - Accepts an array of strings and typing/deleting speed config
-   - Types out each phrase character by character, pauses, then deletes it before moving to the next
-   - Returns the current displayed text and a blinking cursor state
-
-2. **Update `src/pages/HomePage.tsx`**:
-   - Import and use the hook with the phrase list
-   - Replace the static "Your Soul" span with the dynamic typewriter text
-   - Add a blinking cursor character (`|`) after the text using a CSS animation
-   - The primary color styling stays on the rotating text
-
-3. **Add cursor blink animation** in `src/index.css`:
-   - Simple `@keyframes blink` toggling opacity for the cursor
+4. **Track if on last question** — When `currentQuestion === questions.length - 1`, clicking an option just highlights it without auto-advancing, and a "See Results" submit button appears.
 

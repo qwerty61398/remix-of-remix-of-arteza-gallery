@@ -201,7 +201,7 @@ export default function QuizPage() {
           </div>
 
           {/* Question */}
-          <div className="bg-card border border-border rounded-xl p-8">
+          <div key={currentQuestion} className="bg-card border border-border rounded-xl p-8 animate-fade-in">
             <h2 className="font-serif text-xl md:text-2xl font-medium text-foreground mb-6 text-center">
               {question.question}
             </h2>

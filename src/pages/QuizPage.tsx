@@ -117,7 +117,7 @@ export default function QuizPage() {
     };
 
     return (
-      <div className="min-h-[80vh] flex items-center justify-center py-12">
+      <div className="min-h-[80vh] flex items-center justify-center py-12 animate-fade-in">
         <div className="container px-4">
           <div className="max-w-2xl mx-auto text-center">
             <div className="w-20 h-20 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-8">
@@ -201,7 +201,7 @@ export default function QuizPage() {
           </div>
 
           {/* Question */}
-          <div className="bg-card border border-border rounded-xl p-8">
+          <div key={currentQuestion} className="bg-card border border-border rounded-xl p-8 animate-fade-in">
             <h2 className="font-serif text-xl md:text-2xl font-medium text-foreground mb-6 text-center">
               {question.question}
             </h2>

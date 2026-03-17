@@ -70,18 +70,26 @@ export default function QuizPage() {
   const [selectedOption, setSelectedOption] = useState<number | null>(null);
   const [showResult, setShowResult] = useState(false);
 
-  const handleNext = () => {
-    if (selectedOption === null) return;
+  const isLastQuestion = currentQuestion === questions.length - 1;
 
+  const handleOptionSelect = (index: number) => {
+    setSelectedOption(index);
+
+    if (!isLastQuestion) {
+      setTimeout(() => {
+        const newAnswers = [...answers, index];
+        setAnswers(newAnswers);
+        setSelectedOption(null);
+        setCurrentQuestion(currentQuestion + 1);
+      }, 300);
+    }
+  };
+
+  const handleSubmit = () => {
+    if (selectedOption === null) return;
     const newAnswers = [...answers, selectedOption];
     setAnswers(newAnswers);
-    setSelectedOption(null);
-
-    if (currentQuestion < questions.length - 1) {
-      setCurrentQuestion(currentQuestion + 1);
-    } else {
-      setShowResult(true);
-    }
+    setShowResult(true);
   };
 
   const handleBack = () => {
@@ -210,7 +218,7 @@ export default function QuizPage() {
               {question.options.map((option, index) => (
                 <button
                   key={index}
-                  onClick={() => setSelectedOption(index)}
+                  onClick={() => handleOptionSelect(index)}
                   className={cn(
                     "w-full p-4 rounded-lg border text-left transition-all",
                     selectedOption === index
@@ -235,14 +243,16 @@ export default function QuizPage() {
               <ArrowLeft className="h-4 w-4" />
               Back
             </Button>
-            <Button
-              onClick={handleNext}
-              disabled={selectedOption === null}
-              className="gap-2"
-            >
-              {currentQuestion === questions.length - 1 ? "See Results" : "Next"}
-              <ArrowRight className="h-4 w-4" />
-            </Button>
+            {isLastQuestion && (
+              <Button
+                onClick={handleSubmit}
+                disabled={selectedOption === null}
+                className="gap-2"
+              >
+                See Results
+                <ArrowRight className="h-4 w-4" />
+              </Button>
+            )}
           </div>
         </div>
       </div>

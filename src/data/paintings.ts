@@ -205,6 +205,18 @@ export const paintings: Painting[] = [
     available: true,
     medium: "Oil",
     material: "Canvas"
+  },
+  {
+    id: "13",
+    title: "Morning Serenity: A Quiet Reverie",
+    image: morningSerenity,
+    dimensions: "18\" × 24\"",
+    price: 25000,
+    description: "A contemplative oil painting capturing a woman in a flowing white robe, seated on rumpled lavender sheets, gazing out through a sunlit window while cradling a warm cup. Soft blues and muted purples bathe the scene in morning light, while confident brushwork renders the fabric's folds and the figure's graceful posture with intimate realism. A meditation on solitude, stillness, and the gentle beauty of unhurried mornings.",
+    collection: "Portraits and Personalities",
+    available: true,
+    medium: "Oil",
+    material: "Canvas"
   }
 ];
 

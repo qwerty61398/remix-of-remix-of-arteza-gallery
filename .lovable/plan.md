@@ -1,23 +1,31 @@
 
 
-## Plan: Add New Painting to Shop
+## Typewriter Effect on Hero Heading
 
-**File: `src/data/paintings.ts`**
+Add a typewriter animation to the hero section that cycles the ending phrase. The heading will read:
 
-1. **Copy the uploaded image** to `src/assets/paintings/morning-serenity.jpg`
+**"Art That Speaks to [rotating text]"**
 
-2. **Add import** for the new image at the top of `src/data/paintings.ts`
+Where `[rotating text]` cycles through phrases like:
+- Your Soul
+- Your Heart
+- The World
+- Every Emotion
+- New Heights
 
-3. **Add a new painting entry** (id: "13") to the `paintings` array with:
-   - **Title**: "Morning Serenity: A Quiet Reverie"
-   - **Image**: the imported asset
-   - **Dimensions**: 18" × 24"
-   - **Price**: ₹25,000
-   - **Medium**: Oil
-   - **Material**: Canvas
-   - **Collection**: "Portraits and Personalities"
-   - **Available**: true
-   - **Description**: A contemplative oil painting capturing a woman in a flowing white robe, seated on rumpled lavender sheets, gazing out through a sunlit window while cradling a warm cup. Soft blues and muted purples bathe the scene in morning light, while confident brushwork renders the fabric's folds and the figure's graceful posture with intimate realism. A meditation on solitude, stillness, and the gentle beauty of unhurried mornings.
+### Implementation
 
-Single-file change plus one asset copy.
+1. **Create a `useTypewriter` hook** (`src/hooks/use-typewriter.ts`) that:
+   - Accepts an array of strings and typing/deleting speed config
+   - Types out each phrase character by character, pauses, then deletes it before moving to the next
+   - Returns the current displayed text and a blinking cursor state
+
+2. **Update `src/pages/HomePage.tsx`**:
+   - Import and use the hook with the phrase list
+   - Replace the static "Your Soul" span with the dynamic typewriter text
+   - Add a blinking cursor character (`|`) after the text using a CSS animation
+   - The primary color styling stays on the rotating text
+
+3. **Add cursor blink animation** in `src/index.css`:
+   - Simple `@keyframes blink` toggling opacity for the cursor
 

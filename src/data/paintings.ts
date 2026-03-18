@@ -12,6 +12,7 @@ import culturalMadhubani from "@/assets/paintings/cultural-madhubani.jpg";
 import ajantaDancer from "@/assets/paintings/ajanta-dancer.jpg";
 import palePortrait from "@/assets/paintings/pale-portrait.jpg";
 import morningSerenity from "@/assets/paintings/morning-serenity.webp";
+import crimsonMuse from "@/assets/paintings/crimson-muse.jpg";
 
 export type CollectionType = 
   | "Abstract Expressions"

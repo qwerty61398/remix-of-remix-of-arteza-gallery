@@ -218,6 +218,18 @@ export const paintings: Painting[] = [
     available: true,
     medium: "Oil",
     material: "Canvas"
+  },
+  {
+    id: "14",
+    title: "The Crimson Muse",
+    image: crimsonMuse,
+    dimensions: "36\" × 24\"",
+    price: 32000,
+    description: "A striking oil portrait of a woman with cascading auburn curls that blaze like living flame, her enigmatic grey-green eyes holding the viewer in a steady, knowing gaze. A delicate pearl earring catches the light against her porcelain skin, while a teal garment hints at quiet elegance. Signed \"Upasna '23,\" the painting channels Modigliani's elongated grace with a warmth and sensuality all its own — a celebration of feminine allure and unapologetic presence.",
+    collection: "Portraits and Personalities",
+    available: true,
+    medium: "Oil",
+    material: "Canvas"
   }
 ];
 

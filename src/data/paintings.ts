@@ -12,6 +12,7 @@ import culturalMadhubani from "@/assets/paintings/cultural-madhubani.jpg";
 import ajantaDancer from "@/assets/paintings/ajanta-dancer.jpg";
 import palePortrait from "@/assets/paintings/pale-portrait.jpg";
 import morningSerenity from "@/assets/paintings/morning-serenity.webp";
+import crimsonMuse from "@/assets/paintings/crimson-muse.jpg";
 
 export type CollectionType = 
   | "Abstract Expressions"
@@ -213,6 +214,18 @@ export const paintings: Painting[] = [
     dimensions: "18\" × 24\"",
     price: 25000,
     description: "A contemplative oil painting capturing a woman in a flowing white robe, seated on rumpled lavender sheets, gazing out through a sunlit window while cradling a warm cup. Soft blues and muted purples bathe the scene in morning light, while confident brushwork renders the fabric's folds and the figure's graceful posture with intimate realism. A meditation on solitude, stillness, and the gentle beauty of unhurried mornings.",
+    collection: "Portraits and Personalities",
+    available: true,
+    medium: "Oil",
+    material: "Canvas"
+  },
+  {
+    id: "14",
+    title: "The Crimson Muse",
+    image: crimsonMuse,
+    dimensions: "36\" × 24\"",
+    price: 32000,
+    description: "A striking oil portrait of a woman with cascading auburn curls that blaze like living flame, her enigmatic grey-green eyes holding the viewer in a steady, knowing gaze. A delicate pearl earring catches the light against her porcelain skin, while a teal garment hints at quiet elegance. Signed \"Upasna '23,\" the painting channels Modigliani's elongated grace with a warmth and sensuality all its own — a celebration of feminine allure and unapologetic presence.",
     collection: "Portraits and Personalities",
     available: true,
     medium: "Oil",

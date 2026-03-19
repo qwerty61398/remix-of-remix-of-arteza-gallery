@@ -239,6 +239,114 @@ export const paintings: Painting[] = [
     available: true,
     medium: "Oil",
     material: "Canvas"
+  },
+  {
+    id: "15",
+    title: "Krishna's Melody: Lotus Garden Serenade",
+    image: krishnaFlute,
+    dimensions: "18\" × 24\"",
+    price: 15000,
+    description: "A devotional acrylic painting depicting Lord Krishna seated serenely amidst a sea of pink lotus blossoms, playing the divine flute with closed eyes and meditative grace. A majestic peacock perches nearby on moss-covered rocks, its iridescent plumage fanning outward, while towering forest trees rise into a luminous blue sky. The composition blends spiritual reverence with nature's beauty, evoking the eternal melody of Vrindavan.",
+    collection: "Cultural Chronicles",
+    available: true,
+    medium: "Acrylic",
+    material: "Canvas"
+  },
+  {
+    id: "16",
+    title: "Chromatic Still Life: Vases in Dialogue",
+    image: geometricVases,
+    dimensions: "18\" × 24\"",
+    price: 12000,
+    description: "A bold, pop-art-inspired acrylic still life featuring three vases rendered in vivid geometric planes — an angular emerald vessel, a sinuous red-and-magenta form, and a luminous cerulean globe — arranged against contrasting color-blocked backgrounds. A plate of stylized fruits and a cheerful striped tablecloth complete this exuberant celebration of color, form, and playful abstraction.",
+    collection: "Abstract Expressions",
+    available: true,
+    medium: "Acrylic",
+    material: "Canvas"
+  },
+  {
+    id: "17",
+    title: "Sunlit Harvest: Sunflowers in Clay",
+    image: sunflowerJug,
+    dimensions: "12\" × 12\"",
+    price: 2000,
+    description: "A charming acrylic study of golden sunflowers bursting from a rustic terracotta jug, their radiant petals and dark centers rendered with lively impasto strokes. An abstract grid-like background in muted greys and whites provides dramatic contrast, letting the warm yellows and rich browns sing with earthy vitality.",
+    collection: "Nature's Palette",
+    available: true,
+    medium: "Acrylic",
+    material: "Canvas"
+  },
+  {
+    id: "18",
+    title: "Crimson Cascade: Blooms in Red",
+    image: crimsonBouquet,
+    dimensions: "12\" × 12\"",
+    price: 2000,
+    description: "A lush acrylic floral painting featuring an abundant arrangement of pink dahlias, white lilies, and deep purple blooms spilling from a glossy crimson vase. Set against a striking cobalt blue and warm umber background, the composition radiates passionate energy and romantic elegance.",
+    collection: "Nature's Palette",
+    available: true,
+    medium: "Acrylic",
+    material: "Canvas"
+  },
+  {
+    id: "19",
+    title: "Midnight Dahlias: Cobalt Embrace",
+    image: blueDahliaVase,
+    dimensions: "12\" × 12\"",
+    price: 2000,
+    description: "A richly textured acrylic painting of pink and crimson dahlias mingled with delicate white daisies, nestled in a lustrous cobalt blue vase. The dark, moody background enhances the jewel-toned petals, creating an intimate and timeless floral portrait.",
+    collection: "Nature's Palette",
+    available: true,
+    medium: "Acrylic",
+    material: "Canvas"
+  },
+  {
+    id: "20",
+    title: "Azure Petals: Summer's Whisper",
+    image: azurePoppies,
+    dimensions: "12\" × 12\"",
+    price: 2000,
+    description: "A vibrant close-up acrylic study of brilliant sky-blue flowers with golden centres, accompanied by warm amber blossoms against a soft lavender backdrop. The bold, confident brushwork captures the delicate veining of each petal, creating an immersive burst of summer colour and joy.",
+    collection: "Nature's Palette",
+    available: true,
+    medium: "Acrylic",
+    material: "Canvas"
+  },
+  {
+    id: "21",
+    title: "Garden Riot: Roses Unbound",
+    image: gardenRosesBurst,
+    dimensions: "12\" × 12\"",
+    price: 2000,
+    description: "A joyous explosion of colour signed by the artist Upasna, this acrylic canvas overflows with swirling pink and magenta roses, fiery orange cosmos, a pristine white bloom, and sunny yellow daisies against a kaleidoscopic background of gold, blue, and green. Every inch pulses with floral exuberance and painterly confidence.",
+    collection: "Nature's Palette",
+    available: true,
+    medium: "Acrylic",
+    material: "Canvas"
+  },
+  {
+    id: "22",
+    title: "Sapphire Irises: Marbled Dreams",
+    image: blueIrises,
+    dimensions: "12\" × 12\"",
+    price: 2000,
+    description: "An expressive acrylic painting of vivid royal-blue irises springing from a hand-painted glass vase swirled with amber and crimson. The ethereal marbled background in mint, lavender, and pink adds a dreamlike quality, blending fluid abstraction with the structured beauty of the flowers.",
+    collection: "Nature's Palette",
+    available: true,
+    medium: "Acrylic",
+    material: "Canvas"
+  },
+  {
+    id: "23",
+    title: "Teal Window: Red Roses Ascending",
+    image: redTulipsTeal,
+    dimensions: "12\" × 12\"",
+    price: 2000,
+    description: "A striking acrylic composition of crimson rose buds rising on slender green stems from an ornate blue ceramic planter, set against a bold teal and chartreuse background with architectural hints. The confident linework and saturated palette evoke a modern, graphic sensibility rooted in the tradition of botanical painting.",
+    collection: "Nature's Palette",
+    available: true,
+    medium: "Acrylic",
+    material: "Canvas"
   }
 ];
 

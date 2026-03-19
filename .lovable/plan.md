@@ -1,31 +1,38 @@
 
 
-## Typewriter Effect on Hero Heading
+## Plan: Sync Paintings to Database + Redesign About Page
 
-Add a typewriter animation to the hero section that cycles the ending phrase. The heading will read:
+### Task 1: Sync all 23 paintings to the database
 
-**"Art That Speaks to [rotating text]"**
+Insert all 23 paintings from `src/data/paintings.ts` into the `paintings` table using SQL INSERT statements. The database table has columns: `title`, `description`, `dimensions`, `collection`, `price`, `image_url`, `is_available`, `is_featured`. 
 
-Where `[rotating text]` cycles through phrases like:
-- Your Soul
-- Your Heart
-- The World
-- Every Emotion
-- New Heights
+Since the static file uses local asset imports for `image`, the `image_url` values will be set to descriptive placeholder paths (e.g. `/paintings/floral-vase.jpg`) — these can later be replaced with actual storage URLs if the app migrates to database-driven image serving.
 
-### Implementation
+**Approach**: Use the database insert tool to run a single INSERT with all 23 rows. The `story` field will be left null and `is_featured` false for all.
 
-1. **Create a `useTypewriter` hook** (`src/hooks/use-typewriter.ts`) that:
-   - Accepts an array of strings and typing/deleting speed config
-   - Types out each phrase character by character, pauses, then deletes it before moving to the next
-   - Returns the current displayed text and a blinking cursor state
+### Task 2: Redesign About Page with storytelling timeline
 
-2. **Update `src/pages/HomePage.tsx`**:
-   - Import and use the hook with the phrase list
-   - Replace the static "Your Soul" span with the dynamic typewriter text
-   - Add a blinking cursor character (`|`) after the text using a CSS animation
-   - The primary color styling stays on the rotating text
+**File: `src/pages/AboutPage.tsx`** — Full rewrite with a modern layout:
 
-3. **Add cursor blink animation** in `src/index.css`:
-   - Simple `@keyframes blink` toggling opacity for the cursor
+1. **Hero Section** — Full-width with a large heading, artistic tagline, and a featured painting as background/accent image. More dramatic spacing and typography.
+
+2. **Storytelling Timeline** — A vertical timeline with alternating left/right content blocks, each milestone showing:
+   - Year or period
+   - Title of the milestone
+   - Description paragraph
+   - Accompanying painting image from the catalog
+   
+   Timeline milestones:
+   - **Early Years** — Childhood discovery of art, first experiments with colour
+   - **Traditional Training** — Learning Madhubani, classical Indian techniques
+   - **Western Exploration** — Studying oil painting, impressionism, and expressionism
+   - **Finding Her Voice** — Blending Eastern and Western styles into a unique voice
+   - **ARTEZA Born** — Launching the collection, sharing art with the world
+   - **Today & Beyond** — Current work, commissions, teaching
+
+3. **Values Section** — Keep the 3-card grid (Authentic Artistry, Cultural Heritage, Emotional Connection) but with refined styling.
+
+4. **Call-to-Action** — End with a "View the Collection" or "Get in Touch" CTA section.
+
+Uses existing `ScrollReveal` and `StaggerItem` animation components. Timeline implemented with Tailwind CSS (vertical line, alternating cards with dots/connectors). No new dependencies needed.
 

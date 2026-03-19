@@ -13,6 +13,15 @@ import ajantaDancer from "@/assets/paintings/ajanta-dancer.jpg";
 import palePortrait from "@/assets/paintings/pale-portrait.jpg";
 import morningSerenity from "@/assets/paintings/morning-serenity.webp";
 import crimsonMuse from "@/assets/paintings/crimson-muse.jpg";
+import krishnaFlute from "@/assets/paintings/krishna-flute.webp";
+import geometricVases from "@/assets/paintings/geometric-vases.jpg";
+import sunflowerJug from "@/assets/paintings/sunflower-jug.webp";
+import crimsonBouquet from "@/assets/paintings/crimson-bouquet.jpg";
+import blueDahliaVase from "@/assets/paintings/blue-dahlia-vase.webp";
+import azurePoppies from "@/assets/paintings/azure-poppies.webp";
+import gardenRosesBurst from "@/assets/paintings/garden-roses-burst.jpg";
+import blueIrises from "@/assets/paintings/blue-irises.jpg";
+import redTulipsTeal from "@/assets/paintings/red-tulips-teal.jpg";
 
 export type CollectionType = 
   | "Abstract Expressions"

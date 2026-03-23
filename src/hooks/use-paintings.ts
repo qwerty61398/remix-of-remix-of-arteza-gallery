@@ -22,10 +22,12 @@ const staticImageMap = new Map(
 
 function mapDbToPainting(db: DbPainting): Painting {
   const staticData = staticImageMap.get(db.title);
+  // Prefer cloud storage URL; fall back to static asset if DB URL is a placeholder
+  const isRealUrl = db.image_url.startsWith("http");
   return {
     id: db.id,
     title: db.title,
-    image: staticData?.image || db.image_url,
+    image: isRealUrl ? db.image_url : (staticData?.image || db.image_url),
     dimensions: db.dimensions || "",
     price: db.price,
     description: db.description || "",

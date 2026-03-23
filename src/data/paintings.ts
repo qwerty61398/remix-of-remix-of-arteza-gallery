@@ -22,6 +22,7 @@ import azurePoppies from "@/assets/paintings/azure-poppies.webp";
 import gardenRosesBurst from "@/assets/paintings/garden-roses-burst.jpg";
 import blueIrises from "@/assets/paintings/blue-irises.jpg";
 import redTulipsTeal from "@/assets/paintings/red-tulips-teal.jpg";
+import cherryBlossoms from "@/assets/cherry-blossoms.webp";
 
 export type CollectionType = 
   | "Abstract Expressions"
@@ -343,6 +344,18 @@ export const paintings: Painting[] = [
     dimensions: "12\" × 12\"",
     price: 3000,
     description: "A striking acrylic composition of crimson rose buds rising on slender green stems from an ornate blue ceramic planter, set against a bold teal and chartreuse background with architectural hints. The confident linework and saturated palette evoke a modern, graphic sensibility rooted in the tradition of botanical painting.",
+    collection: "Nature's Palette",
+    available: true,
+    medium: "Acrylic",
+    material: "Canvas"
+  },
+  {
+    id: "24",
+    title: "Cherry Blossoms: Pink Cascade",
+    image: cherryBlossoms,
+    dimensions: "12\" × 12\"",
+    price: 3000,
+    description: "A delicate acrylic painting of cascading pink and white cherry blossoms on a graceful branch, set against a moody blue-grey background. The soft petals and green leaves create a serene, springtime atmosphere full of natural beauty and gentle movement.",
     collection: "Nature's Palette",
     available: true,
     medium: "Acrylic",

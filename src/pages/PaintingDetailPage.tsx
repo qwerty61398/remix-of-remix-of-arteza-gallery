@@ -1,15 +1,40 @@
 import { useParams, Link } from "react-router-dom";
 import { ArrowLeft, ShoppingBag, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { getPaintingById, getPaintingsByCollection } from "@/data/paintings";
+import { usePaintings, usePaintingById } from "@/hooks/use-paintings";
 import { useCart } from "@/contexts/CartContext";
 import { ArtworkCard } from "@/components/artwork/ArtworkCard";
 import { ScrollReveal, StaggerItem } from "@/components/animations/ScrollReveal";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function PaintingDetailPage() {
   const { id } = useParams();
+  const { data: painting, isLoading } = usePaintingById(id || "");
+  const { data: allPaintings = [] } = usePaintings();
   const { addToCart } = useCart();
-  const painting = getPaintingById(id || "");
+
+  const formatPrice = (price: number) => {
+    return new Intl.NumberFormat("en-IN", {
+      style: "currency",
+      currency: "INR",
+      maximumFractionDigits: 0,
+    }).format(price);
+  };
+
+  if (isLoading) {
+    return (
+      <div className="py-8 container px-4">
+        <div className="grid md:grid-cols-2 gap-12">
+          <Skeleton className="aspect-square rounded-xl" />
+          <div className="space-y-4">
+            <Skeleton className="h-8 w-3/4" />
+            <Skeleton className="h-6 w-1/2" />
+            <Skeleton className="h-24 w-full" />
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   if (!painting) {
     return (
@@ -25,17 +50,9 @@ export default function PaintingDetailPage() {
     );
   }
 
-  const relatedPaintings = getPaintingsByCollection(painting.collection)
-    .filter(p => p.id !== painting.id)
+  const relatedPaintings = allPaintings
+    .filter(p => p.collection === painting.collection && p.id !== painting.id)
     .slice(0, 3);
-
-  const formatPrice = (price: number) => {
-    return new Intl.NumberFormat("en-IN", {
-      style: "currency",
-      currency: "INR",
-      maximumFractionDigits: 0,
-    }).format(price);
-  };
 
   return (
     <div className="py-8">
@@ -78,8 +95,8 @@ export default function PaintingDetailPage() {
                 </div>
                 <div className="flex flex-wrap gap-x-6 gap-y-1 text-sm text-muted-foreground">
                   <span>Size: {painting.dimensions}</span>
-                  <span>Medium: {painting.medium}</span>
-                  <span>Material: {painting.material}</span>
+                  {painting.medium && <span>Medium: {painting.medium}</span>}
+                  {painting.material && <span>Material: {painting.material}</span>}
                 </div>
               </div>
 

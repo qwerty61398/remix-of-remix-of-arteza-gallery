@@ -1,12 +1,15 @@
 import { useState } from "react";
 import { ArtworkCard } from "@/components/artwork/ArtworkCard";
-import { paintings, collections, CollectionType } from "@/data/paintings";
+import { collections, CollectionType } from "@/data/paintings";
+import { usePaintings } from "@/hooks/use-paintings";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { ScrollReveal, StaggerItem } from "@/components/animations/ScrollReveal";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function ShopPage() {
   const [selectedCollection, setSelectedCollection] = useState<CollectionType | "all">("all");
+  const { data: paintings = [], isLoading } = usePaintings();
 
   const filteredPaintings = selectedCollection === "all"
     ? paintings
@@ -54,15 +57,27 @@ export default function ShopPage() {
           </div>
         </ScrollReveal>
 
-        <div className="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-8 space-y-8">
-          {filteredPaintings.map((painting, i) => (
-            <StaggerItem key={painting.id} index={i} className="break-inside-avoid">
-              <ArtworkCard painting={painting} />
-            </StaggerItem>
-          ))}
-        </div>
+        {isLoading ? (
+          <div className="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-8 space-y-8">
+            {Array.from({ length: 8 }).map((_, i) => (
+              <div key={i} className="break-inside-avoid space-y-4">
+                <Skeleton className="w-full aspect-square rounded-lg" />
+                <Skeleton className="h-5 w-3/4" />
+                <Skeleton className="h-4 w-1/2" />
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div className="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-8 space-y-8">
+            {filteredPaintings.map((painting, i) => (
+              <StaggerItem key={painting.id} index={i} className="break-inside-avoid">
+                <ArtworkCard painting={painting} />
+              </StaggerItem>
+            ))}
+          </div>
+        )}
 
-        {filteredPaintings.length === 0 && (
+        {!isLoading && filteredPaintings.length === 0 && (
           <ScrollReveal>
             <div className="text-center py-20">
               <p className="text-muted-foreground">No paintings found in this collection.</p>

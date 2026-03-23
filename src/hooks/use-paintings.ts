@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
-import { Painting, CollectionType } from "@/data/paintings";
+import { Painting, CollectionType, paintings as staticPaintings } from "@/data/paintings";
 
 interface DbPainting {
   id: string;
@@ -15,18 +15,24 @@ interface DbPainting {
   story: string | null;
 }
 
+// Build a lookup from title to static image
+const staticImageMap = new Map(
+  staticPaintings.map(p => [p.title, { image: p.image, medium: p.medium, material: p.material }])
+);
+
 function mapDbToPainting(db: DbPainting): Painting {
+  const staticData = staticImageMap.get(db.title);
   return {
     id: db.id,
     title: db.title,
-    image: db.image_url,
+    image: staticData?.image || db.image_url,
     dimensions: db.dimensions || "",
     price: db.price,
     description: db.description || "",
     collection: db.collection as CollectionType,
     available: db.is_available ?? true,
-    medium: "",
-    material: "",
+    medium: staticData?.medium || "",
+    material: staticData?.material || "",
   };
 }
 

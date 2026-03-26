@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
-import { getPaintingsByCollection, CollectionType } from "@/data/paintings";
+import { CollectionType } from "@/data/paintings";
+import { usePaintingsByCollection } from "@/hooks/use-paintings";
 import { ImageWithSkeleton } from "@/components/ImageWithSkeleton";
 
 interface CollectionCardProps {
@@ -10,7 +11,7 @@ interface CollectionCardProps {
 }
 
 export function CollectionCard({ name, description, slug }: CollectionCardProps) {
-  const paintings = getPaintingsByCollection(name);
+  const { data: paintings = [] } = usePaintingsByCollection(name);
   const featuredImage = paintings[0]?.image;
 
   return (

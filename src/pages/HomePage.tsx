@@ -4,16 +4,18 @@ import { ArrowRight, Lightbulb, Palette } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ArtworkCard } from "@/components/artwork/ArtworkCard";
 import { CollectionCard } from "@/components/artwork/CollectionCard";
-import { paintings, collections } from "@/data/paintings";
+import { collections } from "@/data/paintings";
+import { usePaintings } from "@/hooks/use-paintings";
 import { useTypewriter } from "@/hooks/use-typewriter";
 import { ScrollReveal, StaggerItem } from "@/components/animations/ScrollReveal";
-
-import heroImage from "@/assets/paintings/floral-face.jpg";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const HERO_PHRASES = ["the Future", "Your Potential", "a Better World", "the Noise", "the Dreamer", "the Wanderer", "the Soul", "the Heart", "Your Story"];
 
 export default function HomePage() {
+  const { data: paintings = [], isLoading } = usePaintings();
   const featuredPaintings = paintings.slice(0, 4);
+  const heroImage = paintings[4]?.image; // Azure Veil
   const { text } = useTypewriter({ words: HERO_PHRASES });
   const heroRef = useRef<HTMLElement>(null);
   const imgRef = useRef<HTMLImageElement>(null);
@@ -35,12 +37,14 @@ export default function HomePage() {
       {/* Hero Section */}
       <section ref={heroRef} className="relative min-h-[90vh] flex items-center overflow-hidden">
         <div className="absolute inset-0 -z-10">
-          <img
-            ref={imgRef}
-            src={heroImage}
-            alt="Featured artwork"
-            className="h-full w-full object-cover opacity-40 will-change-transform scale-110"
-          />
+          {heroImage && (
+            <img
+              ref={imgRef}
+              src={heroImage}
+              alt="Featured artwork"
+              className="h-full w-full object-cover opacity-40 will-change-transform scale-110"
+            />
+          )}
           <div className="absolute inset-0 bg-gradient-to-r from-background via-background/90 to-background/40" />
         </div>
 
@@ -112,13 +116,25 @@ export default function HomePage() {
             </div>
           </ScrollReveal>
 
-          <div className="columns-1 sm:columns-2 lg:columns-4 gap-6 space-y-6">
-            {featuredPaintings.map((painting, i) => (
-              <StaggerItem key={painting.id} index={i} className="break-inside-avoid">
-                <ArtworkCard painting={painting} variant="compact" />
-              </StaggerItem>
-            ))}
-          </div>
+          {isLoading ? (
+            <div className="columns-1 sm:columns-2 lg:columns-4 gap-6 space-y-6">
+              {Array.from({ length: 4 }).map((_, i) => (
+                <div key={i} className="break-inside-avoid space-y-4">
+                  <Skeleton className="w-full aspect-square rounded-lg" />
+                  <Skeleton className="h-5 w-3/4" />
+                  <Skeleton className="h-4 w-1/2" />
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="columns-1 sm:columns-2 lg:columns-4 gap-6 space-y-6">
+              {featuredPaintings.map((painting, i) => (
+                <StaggerItem key={painting.id} index={i} className="break-inside-avoid">
+                  <ArtworkCard painting={painting} variant="compact" />
+                </StaggerItem>
+              ))}
+            </div>
+          )}
         </div>
       </section>
 
@@ -217,19 +233,23 @@ export default function HomePage() {
             <ScrollReveal variant="fade-right">
               <div className="relative">
                 <div className="aspect-[4/5] rounded-xl overflow-hidden img-zoom">
-                  <img
-                    src={paintings[8].image}
-                    alt="Upasna's artwork"
-                    className="h-full w-full object-cover"
-                  />
+                  {paintings[8] && (
+                    <img
+                      src={paintings[8].image}
+                      alt="Upasna's artwork"
+                      className="h-full w-full object-cover"
+                    />
+                  )}
                 </div>
-                <div className="absolute -bottom-6 -left-6 w-32 h-32 rounded-lg overflow-hidden shadow-xl img-zoom">
-                  <img
-                    src={paintings[5].image}
-                    alt="Artwork detail"
-                    className="h-full w-full object-cover"
-                  />
-                </div>
+                {paintings[5] && (
+                  <div className="absolute -bottom-6 -left-6 w-32 h-32 rounded-lg overflow-hidden shadow-xl img-zoom">
+                    <img
+                      src={paintings[5].image}
+                      alt="Artwork detail"
+                      className="h-full w-full object-cover"
+                    />
+                  </div>
+                )}
               </div>
             </ScrollReveal>
           </div>

@@ -1,39 +1,41 @@
 import { Calendar, Clock, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
-import { paintings } from "@/data/paintings";
+import { usePaintings } from "@/hooks/use-paintings";
 import { ScrollReveal, StaggerItem } from "@/components/animations/ScrollReveal";
 
-const blogPosts = [
-  {
-    id: "1",
-    title: "The Story Behind Madhubani: A Cultural Journey",
-    excerpt: "Exploring the ancient art form that has been passed down through generations in Bihar, India.",
-    image: paintings[9].image,
-    date: "January 15, 2026",
-    readTime: "5 min read",
-    category: "Art History",
-  },
-  {
-    id: "2",
-    title: "Finding Inspiration in Nature's Palette",
-    excerpt: "How the changing seasons and natural landscapes influence my landscape paintings.",
-    image: paintings[3].image,
-    date: "January 10, 2026",
-    readTime: "4 min read",
-    category: "Inspiration",
-  },
-  {
-    id: "3",
-    title: "Abstract Art: Emotion Beyond Form",
-    excerpt: "Understanding the power of abstract expressionism and how it connects with viewers.",
-    image: paintings[5].image,
-    date: "January 5, 2026",
-    readTime: "6 min read",
-    category: "Technique",
-  },
-];
-
 export default function BlogPage() {
+  const { data: paintings = [] } = usePaintings();
+
+  const blogPosts = [
+    {
+      id: "1",
+      title: "The Story Behind Madhubani: A Cultural Journey",
+      excerpt: "Exploring the ancient art form that has been passed down through generations in Bihar, India.",
+      image: paintings[9]?.image || "",
+      date: "January 15, 2026",
+      readTime: "5 min read",
+      category: "Art History",
+    },
+    {
+      id: "2",
+      title: "Finding Inspiration in Nature's Palette",
+      excerpt: "How the changing seasons and natural landscapes influence my landscape paintings.",
+      image: paintings[3]?.image || "",
+      date: "January 10, 2026",
+      readTime: "4 min read",
+      category: "Inspiration",
+    },
+    {
+      id: "3",
+      title: "Abstract Art: Emotion Beyond Form",
+      excerpt: "Understanding the power of abstract expressionism and how it connects with viewers.",
+      image: paintings[5]?.image || "",
+      date: "January 5, 2026",
+      readTime: "6 min read",
+      category: "Technique",
+    },
+  ];
+
   return (
     <div className="py-12">
       <div className="container px-4">
@@ -55,11 +57,13 @@ export default function BlogPage() {
             <Link to="#" className="group block">
               <div className="grid md:grid-cols-2 gap-8 items-center">
                 <div className="aspect-[4/3] rounded-xl overflow-hidden bg-muted img-zoom">
-                  <img
-                    src={blogPosts[0].image}
-                    alt={blogPosts[0].title}
-                    className="h-full w-full object-cover"
-                  />
+                  {blogPosts[0].image && (
+                    <img
+                      src={blogPosts[0].image}
+                      alt={blogPosts[0].title}
+                      className="h-full w-full object-cover"
+                    />
+                  )}
                 </div>
                 <div className="space-y-4">
                   <span className="text-sm font-medium text-primary">{blogPosts[0].category}</span>
@@ -94,11 +98,13 @@ export default function BlogPage() {
               <Link to="#" className="group block">
                 <article className="space-y-4">
                   <div className="aspect-[4/3] rounded-lg overflow-hidden bg-muted img-zoom">
-                    <img
-                      src={post.image}
-                      alt={post.title}
-                      className="h-full w-full object-cover"
-                    />
+                    {post.image && (
+                      <img
+                        src={post.image}
+                        alt={post.title}
+                        className="h-full w-full object-cover"
+                      />
+                    )}
                   </div>
                   <div>
                     <span className="text-sm font-medium text-primary">{post.category}</span>

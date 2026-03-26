@@ -1,42 +1,44 @@
 import { Calendar, Clock, Users, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { paintings } from "@/data/paintings";
+import { usePaintings } from "@/hooks/use-paintings";
 import { ScrollReveal, StaggerItem } from "@/components/animations/ScrollReveal";
 
-const classes = [
-  {
-    id: "1",
-    title: "Introduction to Madhubani Art",
-    description: "Learn the traditional Madhubani painting techniques passed down through generations. Perfect for beginners.",
-    image: paintings[9].image,
-    duration: "3 hours",
-    participants: "8-12 students",
-    date: "Every Saturday",
-    price: 2500,
-  },
-  {
-    id: "2",
-    title: "Abstract Expressionism Workshop",
-    description: "Explore the freedom of abstract art. Learn to express emotions through bold colors and dynamic forms.",
-    image: paintings[2].image,
-    duration: "4 hours",
-    participants: "6-10 students",
-    date: "First Sunday of month",
-    price: 3500,
-  },
-  {
-    id: "3",
-    title: "Landscape Painting Masterclass",
-    description: "Capture the beauty of nature on canvas. From sunrise to sunset, learn to paint breathtaking landscapes.",
-    image: paintings[3].image,
-    duration: "5 hours",
-    participants: "6-8 students",
-    date: "Second Sunday of month",
-    price: 4000,
-  },
-];
-
 export default function ClassesPage() {
+  const { data: paintings = [] } = usePaintings();
+
+  const classes = [
+    {
+      id: "1",
+      title: "Introduction to Madhubani Art",
+      description: "Learn the traditional Madhubani painting techniques passed down through generations. Perfect for beginners.",
+      image: paintings[9]?.image || "",
+      duration: "3 hours",
+      participants: "8-12 students",
+      date: "Every Saturday",
+      price: 2500,
+    },
+    {
+      id: "2",
+      title: "Abstract Expressionism Workshop",
+      description: "Explore the freedom of abstract art. Learn to express emotions through bold colors and dynamic forms.",
+      image: paintings[2]?.image || "",
+      duration: "4 hours",
+      participants: "6-10 students",
+      date: "First Sunday of month",
+      price: 3500,
+    },
+    {
+      id: "3",
+      title: "Landscape Painting Masterclass",
+      description: "Capture the beauty of nature on canvas. From sunrise to sunset, learn to paint breathtaking landscapes.",
+      image: paintings[3]?.image || "",
+      duration: "5 hours",
+      participants: "6-8 students",
+      date: "Second Sunday of month",
+      price: 4000,
+    },
+  ];
+
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat("en-IN", {
       style: "currency",
@@ -65,11 +67,13 @@ export default function ClassesPage() {
             <StaggerItem key={classItem.id} index={i}>
               <article className="bg-card border border-border rounded-xl overflow-hidden hover-lift">
                 <div className="aspect-[4/3] overflow-hidden img-zoom">
-                  <img
-                    src={classItem.image}
-                    alt={classItem.title}
-                    className="h-full w-full object-cover"
-                  />
+                  {classItem.image && (
+                    <img
+                      src={classItem.image}
+                      alt={classItem.title}
+                      className="h-full w-full object-cover"
+                    />
+                  )}
                 </div>
 
                 <div className="p-6 space-y-4">

@@ -1,5 +1,5 @@
 import { Frame, Award, Heart, ArrowRight } from "lucide-react";
-import { paintings } from "@/data/paintings";
+import { usePaintings } from "@/hooks/use-paintings";
 import { ScrollReveal, StaggerItem } from "@/components/animations/ScrollReveal";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -50,6 +50,8 @@ const timeline = [
 ];
 
 export default function AboutPage() {
+  const { data: paintings = [] } = usePaintings();
+
   return (
     <div className="py-12">
       {/* Hero */}
@@ -74,26 +76,32 @@ export default function AboutPage() {
           <ScrollReveal variant="fade-right">
             <div className="relative">
               <div className="aspect-[4/5] rounded-2xl overflow-hidden bg-muted shadow-2xl img-zoom">
-                <img
-                  src={paintings[8].image}
-                  alt="Upasna's Art"
-                  className="h-full w-full object-cover"
-                />
+                {paintings[8] && (
+                  <img
+                    src={paintings[8].image}
+                    alt="Upasna's Art"
+                    className="h-full w-full object-cover"
+                  />
+                )}
               </div>
-              <div className="absolute -bottom-6 -left-6 w-36 h-36 rounded-xl overflow-hidden shadow-xl border-4 border-background img-zoom hidden md:block">
-                <img
-                  src={paintings[5].image}
-                  alt="Artwork detail"
-                  className="h-full w-full object-cover"
-                />
-              </div>
-              <div className="absolute -top-4 -right-4 w-28 h-28 rounded-xl overflow-hidden shadow-xl border-4 border-background img-zoom hidden md:block">
-                <img
-                  src={paintings[6].image}
-                  alt="Artwork detail"
-                  className="h-full w-full object-cover"
-                />
-              </div>
+              {paintings[5] && (
+                <div className="absolute -bottom-6 -left-6 w-36 h-36 rounded-xl overflow-hidden shadow-xl border-4 border-background img-zoom hidden md:block">
+                  <img
+                    src={paintings[5].image}
+                    alt="Artwork detail"
+                    className="h-full w-full object-cover"
+                  />
+                </div>
+              )}
+              {paintings[6] && (
+                <div className="absolute -top-4 -right-4 w-28 h-28 rounded-xl overflow-hidden shadow-xl border-4 border-background img-zoom hidden md:block">
+                  <img
+                    src={paintings[6].image}
+                    alt="Artwork detail"
+                    className="h-full w-full object-cover"
+                  />
+                </div>
+              )}
             </div>
           </ScrollReveal>
         </div>
@@ -119,6 +127,7 @@ export default function AboutPage() {
 
           {timeline.map((item, i) => {
             const isEven = i % 2 === 0;
+            const painting = paintings[item.paintingIndex];
             return (
               <StaggerItem key={item.year} index={i} variant="zoom-in">
                 <div className="relative mb-16 last:mb-0">
@@ -159,11 +168,13 @@ export default function AboutPage() {
                       }`}
                     >
                       <div className="aspect-[4/3] rounded-xl overflow-hidden bg-muted shadow-lg img-zoom">
-                        <img
-                          src={paintings[item.paintingIndex].image}
-                          alt={item.title}
-                          className="h-full w-full object-cover"
-                        />
+                        {painting && (
+                          <img
+                            src={painting.image}
+                            alt={item.title}
+                            className="h-full w-full object-cover"
+                          />
+                        )}
                       </div>
                     </div>
                   </div>

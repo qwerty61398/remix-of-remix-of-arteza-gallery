@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
-import { Painting, CollectionType, paintings as staticPaintings } from "@/data/paintings";
+import { Painting, CollectionType } from "@/data/paintings";
 
 interface DbPainting {
   id: string;
@@ -15,26 +15,18 @@ interface DbPainting {
   story: string | null;
 }
 
-// Build a lookup from title to static image
-const staticImageMap = new Map(
-  staticPaintings.map(p => [p.title, { image: p.image, medium: p.medium, material: p.material }])
-);
-
 function mapDbToPainting(db: DbPainting): Painting {
-  const staticData = staticImageMap.get(db.title);
-  // Prefer cloud storage URL; fall back to static asset if DB URL is a placeholder
-  const isRealUrl = db.image_url.startsWith("http");
   return {
     id: db.id,
     title: db.title,
-    image: isRealUrl ? db.image_url : (staticData?.image || db.image_url),
+    image: db.image_url,
     dimensions: db.dimensions || "",
     price: db.price,
     description: db.description || "",
     collection: db.collection as CollectionType,
     available: db.is_available ?? true,
-    medium: staticData?.medium || "",
-    material: staticData?.material || "",
+    medium: "",
+    material: "",
   };
 }
 
@@ -67,5 +59,22 @@ export function usePaintingById(id: string) {
       return mapDbToPainting(data as DbPainting);
     },
     enabled: !!id,
+  });
+}
+
+export function usePaintingsByCollection(collectionName: CollectionType) {
+  return useQuery({
+    queryKey: ["paintings", "collection", collectionName],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("paintings")
+        .select("*")
+        .eq("collection", collectionName)
+        .order("created_at", { ascending: true });
+
+      if (error) throw error;
+      return (data as DbPainting[]).map(mapDbToPainting);
+    },
+    enabled: !!collectionName,
   });
 }

@@ -1,262 +1,369 @@
-import { Frame, Award, Heart, ArrowRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { usePaintings } from "@/hooks/use-paintings";
-import { ScrollReveal, StaggerItem } from "@/components/animations/ScrollReveal";
+import { ScrollReveal } from "@/components/animations/ScrollReveal";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { collections } from "@/data/paintings";
 
-const timeline = [
-  {
-    year: "Early Years",
-    title: "A Spark of Colour",
-    description:
-      "Growing up surrounded by the vibrant hues of Indian festivals and nature's endless palette, young Upasna discovered her love for art through childhood sketches and her first experiments with watercolours. Every blank wall and scrap of paper became a canvas for her budding imagination.",
-    paintingIndex: 9,
-  },
-  {
-    year: "Traditional Training",
-    title: "Roots in Heritage",
-    description:
-      "Under the guidance of master artists, Upasna immersed herself in the intricate world of Madhubani and other classical Indian art forms. She learned the discipline of line, the symbolism of motifs, and the meditative patience that transforms pigment into prayer.",
-    paintingIndex: 5,
-  },
-  {
-    year: "Western Exploration",
-    title: "Broadening the Horizon",
-    description:
-      "Drawn to the bold freedom of impressionism and expressionism, Upasna explored oil painting techniques and Western composition. This period of cross-cultural study expanded her visual vocabulary and gave her the tools to bridge two artistic worlds.",
-    paintingIndex: 2,
-  },
-  {
-    year: "Finding Her Voice",
-    title: "East Meets West",
-    description:
-      "The fusion crystallised — Madhubani precision meets expressionist passion. Upasna developed a signature style that honours India's artistic legacy while speaking a universal language of colour and emotion. Each piece became a conversation between tradition and modernity.",
-    paintingIndex: 4,
-  },
-  {
-    year: "ARTEZA Born",
-    title: "Sharing Art with the World",
-    description:
-      "With a growing body of work and collectors spanning continents, Upasna launched ARTEZA — a curated collection that invites art lovers into her world. Every painting carries a story, a memory, and an invitation to feel deeply.",
-    paintingIndex: 0,
-  },
-  {
-    year: "Today & Beyond",
-    title: "An Ever-Evolving Canvas",
-    description:
-      "Today, Upasna continues to push boundaries — accepting commissions, teaching art workshops, and exploring new mediums. Her mission remains unchanged: to create art that speaks to the soul and makes the world a more beautiful place.",
-    paintingIndex: 13,
-  },
-];
+/* ─── Full-bleed image section ─── */
+function FullBleedImage({
+  src,
+  alt,
+  overlay,
+  children,
+  className = "",
+}: {
+  src?: string;
+  alt: string;
+  overlay?: "dark" | "light";
+  children?: React.ReactNode;
+  className?: string;
+}) {
+  return (
+    <section className={`relative min-h-[70vh] flex items-center justify-center overflow-hidden ${className}`}>
+      {src && (
+        <img
+          src={src}
+          alt={alt}
+          className="absolute inset-0 w-full h-full object-cover"
+          loading="lazy"
+        />
+      )}
+      {overlay === "dark" && (
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-black/30" />
+      )}
+      {overlay === "light" && (
+        <div className="absolute inset-0 bg-gradient-to-t from-white/80 via-white/40 to-transparent" />
+      )}
+      {children && <div className="relative z-10 w-full">{children}</div>}
+    </section>
+  );
+}
+
+/* ─── Pull quote ─── */
+function PullQuote({ children }: { children: React.ReactNode }) {
+  return (
+    <ScrollReveal variant="blur-in">
+      <blockquote className="max-w-3xl mx-auto px-6 py-16 md:py-24 text-center">
+        <p className="pull-quote text-2xl md:text-4xl lg:text-5xl text-primary/80">
+          "{children}"
+        </p>
+      </blockquote>
+    </ScrollReveal>
+  );
+}
+
+/* ─── Narrative text block ─── */
+function NarrativeBlock({
+  chapter,
+  title,
+  children,
+  dark = false,
+}: {
+  chapter?: string;
+  title: string;
+  children: React.ReactNode;
+  dark?: boolean;
+}) {
+  return (
+    <section className={`py-20 md:py-32 ${dark ? "bg-foreground" : "bg-background"}`}>
+      <div className="container px-6 max-w-3xl mx-auto">
+        <ScrollReveal variant="fade-up">
+          {chapter && (
+            <span
+              className={`inline-block text-xs font-bold tracking-[0.25em] uppercase mb-4 ${
+                dark ? "text-primary-foreground/60" : "text-primary"
+              }`}
+            >
+              {chapter}
+            </span>
+          )}
+          <h2
+            className={`font-serif text-3xl md:text-4xl lg:text-5xl font-bold mb-8 leading-tight ${
+              dark ? "text-primary-foreground" : "text-foreground"
+            }`}
+          >
+            {title}
+          </h2>
+        </ScrollReveal>
+        <ScrollReveal variant="fade-up" delay={150}>
+          <div
+            className={`space-y-6 text-lg leading-relaxed ${
+              dark ? "text-primary-foreground/80" : "text-muted-foreground"
+            }`}
+          >
+            {children}
+          </div>
+        </ScrollReveal>
+      </div>
+    </section>
+  );
+}
 
 export default function AboutPage() {
   const { data: paintings = [] } = usePaintings();
 
-  return (
-    <div className="py-12">
-      {/* Hero */}
-      <section className="container px-4 mb-24">
-        <div className="grid md:grid-cols-2 gap-12 items-center">
-          <ScrollReveal variant="fade-left">
-            <div className="space-y-6">
-              <span className="inline-block text-sm font-medium tracking-widest uppercase text-primary">
-                The Story Behind the Art
-              </span>
-              <h1 className="font-serif text-4xl md:text-6xl font-bold text-foreground leading-tight">
-                Meet <span className="text-primary">Upasna</span>
-              </h1>
-              <p className="text-lg text-muted-foreground leading-relaxed max-w-lg">
-                A contemporary artist bridging traditional Indian art forms and
-                modern expressionism — creating paintings that speak to the soul,
-                one brushstroke at a time.
-              </p>
-            </div>
-          </ScrollReveal>
+  // Helper to safely get a painting image
+  const img = (index: number) => paintings[index]?.image;
 
-          <ScrollReveal variant="fade-right">
-            <div className="relative">
-              <div className="aspect-[4/5] rounded-2xl overflow-hidden bg-muted shadow-2xl img-zoom">
-                {paintings[8] && (
-                  <img
-                    src={paintings[8].image}
-                    alt="Upasna's Art"
-                    className="h-full w-full object-cover"
-                  />
+  return (
+    <div className="-mt-1">
+      {/* ═══════ HERO ═══════ */}
+      <FullBleedImage
+        src={img(0)}
+        alt="Featured artwork"
+        overlay="dark"
+        className="min-h-screen"
+      >
+        <div className="container px-6 text-center">
+          <ScrollReveal variant="blur-in">
+            <p className="text-white/60 text-sm tracking-[0.3em] uppercase mb-6 text-shadow-sm">
+              The Story Behind the Art
+            </p>
+            <h1 className="font-serif text-4xl md:text-6xl lg:text-8xl font-bold text-white text-shadow leading-[1.1] max-w-4xl mx-auto">
+              I paint because words were never enough.
+            </h1>
+          </ScrollReveal>
+          <ScrollReveal variant="fade-up" delay={400}>
+            <p className="mt-8 text-white/70 text-lg md:text-xl max-w-xl mx-auto text-shadow-sm">
+              A journey through colour, culture, and the quiet spaces between brushstrokes.
+            </p>
+          </ScrollReveal>
+        </div>
+      </FullBleedImage>
+
+      {/* ═══════ CHAPTER 1: THE BEGINNING ═══════ */}
+      <NarrativeBlock chapter="Chapter One" title="The Beginning">
+        <p>
+          I remember the first time colour spoke to me. I was five, sitting on the cool marble
+          floor of my grandmother's house, watching her draw <em>alpana</em> patterns with rice
+          paste on the threshold. The white swirls against the red oxide floor were magic — simple
+          lines creating a whole universe at the doorstep.
+        </p>
+        <p>
+          Every festival brought an explosion of pigment. Rangoli powders in impossible greens and
+          magentas, marigold garlands dripping gold, the deep indigo of my mother's sari as she
+          lit oil lamps at dusk. I didn't know then that I was training my eye. I just knew the
+          world was unbearably beautiful and I wanted to hold onto it.
+        </p>
+        <p>
+          My first "studio" was a corner of the verandah. Watercolours from a tin box, a chipped
+          ceramic plate for a palette, and stolen sheets of my father's office paper. I painted
+          everything — the neighbour's cat, the banyan tree, the clouds that looked like elephants.
+          Nobody told me I was an artist. I simply couldn't stop.
+        </p>
+      </NarrativeBlock>
+
+      {/* Full-bleed painting break */}
+      <FullBleedImage src={img(9)} alt="Early artwork" overlay="dark">
+        <ScrollReveal variant="blur-in">
+          <p className="text-center text-white/90 font-serif italic text-xl md:text-2xl text-shadow max-w-2xl mx-auto px-6">
+            Those early sketches were clumsy, honest, and full of wonder — everything art should be.
+          </p>
+        </ScrollReveal>
+      </FullBleedImage>
+
+      {/* ═══════ CHAPTER 2: THE TURNING POINT ═══════ */}
+      <section className="py-20 md:py-32 bg-background">
+        <div className="container px-6">
+          <div className="grid md:grid-cols-2 gap-12 lg:gap-20 items-center max-w-6xl mx-auto">
+            <ScrollReveal variant="fade-left">
+              <div className="aspect-[3/4] rounded-2xl overflow-hidden shadow-2xl img-zoom">
+                {img(5) && (
+                  <img src={img(5)} alt="Madhubani inspired work" className="h-full w-full object-cover" />
                 )}
               </div>
-              {paintings[5] && (
-                <div className="absolute -bottom-6 -left-6 w-36 h-36 rounded-xl overflow-hidden shadow-xl border-4 border-background img-zoom hidden md:block">
-                  <img
-                    src={paintings[5].image}
-                    alt="Artwork detail"
-                    className="h-full w-full object-cover"
-                  />
+            </ScrollReveal>
+            <ScrollReveal variant="fade-right">
+              <div className="space-y-6">
+                <span className="text-xs font-bold tracking-[0.25em] uppercase text-primary">
+                  Chapter Two
+                </span>
+                <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold text-foreground leading-tight">
+                  Roots in Heritage
+                </h2>
+                <div className="space-y-5 text-lg text-muted-foreground leading-relaxed">
+                  <p>
+                    Under the guidance of master artists, I entered the intricate world of Madhubani
+                    painting. For months, I practiced nothing but lines — the confident, unbroken
+                    lines that form the backbone of this ancient art. My hand ached. My patience
+                    was tested. But slowly, the lines began to breathe.
+                  </p>
+                  <p>
+                    I learned that every motif carries meaning: the fish for fertility, the peacock
+                    for love, the lotus for purity. Each painting was a prayer rendered in pigment,
+                    a meditation that connected me to generations of women who had painted these
+                    same symbols on mud walls for centuries.
+                  </p>
+                  <p>
+                    This training gave me discipline. It taught me that art is not just expression —
+                    it is devotion.
+                  </p>
                 </div>
-              )}
-              {paintings[6] && (
-                <div className="absolute -top-4 -right-4 w-28 h-28 rounded-xl overflow-hidden shadow-xl border-4 border-background img-zoom hidden md:block">
-                  <img
-                    src={paintings[6].image}
-                    alt="Artwork detail"
-                    className="h-full w-full object-cover"
-                  />
-                </div>
-              )}
-            </div>
-          </ScrollReveal>
+              </div>
+            </ScrollReveal>
+          </div>
         </div>
       </section>
 
-      {/* Timeline */}
-      <section className="container px-4 mb-24">
-        <ScrollReveal variant="blur-in">
-          <div className="text-center mb-16">
-            <span className="inline-block text-sm font-medium tracking-widest uppercase text-primary mb-3">
-              The Journey
+      <PullQuote>
+        Art is not just expression — it is devotion. Every motif is a prayer, every line a meditation.
+      </PullQuote>
+
+      {/* ═══════ CHAPTER 3: TWO WORLDS COLLIDE ═══════ */}
+      <FullBleedImage src={img(2)} alt="Western-influenced painting" overlay="dark" className="min-h-[80vh]">
+        <div className="container px-6 max-w-3xl mx-auto">
+          <ScrollReveal variant="fade-up">
+            <span className="inline-block text-xs font-bold tracking-[0.25em] uppercase text-white/50 mb-4">
+              Chapter Three
             </span>
-            <h2 className="font-serif text-3xl md:text-4xl font-bold text-foreground">
-              From First Brushstroke to ARTEZA
+            <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold text-white text-shadow leading-tight mb-8">
+              Two Worlds Collide
             </h2>
-          </div>
+            <div className="space-y-5 text-lg text-white/80 text-shadow-sm leading-relaxed">
+              <p>
+                Then came oil paints — thick, forgiving, gloriously slow to dry. I fell in love
+                with the impressionists first: Monet's haystacks dissolving in light, Renoir's
+                skin tones that seemed to glow from within. The freedom was intoxicating after
+                years of precise, symmetrical forms.
+              </p>
+              <p>
+                I spent a year doing nothing but colour studies. Mixing cerulean with cadmium
+                yellow to find that exact shade of afternoon light on a mango tree. Layering
+                transparent glazes until a canvas hummed with depth. Western technique gave me
+                permission to be messy, to let the paint itself become the subject.
+              </p>
+            </div>
+          </ScrollReveal>
+        </div>
+      </FullBleedImage>
+
+      {/* ═══════ CHAPTER 4: PHILOSOPHY ═══════ */}
+      <NarrativeBlock chapter="Chapter Four" title="Every Brushstroke Is a Conversation" dark>
+        <p>
+          People ask me what my paintings mean. I never have a clean answer. A painting starts
+          as a feeling — maybe the way morning light hits a terracotta wall, or a melody that
+          won't leave my head. I don't plan. I listen to the canvas.
+        </p>
+        <p>
+          My process is slow and intuitive. I begin with washes of colour, letting them bleed
+          and merge. Then I build — layer upon layer — until forms emerge from the chaos. Some
+          days the painting tells me exactly what it needs. Other days we argue. The best work
+          comes from those arguments.
+        </p>
+        <p>
+          I believe art should make you feel something you can't name. Not beautiful, not
+          shocking — just <em>true</em>. That space between recognition and mystery is where
+          I try to live.
+        </p>
+      </NarrativeBlock>
+
+      <PullQuote>
+        The best work comes from arguing with the canvas — from that space between recognition and mystery.
+      </PullQuote>
+
+      {/* Full-bleed painting break */}
+      <FullBleedImage src={img(4)} alt="Artistic process" overlay="dark">
+        <ScrollReveal variant="blur-in">
+          <p className="text-center text-white/90 font-serif italic text-xl md:text-2xl text-shadow max-w-2xl mx-auto px-6">
+            I don't plan. I listen to the canvas.
+          </p>
         </ScrollReveal>
+      </FullBleedImage>
 
-        <div className="relative max-w-5xl mx-auto">
-          {/* Vertical line */}
-          <div className="absolute left-1/2 top-0 bottom-0 w-px bg-border hidden md:block" />
-          <div className="absolute left-6 top-0 bottom-0 w-px bg-border md:hidden" />
+      {/* ═══════ CHAPTER 5: THE COLLECTIONS ═══════ */}
+      <section className="py-20 md:py-32 bg-background">
+        <div className="container px-6 max-w-3xl mx-auto mb-16">
+          <ScrollReveal variant="fade-up">
+            <span className="inline-block text-xs font-bold tracking-[0.25em] uppercase text-primary mb-4">
+              Chapter Five
+            </span>
+            <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold text-foreground leading-tight mb-6">
+              The Collections
+            </h2>
+            <p className="text-lg text-muted-foreground leading-relaxed">
+              Each series is a chapter of its own — a different mood, a different question.
+              Together, they form the story of everything I've seen, felt, and imagined.
+            </p>
+          </ScrollReveal>
+        </div>
 
-          {timeline.map((item, i) => {
-            const isEven = i % 2 === 0;
-            const painting = paintings[item.paintingIndex];
+        <div className="space-y-0">
+          {collections.map((collection, i) => {
+            const collectionPainting = paintings.find((p) => p.collection === collection.name);
             return (
-              <StaggerItem key={item.year} index={i} variant="zoom-in">
-                <div className="relative mb-16 last:mb-0">
-                  {/* Dot */}
-                  <div className="absolute left-6 md:left-1/2 w-3 h-3 bg-primary rounded-full -translate-x-1/2 top-8 z-10 ring-4 ring-background" />
-
-                  <div
-                    className={`md:grid md:grid-cols-2 md:gap-12 items-center pl-14 md:pl-0 ${
-                      isEven ? "" : "md:direction-rtl"
-                    }`}
-                  >
-                    {/* Text side */}
-                    <div
-                      className={`space-y-3 ${
-                        isEven
-                          ? "md:text-right md:pr-12"
-                          : "md:text-left md:pl-12 md:col-start-2 md:row-start-1"
-                      }`}
-                      style={{ direction: "ltr" }}
-                    >
-                      <span className="inline-block text-xs font-bold tracking-widest uppercase text-primary bg-primary/10 px-3 py-1 rounded-full">
-                        {item.year}
-                      </span>
-                      <h3 className="font-serif text-xl md:text-2xl font-bold text-foreground">
-                        {item.title}
+              <ScrollReveal key={collection.slug} variant="fade-up" delay={i * 100}>
+                <Link to={`/gallery/${collection.slug}`} className="block group">
+                  <div className="relative h-[50vh] md:h-[60vh] overflow-hidden">
+                    {collectionPainting && (
+                      <img
+                        src={collectionPainting.image}
+                        alt={collection.name}
+                        className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                        loading="lazy"
+                      />
+                    )}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
+                    <div className="absolute bottom-0 left-0 right-0 p-8 md:p-12">
+                      <h3 className="font-serif text-2xl md:text-4xl font-bold text-white text-shadow mb-2">
+                        {collection.name}
                       </h3>
-                      <p className="text-muted-foreground leading-relaxed">
-                        {item.description}
+                      <p className="text-white/70 text-sm md:text-base max-w-lg text-shadow-sm">
+                        {collection.description}
                       </p>
                     </div>
-
-                    {/* Image side */}
-                    <div
-                      className={`mt-4 md:mt-0 ${
-                        isEven
-                          ? "md:pl-12"
-                          : "md:pr-12 md:col-start-1 md:row-start-1"
-                      }`}
-                    >
-                      <div className="aspect-[4/3] rounded-xl overflow-hidden bg-muted shadow-lg img-zoom">
-                        {painting && (
-                          <img
-                            src={painting.image}
-                            alt={item.title}
-                            className="h-full w-full object-cover"
-                          />
-                        )}
-                      </div>
-                    </div>
                   </div>
-                </div>
-              </StaggerItem>
+                </Link>
+              </ScrollReveal>
             );
           })}
         </div>
       </section>
 
-      {/* Values */}
-      <section className="container px-4 mb-24">
-        <ScrollReveal variant="blur-in">
-          <div className="text-center mb-12">
-            <span className="inline-block text-sm font-medium tracking-widest uppercase text-primary mb-3">
-              Philosophy
-            </span>
-            <h2 className="font-serif text-3xl md:text-4xl font-bold text-foreground">
-              What Drives the Art
-            </h2>
-          </div>
-        </ScrollReveal>
+      {/* ═══════ CHAPTER 6: THE STUDIO TODAY ═══════ */}
+      <NarrativeBlock chapter="Chapter Six" title="The Studio Today">
+        <p>
+          My studio is a small, light-filled room that smells of linseed oil and strong chai.
+          There's paint on the walls, the floor, and — inevitably — on my clothes. I wouldn't
+          have it any other way.
+        </p>
+        <p>
+          Today, I divide my time between creating new work, fulfilling commissions for
+          collectors around the world, and teaching workshops where I share the techniques and
+          philosophy that shaped my practice. Every student reminds me why I started — that
+          pure, unfiltered joy of putting colour on a surface and watching something come alive.
+        </p>
+        <p>
+          ARTEZA was born from the belief that original art should be accessible — not locked
+          away in galleries but hanging in homes, sparking conversations, becoming part of
+          people's daily lives. Every painting I ship carries a piece of my story, and it makes
+          me endlessly happy to know it will become part of someone else's.
+        </p>
+      </NarrativeBlock>
 
-        <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
-          {[
-            {
-              icon: Frame,
-              title: "Authentic Artistry",
-              desc: "Every piece is an original, hand-painted work of art, created with passion and meticulous attention to detail.",
-            },
-            {
-              icon: Award,
-              title: "Cultural Heritage",
-              desc: "Celebrating India's rich artistic traditions while pushing the boundaries of contemporary expression.",
-            },
-            {
-              icon: Heart,
-              title: "Emotional Connection",
-              desc: "Creating art that resonates with viewers on a deeply personal and emotional level.",
-            },
-          ].map((item, i) => (
-            <StaggerItem key={item.title} index={i} variant="zoom-in">
-              <div className="text-center p-8 bg-card rounded-2xl border border-border hover-lift transition-all duration-300">
-                <div className="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-5">
-                  <item.icon className="h-7 w-7 text-primary" />
-                </div>
-                <h3 className="font-serif text-xl font-semibold text-foreground mb-2">
-                  {item.title}
-                </h3>
-                <p className="text-muted-foreground text-sm leading-relaxed">
-                  {item.desc}
-                </p>
-              </div>
-            </StaggerItem>
-          ))}
-        </div>
-      </section>
-
-      {/* CTA */}
-      <section className="container px-4">
-        <ScrollReveal variant="blur-in">
-          <div className="max-w-2xl mx-auto text-center bg-card border border-border rounded-2xl p-10 md:p-14">
-            <h2 className="font-serif text-2xl md:text-3xl font-bold text-foreground mb-4">
+      {/* ═══════ FINAL CTA ═══════ */}
+      <FullBleedImage src={img(13)} alt="Latest artwork" overlay="dark" className="min-h-[80vh]">
+        <div className="container px-6 text-center">
+          <ScrollReveal variant="blur-in">
+            <h2 className="font-serif text-3xl md:text-5xl lg:text-6xl font-bold text-white text-shadow leading-tight max-w-3xl mx-auto mb-6">
               Ready to Find Your Perfect Piece?
             </h2>
-            <p className="text-muted-foreground mb-8 leading-relaxed">
-              Explore the full ARTEZA collection or get in touch for commissions
-              and inquiries.
+            <p className="text-white/70 text-lg md:text-xl max-w-xl mx-auto mb-10 text-shadow-sm">
+              Explore the full ARTEZA collection or get in touch for commissions and inquiries.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button asChild size="lg">
+              <Button asChild size="lg" className="text-base">
                 <Link to="/shop">
                   Browse Collection <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
               </Button>
-              <Button asChild variant="outline" size="lg">
+              <Button asChild variant="outline" size="lg" className="text-base border-white/30 text-white hover:bg-white/10">
                 <Link to="/contact">Get in Touch</Link>
               </Button>
             </div>
-          </div>
-        </ScrollReveal>
-      </section>
+          </ScrollReveal>
+        </div>
+      </FullBleedImage>
     </div>
   );
 }

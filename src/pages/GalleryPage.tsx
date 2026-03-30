@@ -12,7 +12,7 @@ export default function GalleryPage() {
         <ScrollReveal>
           <div className="text-center mb-16">
             <h1 className="font-serif text-4xl md:text-5xl font-bold text-foreground mb-4">
-              Art Gallery
+              Collections
             </h1>
             <p className="text-muted-foreground max-w-2xl mx-auto mb-8">
               Explore our curated collections, each telling a unique story through color,

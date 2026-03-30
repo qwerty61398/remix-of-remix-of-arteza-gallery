@@ -30,7 +30,7 @@ export function Footer() {
             <h4 className="font-semibold text-foreground">Explore</h4>
             <nav className="flex flex-col gap-2">
               <Link to="/shop" className="text-sm text-muted-foreground hover:text-primary transition-colors">Shop</Link>
-              <Link to="/gallery" className="text-sm text-muted-foreground hover:text-primary transition-colors">Gallery</Link>
+              <Link to="/gallery" className="text-sm text-muted-foreground hover:text-primary transition-colors">Collections</Link>
               <Link to="/quiz" className="text-sm text-muted-foreground hover:text-primary transition-colors">Art Style Quiz</Link>
               <Link to="/classes" className="text-sm text-muted-foreground hover:text-primary transition-colors">Classes</Link>
             </nav>

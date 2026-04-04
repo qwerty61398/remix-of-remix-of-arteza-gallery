@@ -1,47 +1,49 @@
 
 
-## Plan: Immersive Magazine-Style About Page Redesign
+## Plan: Parallax Effect + Medium/Material for Paintings
 
-Transform the About page from a standard timeline layout into a long-form, immersive scrolling experience inspired by editorial storytelling magazines.
+### 1. Add parallax scrolling to About page full-bleed images
 
-### Design Concept
+**File: `src/pages/AboutPage.tsx`**
 
-Full-bleed painting images alternate with narrative text sections. First-person voice throughout. Dark atmospheric sections contrasted with light ones. Large pull quotes break up the prose. Every section fades in as the user scrolls.
+Update the `FullBleedImage` component's `<img>` tag to use a fixed-position background technique for parallax. Replace the `<img>` with a `div` using `background-image` + `background-attachment: fixed` + `background-size: cover` + `background-position: center`. This creates a natural parallax scroll effect without JavaScript.
 
-### Content Structure (First-Person Narrative)
+Fallback: On mobile (where `background-attachment: fixed` is poorly supported), use standard `object-cover` image via a media query or Tailwind responsive class.
 
-1. **Hero -- Full-bleed opening image** with overlaid text: "I paint because words were never enough." Dark gradient overlay on a featured painting. Full viewport height. Text fades in on scroll.
+### 2. Add `medium` and `material` columns to the `paintings` table
 
-2. **Chapter 1: The Beginning** -- "I remember the first time colour spoke to me..." Childhood inspiration story. Full-width painting image with parallax-style sticky positioning. Pull quote in large serif italic.
+**Database migration:**
+```sql
+ALTER TABLE public.paintings
+  ADD COLUMN medium text DEFAULT 'Oil on Canvas',
+  ADD COLUMN material text DEFAULT 'Canvas';
+```
 
-3. **Chapter 2: The Turning Point** -- Training in Madhubani, discovering classical forms. Side-by-side layout: large painting left, intimate text right. Another full-bleed painting break.
+This gives all existing paintings sensible defaults.
 
-4. **Chapter 3: Two Worlds Collide** -- Western exploration, oil painting, impressionism. Full-bleed image section with text overlay on gradient.
+### 3. Update the data hook to map `medium` and `material`
 
-5. **Chapter 4: Philosophy of Painting** -- "Every brushstroke is a conversation..." What drives the art, the meditative process. Pull quote section. Values cards reimagined as inline editorial blocks.
+**File: `src/hooks/use-paintings.ts`**
 
-6. **Chapter 5: The Collections** -- Brief tour of each collection series with a representative painting. Horizontal scroll or stacked full-bleed images with collection name overlays.
+- Add `medium` and `material` to the `DbPainting` interface
+- Map them in `mapDbToPainting` instead of hardcoding empty strings
 
-7. **Chapter 6: The Studio Today** -- Daily process, commissions, teaching. Final full-bleed image with CTA overlay.
+### 4. Display medium/material on the Shop page (ArtworkCard)
 
-### Technical Implementation
+**File: `src/components/artwork/ArtworkCard.tsx`**
 
-**File: `src/pages/AboutPage.tsx`** -- Full rewrite.
+Add a small line below dimensions showing medium info, e.g.:
+```
+<p className="text-xs text-muted-foreground">{painting.medium}</p>
+```
 
-- Remove the timeline data structure and alternating grid layout
-- Build sequential full-bleed sections using `min-h-screen` or `min-h-[70vh]` with `relative` positioning and gradient overlays (`bg-gradient-to-t from-black/70`)
-- Use existing `ScrollReveal` component (fade-up, blur-in variants) on every text block and image for scroll-triggered animations
-- Pull quotes styled with `font-serif text-3xl md:text-5xl italic text-primary/80` centered with generous padding
-- Alternate between dark sections (`bg-foreground text-background`) and light sections for rhythm
-- Images reference `paintings[]` array from `usePaintings()` hook (cloud storage URLs)
-- Responsive: single column throughout, images always full-width on mobile
-- No new dependencies needed
+### 5. Detail page already shows medium/material
 
-**File: `src/index.css`** -- Add a few utility classes:
-- `.text-shadow` for legible text on image overlays
-- Optional parallax helper via CSS `background-attachment: fixed` on select sections
+The `PaintingDetailPage` already conditionally renders medium and material (lines 98-99), so it will automatically display once the hook provides real data.
 
-### Testing
-
-After implementation, the Blog, Classes, Gallery, and Collection pages should be verified for image loading from cloud storage (no code changes needed for those -- just browser verification).
+### Files to modify
+- `src/pages/AboutPage.tsx` — parallax effect on full-bleed images
+- `src/hooks/use-paintings.ts` — map new DB columns
+- `src/components/artwork/ArtworkCard.tsx` — show medium info on shop cards
+- Database migration — add `medium` and `material` columns
 

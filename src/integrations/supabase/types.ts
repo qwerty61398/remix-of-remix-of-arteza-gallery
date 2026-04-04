@@ -245,6 +245,8 @@ export type Database = {
           image_url: string
           is_available: boolean | null
           is_featured: boolean | null
+          material: string | null
+          medium: string | null
           price: number
           story: string | null
           title: string
@@ -259,6 +261,8 @@ export type Database = {
           image_url: string
           is_available?: boolean | null
           is_featured?: boolean | null
+          material?: string | null
+          medium?: string | null
           price: number
           story?: string | null
           title: string
@@ -273,6 +277,8 @@ export type Database = {
           image_url?: string
           is_available?: boolean | null
           is_featured?: boolean | null
+          material?: string | null
+          medium?: string | null
           price?: number
           story?: string | null
           title?: string

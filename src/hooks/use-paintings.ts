@@ -13,6 +13,8 @@ interface DbPainting {
   is_available: boolean | null;
   is_featured: boolean | null;
   story: string | null;
+  medium: string | null;
+  material: string | null;
 }
 
 function mapDbToPainting(db: DbPainting): Painting {
@@ -25,8 +27,8 @@ function mapDbToPainting(db: DbPainting): Painting {
     description: db.description || "",
     collection: db.collection as CollectionType,
     available: db.is_available ?? true,
-    medium: "",
-    material: "",
+    medium: db.medium || "Oil on Canvas",
+    material: db.material || "Canvas",
   };
 }
 

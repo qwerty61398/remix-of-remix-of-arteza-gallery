@@ -357,7 +357,7 @@ export default function AboutPage() {
                   Browse Collection <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
               </Button>
-              <Button asChild variant="outline" size="lg" className="text-base border-white/30 text-foreground bg-white hover:bg-white/90">
+              <Button asChild variant="outline" size="lg" className="text-base border-white/30 !text-gray-900 bg-white hover:bg-white/90">
                 <Link to="/contact">Get in Touch</Link>
               </Button>
             </div>

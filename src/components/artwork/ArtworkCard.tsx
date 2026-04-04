@@ -47,6 +47,9 @@ export function ArtworkCard({ painting, variant = "default" }: ArtworkCardProps)
               </h3>
             </Link>
             <p className="text-sm text-muted-foreground">{painting.dimensions}</p>
+            {painting.medium && (
+              <p className="text-xs text-muted-foreground">{painting.medium}</p>
+            )}
           </div>
         </div>
 

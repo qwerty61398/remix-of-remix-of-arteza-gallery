@@ -22,11 +22,11 @@ function FullBleedImage({
   return (
     <section className={`relative min-h-[70vh] flex items-center justify-center overflow-hidden ${className}`}>
       {src && (
-        <img
-          src={src}
-          alt={alt}
-          className="absolute inset-0 w-full h-full object-cover"
-          loading="lazy"
+        <div
+          className="absolute inset-0 w-full h-full bg-cover bg-center bg-no-repeat sm:bg-fixed"
+          style={{ backgroundImage: `url(${src})` }}
+          role="img"
+          aria-label={alt}
         />
       )}
       {overlay === "dark" && (

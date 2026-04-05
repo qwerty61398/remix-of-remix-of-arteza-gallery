@@ -152,6 +152,8 @@ export function AdminPaintings() {
       image_url: formData.image_url,
       is_available: formData.is_available,
       is_featured: formData.is_featured,
+      medium: formData.medium || null,
+      material: formData.material || null,
     };
 
     if (editingPainting) {

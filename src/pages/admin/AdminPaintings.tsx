@@ -297,6 +297,7 @@ export function AdminPaintings() {
                 </div>
               </div>
 
+              <div className="space-y-2">
                 <Label>Painting Image *</Label>
                 <div className="flex items-start gap-4">
                   <ImageUpload

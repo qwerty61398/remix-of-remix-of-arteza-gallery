@@ -45,6 +45,8 @@ interface Painting {
   image_url: string;
   is_available: boolean | null;
   is_featured: boolean | null;
+  medium: string | null;
+  material: string | null;
   created_at: string;
 }
 

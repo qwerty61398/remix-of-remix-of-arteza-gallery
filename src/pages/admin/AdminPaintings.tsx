@@ -76,6 +76,8 @@ export function AdminPaintings() {
     image_url: "",
     is_available: true,
     is_featured: false,
+    medium: "Oil on Canvas",
+    material: "Canvas",
   });
 
   const fetchPaintings = async () => {

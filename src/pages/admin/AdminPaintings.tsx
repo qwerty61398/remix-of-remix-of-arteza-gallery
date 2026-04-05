@@ -114,6 +114,8 @@ export function AdminPaintings() {
       image_url: "",
       is_available: true,
       is_featured: false,
+      medium: "Oil on Canvas",
+      material: "Canvas",
     });
     setEditingPainting(null);
   };
@@ -130,6 +132,8 @@ export function AdminPaintings() {
       image_url: painting.image_url,
       is_available: painting.is_available ?? true,
       is_featured: painting.is_featured ?? false,
+      medium: painting.medium || "Oil on Canvas",
+      material: painting.material || "Canvas",
     });
     setIsDialogOpen(true);
   };

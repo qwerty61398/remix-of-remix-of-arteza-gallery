@@ -45,6 +45,8 @@ interface Painting {
   image_url: string;
   is_available: boolean | null;
   is_featured: boolean | null;
+  medium: string | null;
+  material: string | null;
   created_at: string;
 }
 
@@ -74,6 +76,8 @@ export function AdminPaintings() {
     image_url: "",
     is_available: true,
     is_featured: false,
+    medium: "Oil on Canvas",
+    material: "Canvas",
   });
 
   const fetchPaintings = async () => {
@@ -110,6 +114,8 @@ export function AdminPaintings() {
       image_url: "",
       is_available: true,
       is_featured: false,
+      medium: "Oil on Canvas",
+      material: "Canvas",
     });
     setEditingPainting(null);
   };
@@ -126,6 +132,8 @@ export function AdminPaintings() {
       image_url: painting.image_url,
       is_available: painting.is_available ?? true,
       is_featured: painting.is_featured ?? false,
+      medium: painting.medium || "Oil on Canvas",
+      material: painting.material || "Canvas",
     });
     setIsDialogOpen(true);
   };
@@ -144,6 +152,8 @@ export function AdminPaintings() {
       image_url: formData.image_url,
       is_available: formData.is_available,
       is_featured: formData.is_featured,
+      medium: formData.medium || null,
+      material: formData.material || null,
     };
 
     if (editingPainting) {
@@ -262,6 +272,27 @@ export function AdminPaintings() {
                     value={formData.dimensions}
                     onChange={(e) => setFormData({ ...formData, dimensions: e.target.value })}
                     placeholder="e.g., 24x36 inches"
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="medium">Medium</Label>
+                  <Input
+                    id="medium"
+                    value={formData.medium}
+                    onChange={(e) => setFormData({ ...formData, medium: e.target.value })}
+                    placeholder="e.g., Oil on Canvas, Acrylic, Mixed Media"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="material">Material</Label>
+                  <Input
+                    id="material"
+                    value={formData.material}
+                    onChange={(e) => setFormData({ ...formData, material: e.target.value })}
+                    placeholder="e.g., Canvas, Paper, Board"
                   />
                 </div>
               </div>

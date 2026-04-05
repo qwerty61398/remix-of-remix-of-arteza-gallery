@@ -68,11 +68,6 @@ export function ArtworkCard({ painting, variant = "default" }: ArtworkCardProps)
           </Button>
         </div>
 
-        {variant === "default" && (
-          <p className="text-sm text-muted-foreground line-clamp-2">
-            {painting.description}
-          </p>
-        )}
       </div>
     </article>
   );

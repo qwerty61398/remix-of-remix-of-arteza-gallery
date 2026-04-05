@@ -276,7 +276,27 @@ export function AdminPaintings() {
                 </div>
               </div>
 
-              <div className="space-y-2">
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="medium">Medium</Label>
+                  <Input
+                    id="medium"
+                    value={formData.medium}
+                    onChange={(e) => setFormData({ ...formData, medium: e.target.value })}
+                    placeholder="e.g., Oil on Canvas, Acrylic, Mixed Media"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="material">Material</Label>
+                  <Input
+                    id="material"
+                    value={formData.material}
+                    onChange={(e) => setFormData({ ...formData, material: e.target.value })}
+                    placeholder="e.g., Canvas, Paper, Board"
+                  />
+                </div>
+              </div>
+
                 <Label>Painting Image *</Label>
                 <div className="flex items-start gap-4">
                   <ImageUpload

@@ -1,13 +1,26 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Lightbulb, ArrowRight, ArrowLeft, Check } from "lucide-react";
+import { Lightbulb, ArrowRight, ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import VinylPlayer from "@/components/quiz/VinylPlayer";
 
 interface Question {
   id: number;
   question: string;
   options: { label: string; collections: string[] }[];
+}
+
+interface Track {
+  name: string;
+  artist: string;
+  duration: string;
+}
+
+interface PlaylistData {
+  name: string;
+  tracks: Track[];
+  spotifyUri?: string;
 }
 
 const questions: Question[] = [
@@ -63,6 +76,142 @@ const questions: Question[] = [
   },
 ];
 
+const playlistData: Record<string, PlaylistData> = {
+  "abstract-expressions": {
+    name: "Emotional Chaos: Abstract Echoes",
+    tracks: [
+      { name: "The Workshop", artist: "Francesco Giovannangelo", duration: "1:29" },
+      { name: "Snows Of Stillness", artist: "Craig McConnell", duration: "3:03" },
+      { name: "Wandering In The Deep", artist: "Francesco Giovannangelo", duration: "3:12" },
+      { name: "Bossam", artist: "Morris Lionel", duration: "4:16" },
+      { name: "Troubled Waters Pedal Guitar", artist: "Pete Bax", duration: "2:29" },
+      { name: "Luscious", artist: "Richard Freitas", duration: "3:18" },
+      { name: "Say Yes Again To Love", artist: "Paul Reece", duration: "4:05" },
+      { name: "New Heights Uke", artist: "Denis Turbide", duration: "2:08" },
+      { name: "Quantum Is0", artist: "Image Sounds", duration: "1:37" },
+      { name: "Acoustic Showdown", artist: "Mathew McGrath", duration: "3:48" },
+      { name: "Mansion Of Happiness", artist: "Vagabond Beach", duration: "3:15" },
+      { name: "Down By The River Next To The Hill", artist: "Matt Rank", duration: "3:04" },
+      { name: "Blues Over Easy", artist: "Michael Panasuk", duration: "2:16" },
+      { name: "Sunday Dream", artist: "Rob Johnson", duration: "2:01" },
+      { name: "I'll Be With You", artist: "Dean Anthony Caputo", duration: "4:52" },
+      { name: "Inside Love", artist: "D. Silverstone", duration: "1:49" },
+      { name: "Crossing Over", artist: "Luke Gartner-Brereton", duration: "2:28" },
+      { name: "The Bizarre Folk String Instrument", artist: "Rik Roberts", duration: "2:26" },
+      { name: "Heading Home", artist: "Jonathan Geer", duration: "0:32" },
+      { name: "Going Home", artist: "Eric Bode", duration: "1:47" },
+    ],
+  },
+  "cultural-chronicles": {
+    name: "Heritage Harmonies: Global Tales",
+    tracks: [
+      { name: "March", artist: "Haxhigeaszy", duration: "2:24" },
+      { name: "From Rusholme with Love", artist: "Mint Royale", duration: "5:06" },
+      { name: "Zeina", artist: "Petrol Bomb Samosa", duration: "4:49" },
+      { name: "Kundu Tribal", artist: "James Asher", duration: "5:01" },
+      { name: "Dharawi Nights", artist: "Secretpath", duration: "3:57" },
+      { name: "Ziganochka", artist: "Golden Ring Ensemble", duration: "3:07" },
+      { name: "Parallel Life", artist: "The Starseeds", duration: "8:09" },
+      { name: "Pae Pae", artist: "Tamure Tahitien", duration: "1:17" },
+      { name: "Fire Mountain", artist: "Zuma Dionys", duration: "7:35" },
+      { name: "Vietnamese Forest", artist: "Asian Traditional Music", duration: "1:10" },
+      { name: "Old Bagdad", artist: "Jerry Goldsmith", duration: "2:03" },
+      { name: "Silver Keys", artist: "Simon Shavi", duration: "3:40" },
+      { name: "Master Blaster (Live)", artist: "Joe Driscoll & Sekou Kouyate", duration: "3:47" },
+      { name: "Nani", artist: "Kaatru", duration: "3:27" },
+      { name: "Dünya", artist: "Yavuz Çetin", duration: "4:59" },
+      { name: "'Ote'a Heivari'i", artist: "Mahealani Uchiyama", duration: "1:06" },
+      { name: "Adobe Walls", artist: "Gary Stroutsos", duration: "3:21" },
+      { name: "Always Waiting", artist: "Kaya Project & Irina Mikhailova", duration: "7:17" },
+      { name: "Pétards chinois", artist: "Mathias Duplessy & The Violins of the World", duration: "4:05" },
+      { name: "Holographic Universe", artist: "Thievery Corporation & Gunjan", duration: "3:42" },
+    ],
+  },
+  "dreamscapes": {
+    name: "Surreal Serenades: Dreamweaver Tunes",
+    tracks: [
+      { name: "Patience", artist: "AudioQuattro", duration: "2:33" },
+      { name: "Dust", artist: "Jason Greenberg", duration: "3:27" },
+      { name: "New Horizon", artist: "D. Silverstone", duration: "3:04" },
+      { name: "Words Fail", artist: "The Valery Trails", duration: "4:29" },
+      { name: "Emotional Moment", artist: "Tom Croke", duration: "3:01" },
+      { name: "No Way Home", artist: "Deep", duration: "1:37" },
+      { name: "Nighttime in Toronto", artist: "Aaron Saloman", duration: "2:45" },
+      { name: "A Million Love Songs", artist: "Orly Vardy", duration: "3:44" },
+      { name: "My Heart Goes Jingle", artist: "Suchitra Lata", duration: "2:57" },
+      { name: "Flashing Wood", artist: "Salip Tarakci", duration: "4:44" },
+      { name: "Modern Ibiza Club Superstar Dance Music", artist: "Bobby Cole", duration: "4:13" },
+      { name: "Reflection Matrix", artist: "Gregor Laharnar", duration: "2:48" },
+      { name: "The Music Our Love Makes", artist: "Nicole-Marie", duration: "4:11" },
+      { name: "Traveling Towards Each Other", artist: "Nemanja Mitrasevic", duration: "3:33" },
+      { name: "Home", artist: "Claudio Miosga", duration: "4:42" },
+      { name: "It Comes in Waves", artist: "Richard Hughes", duration: "3:18" },
+      { name: "The Maze", artist: "Sean van der Maten", duration: "3:31" },
+      { name: "Amazing Glow Chorus", artist: "Suchitra Lata", duration: "3:13" },
+      { name: "Scarlet Pop", artist: "Enrico Milardo", duration: "1:48" },
+      { name: "Lighten the Load", artist: "Jive Ass Sleepers", duration: "2:15" },
+    ],
+  },
+  "natures-palette": {
+    name: "Earth's Symphony: Natural Rhythms",
+    tracks: [
+      { name: "Pleasant Cricket Chorus", artist: "Pamela Grand Nature Collective", duration: "2:24" },
+      { name: "Chilled White Noise", artist: "Larry Hill Club Nature", duration: "1:44" },
+      { name: "Glorious Fire Harmonies", artist: "Lylou Olegovich Nature Collection", duration: "2:28" },
+      { name: "Bonfire Flow", artist: "Richard Johnson", duration: "2:21" },
+      { name: "Mellow Rain on Vintage Thunder", artist: "Eric Library of Nature Sounds", duration: "1:57" },
+      { name: "Vintage Feel with Rainy Storm", artist: "Isla Wagner Calm Sound Collection", duration: "2:12" },
+      { name: "Hurricane Storm", artist: "Anastasia Natura Music", duration: "2:27" },
+      { name: "Colors of the Wind", artist: "Jack Lewi Nature Collective", duration: "1:58" },
+      { name: "Water Fountain in Rainforest", artist: "Eric Library of Nature Sounds", duration: "1:53" },
+      { name: "Bluish Country Morning", artist: "Dimitri Kuznetsov", duration: "2:08" },
+      { name: "Colossal Mountain Wind Summer Day", artist: "Duyi Zhang", duration: "1:45" },
+      { name: "Sunrise Fire Motion", artist: "Enlai Chen", duration: "2:29" },
+      { name: "Love and Soft Rain", artist: "Cyrilo Lombardi", duration: "1:49" },
+      { name: "Enticing Melodies of Summer Birds", artist: "Emma Scott Nature Studio", duration: "2:25" },
+      { name: "Inside The Cave", artist: "Adam n Joan Nature Library", duration: "2:01" },
+      { name: "Murky Water Ripples", artist: "Luis Laurent", duration: "2:35" },
+      { name: "Birds Peace Sound", artist: "Abella Rossi Nature Musica", duration: "2:11" },
+      { name: "Japaneses Quail", artist: "Mr. Austin Nature Hub", duration: "2:26" },
+      { name: "Sweetness of Night", artist: "Marcello Meyer", duration: "1:36" },
+      { name: "Dreary Rain", artist: "Gabriel Gashi Nature Seasons", duration: "1:57" },
+    ],
+  },
+  "portraits-and-personalities": {
+    name: "Soulful Gazes: Human Essence",
+    tracks: [
+      { name: "Canon in D Major, P. 37", artist: "Johann Pachelbel & Piotr Chelique", duration: "3:08" },
+      { name: "Yo Soy", artist: "Carope", duration: "7:24" },
+      { name: "Lou Francis", artist: "Odessa", duration: "1:35" },
+      { name: "Traveling Light", artist: "Hior Chronik", duration: "2:21" },
+      { name: "Vindheks", artist: "Rumpistol", duration: "5:14" },
+      { name: "Aqua", artist: "Ryuichi Sakamoto", duration: "4:32" },
+      { name: "Something Waits For You (Nedda)", artist: "Juan Pablo Garcia", duration: "3:37" },
+      { name: "We Contain Multitudes", artist: "Yiruma & Ólafur Arnalds", duration: "4:24" },
+      { name: "Experience", artist: "Ludovico Einaudi & Daniel Hope", duration: "5:15" },
+      { name: "Bird Language", artist: "Will August Park", duration: "3:27" },
+      { name: "Vendaval", artist: "Ismael Pinkler & Nicolás Bacal", duration: "2:39" },
+      { name: "Iknowwhereyoucomefrom", artist: "Juan Pablo Garcia", duration: "3:27" },
+      { name: "La Cuna del Cisne", artist: "YoSoyMatt", duration: "2:33" },
+      { name: "A Host for All Kinds of Life", artist: "Green-House", duration: "3:59" },
+      { name: "Jay", artist: "Ludovico Einaudi", duration: "3:12" },
+      { name: "CC", artist: "Radiotrónica", duration: "2:12" },
+      { name: "Quiescent 01", artist: "Kampala Social Club", duration: "3:21" },
+      { name: "sunrise mtn", artist: "Jenny Owen Youngs & John Mark Nelson", duration: "2:31" },
+      { name: "Chansu wa jibun de tsukuru mono", artist: "Katsuragi Taisuke", duration: "2:32" },
+      { name: "Hankyu Denshya", artist: "Yama Warashi", duration: "3:46" },
+    ],
+  },
+};
+
+const collectionNames: Record<string, string> = {
+  "abstract-expressions": "Abstract Expressions",
+  "cultural-chronicles": "Cultural Chronicles",
+  "dreamscapes": "Dreamscapes",
+  "natures-palette": "Nature's Palette",
+  "portraits-and-personalities": "Portraits and Personalities",
+};
+
 export default function QuizPage() {
   const navigate = useNavigate();
   const [currentQuestion, setCurrentQuestion] = useState(0);
@@ -116,40 +265,31 @@ export default function QuizPage() {
 
   if (showResult) {
     const recommendedSlug = getRecommendedCollection();
-    const collectionNames: Record<string, string> = {
-      "abstract-expressions": "Abstract Expressions",
-      "cultural-chronicles": "Cultural Chronicles",
-      "dreamscapes": "Dreamscapes",
-      "natures-palette": "Nature's Palette",
-      "portraits-and-personalities": "Portraits and Personalities",
-    };
+    const playlist = playlistData[recommendedSlug];
 
     return (
       <div className="min-h-[80vh] flex items-center justify-center py-12 animate-fade-in">
         <div className="container px-4">
           <div className="max-w-2xl mx-auto text-center">
-            <div className="w-20 h-20 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-8">
-              <Check className="h-10 w-10 text-primary" />
-            </div>
-
-            <h1 className="font-serif text-3xl md:text-4xl font-bold text-foreground mb-4">
+            <h1 className="font-serif text-3xl md:text-4xl font-bold text-foreground mb-2">
               Your Perfect Match Found!
             </h1>
 
-            <p className="text-lg text-muted-foreground mb-8">
-              Based on your answers, we recommend exploring our
+            <p className="text-lg text-muted-foreground mb-2">
+              We recommend the <span className="text-primary font-semibold">{collectionNames[recommendedSlug]}</span> collection
             </p>
 
-            <div className="bg-card border border-border rounded-xl p-8 mb-8">
-              <h2 className="font-serif text-2xl font-bold text-primary mb-4">
-                {collectionNames[recommendedSlug]}
-              </h2>
-              <p className="text-muted-foreground">
-                This collection aligns perfectly with your taste and preferences.
-              </p>
-            </div>
+            <p className="text-sm text-muted-foreground mb-8">
+              Press play to listen to <span className="italic">{playlist.name}</span>
+            </p>
 
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <VinylPlayer
+              playlistName={playlist.name}
+              tracks={playlist.tracks}
+              spotifyUri={playlist.spotifyUri}
+            />
+
+            <div className="flex flex-col sm:flex-row gap-4 justify-center mt-8">
               <Button size="lg" onClick={() => navigate(`/gallery/${recommendedSlug}`)} className="gap-2">
                 Explore Collection
                 <ArrowRight className="h-4 w-4" />

@@ -345,3 +345,17 @@ All colors MUST be HSL.
 .pull-quote {
   @apply font-serif italic leading-snug tracking-tight;
 }
+
+/* ========== Vinyl Disk Animation ========== */
+@keyframes vinyl-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.vinyl-disk {
+  transition: filter 0.3s ease;
+}
+
+.vinyl-spinning {
+  animation: vinyl-spin 2s linear infinite;
+}

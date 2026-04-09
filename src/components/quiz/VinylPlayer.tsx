@@ -1,22 +1,15 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Play, Pause } from "lucide-react";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
-
-interface Track {
-  name: string;
-  artist: string;
-  duration: string;
-}
 
 interface VinylPlayerProps {
   playlistName: string;
-  tracks: Track[];
   spotifyUri?: string;
 }
 
-export default function VinylPlayer({ playlistName, tracks, spotifyUri }: VinylPlayerProps) {
+export default function VinylPlayer({ playlistName, spotifyUri }: VinylPlayerProps) {
   const [isPlaying, setIsPlaying] = useState(false);
+  const iframeRef = useRef<HTMLIFrameElement>(null);
 
   const togglePlay = () => {
     setIsPlaying(!isPlaying);
@@ -25,36 +18,39 @@ export default function VinylPlayer({ playlistName, tracks, spotifyUri }: VinylP
   return (
     <div className="flex flex-col items-center gap-6">
       {/* Vinyl + Tonearm container */}
-      <div className="relative w-[300px] h-[280px] md:w-[340px] md:h-[310px]">
+      <div className="relative w-[250px] h-[240px] md:w-[300px] md:h-[280px]">
         {/* Tonearm */}
         <div
           className={cn(
-            "tonearm absolute top-0 right-[60px] md:right-[68px] z-20",
+            "tonearm absolute top-0 right-[50px] md:right-[60px] z-20",
             isPlaying && "tonearm--playing"
           )}
           style={{
             transformOrigin: "top center",
             width: "4px",
-            height: "140px",
+            height: "120px",
           }}
         >
-          {/* Pivot point */}
           <div className="absolute -top-1.5 -left-1.5 w-4 h-4 rounded-full bg-muted-foreground border-2 border-border" />
-          {/* Arm shaft */}
-          <div className="absolute top-3 left-0 w-1 h-[100px] bg-muted-foreground rounded-full" />
-          {/* Headshell */}
+          <div className="absolute top-3 left-0 w-1 h-[85px] bg-muted-foreground rounded-full" />
           <div className="absolute bottom-0 -left-1 w-2.5 h-5 bg-muted-foreground rounded-b-sm" />
-          {/* Cartridge / stylus tip */}
           <div className="absolute -bottom-1.5 left-0 w-0.5 h-2 bg-foreground rounded-full mx-auto" style={{ marginLeft: '2px' }} />
         </div>
 
         {/* Vinyl record */}
         <div className="absolute bottom-0 left-0">
-          <div className="relative w-[250px] h-[250px] md:w-[280px] md:h-[280px]">
+          <div className="relative w-[220px] h-[220px] md:w-[260px] md:h-[260px]">
+            {/* Glow effect */}
             <div
               className={cn(
-                "w-full h-full rounded-full relative",
-                "vinyl-disk",
+                "absolute inset-[-12px] rounded-full transition-opacity duration-500 pointer-events-none",
+                isPlaying ? "opacity-100 vinyl-glow" : "opacity-0"
+              )}
+            />
+
+            <div
+              className={cn(
+                "w-full h-full rounded-full relative vinyl-disk",
                 isPlaying && "vinyl-spinning"
               )}
               style={{
@@ -98,7 +94,7 @@ export default function VinylPlayer({ playlistName, tracks, spotifyUri }: VinylP
 
               {/* Center label */}
               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[36%] h-[36%] rounded-full bg-primary flex items-center justify-center p-2">
-                <span className="text-primary-foreground text-[9px] md:text-[10px] font-medium text-center leading-tight line-clamp-3">
+                <span className="text-primary-foreground text-[8px] md:text-[10px] font-medium text-center leading-tight line-clamp-3">
                   {playlistName}
                 </span>
               </div>
@@ -112,61 +108,34 @@ export default function VinylPlayer({ playlistName, tracks, spotifyUri }: VinylP
               onClick={togglePlay}
               className={cn(
                 "absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10",
-                "w-16 h-16 rounded-full flex items-center justify-center",
+                "w-14 h-14 rounded-full flex items-center justify-center",
                 "bg-background/60 backdrop-blur-sm border border-border/50",
                 "hover:bg-background/80 transition-all duration-200",
                 "hover:scale-110 active:scale-95"
               )}
             >
               {isPlaying ? (
-                <Pause className="h-6 w-6 text-foreground" />
+                <Pause className="h-5 w-5 text-foreground" />
               ) : (
-                <Play className="h-6 w-6 text-foreground ml-1" />
+                <Play className="h-5 w-5 text-foreground ml-0.5" />
               )}
             </button>
           </div>
         </div>
       </div>
 
-      {/* Spotify embed */}
+      {/* Spotify embed - always visible when URI exists */}
       {spotifyUri && (
         <iframe
-          className={cn("rounded-xl transition-all duration-300", isPlaying ? "h-[80px] opacity-100" : "h-0 opacity-0 overflow-hidden")}
+          ref={iframeRef}
+          className="rounded-xl w-full"
+          style={{ maxWidth: "300px", height: "80px" }}
           src={`https://open.spotify.com/embed/playlist/${spotifyUri}?utm_source=generator&theme=0`}
-          width="100%"
-          style={{ maxWidth: "400px" }}
           allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
           loading="lazy"
           title="Spotify playlist"
         />
       )}
-
-      {/* Track list */}
-      <div className="w-full max-w-md">
-        <h3 className="text-sm font-medium text-muted-foreground mb-3 text-center">Track List</h3>
-        <ScrollArea className="h-[200px] w-full rounded-lg border border-border bg-card p-1">
-          <div className="space-y-0.5">
-            {tracks.map((track, i) => (
-              <div
-                key={i}
-                className={cn(
-                  "flex items-center gap-3 px-3 py-2 rounded-md text-sm",
-                  "hover:bg-accent/50 transition-colors"
-                )}
-              >
-                <span className="text-muted-foreground text-xs w-5 text-right shrink-0">
-                  {i + 1}
-                </span>
-                <div className="flex-1 min-w-0">
-                  <p className="text-foreground truncate text-sm">{track.name}</p>
-                  <p className="text-muted-foreground truncate text-xs">{track.artist}</p>
-                </div>
-                <span className="text-muted-foreground text-xs shrink-0">{track.duration}</span>
-              </div>
-            ))}
-          </div>
-        </ScrollArea>
-      </div>
     </div>
   );
 }

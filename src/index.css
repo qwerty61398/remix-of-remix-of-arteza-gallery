@@ -360,6 +360,16 @@ All colors MUST be HSL.
   animation: vinyl-spin 2s linear infinite;
 }
 
+.vinyl-glow {
+  box-shadow: 0 0 30px 10px hsl(var(--primary) / 0.4), 0 0 60px 20px hsl(var(--primary) / 0.2);
+  animation: vinyl-pulse 2s ease-in-out infinite;
+}
+
+@keyframes vinyl-pulse {
+  0%, 100% { opacity: 0.7; }
+  50% { opacity: 1; }
+}
+
 /* ========== Tonearm Animation ========== */
 .tonearm {
   transform: rotate(-30deg);

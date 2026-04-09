@@ -4,6 +4,10 @@ import { Lightbulb, ArrowRight, ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import VinylPlayer from "@/components/quiz/VinylPlayer";
+import { usePaintingsByCollection } from "@/hooks/use-paintings";
+import { collectionNames as collectionNamesMap } from "@/pages/QuizPage";
+import { ImageWithSkeleton } from "@/components/ImageWithSkeleton";
+import { CollectionType } from "@/data/paintings";
 
 interface Question {
   id: number;

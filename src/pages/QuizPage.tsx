@@ -218,6 +218,88 @@ const collectionNames: Record<string, string> = {
   "portraits-and-personalities": "Portraits and Personalities",
 };
 
+function QuizResults({
+  recommendedSlug,
+  playlist,
+  onExplore,
+  onRetake,
+}: {
+  recommendedSlug: string;
+  playlist: PlaylistData;
+  onExplore: () => void;
+  onRetake: () => void;
+}) {
+  const collectionName = collectionNames[recommendedSlug] as CollectionType;
+  const { data: paintings } = usePaintingsByCollection(collectionName);
+  const displayPaintings = (paintings || []).slice(0, 6);
+
+  return (
+    <div className="min-h-[80vh] py-12 animate-fade-in">
+      <div className="container px-4">
+        {/* Title */}
+        <div className="text-center mb-10">
+          <h1 className="font-serif text-3xl md:text-4xl font-bold text-foreground mb-2">
+            Your Perfect Match Found!
+          </h1>
+          <p className="text-lg text-muted-foreground">
+            We recommend the <span className="text-primary font-semibold">{collectionNames[recommendedSlug]}</span> collection
+          </p>
+          <p className="text-sm text-muted-foreground mt-1">
+            Click the vinyl to listen to <span className="italic">{playlist.name}</span>
+          </p>
+        </div>
+
+        {/* Grid: Vinyl left, Paintings right */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 max-w-5xl mx-auto">
+          {/* Left: Vinyl + Embed */}
+          <div className="flex flex-col items-center justify-start">
+            <VinylPlayer
+              playlistName={playlist.name}
+              spotifyUri={playlist.spotifyUri}
+            />
+          </div>
+
+          {/* Right: Paintings Mosaic */}
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-2 auto-rows-[140px]">
+            {displayPaintings.map((painting, i) => (
+              <div
+                key={painting.id}
+                className={cn(
+                  "rounded-lg overflow-hidden relative group",
+                  i === 0 && "col-span-2 row-span-2",
+                  i === 3 && "col-span-2"
+                )}
+              >
+                <ImageWithSkeleton
+                  src={painting.image}
+                  alt={painting.title}
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-foreground/0 group-hover:bg-foreground/30 transition-colors duration-300 flex items-end p-2">
+                  <span className="text-primary-foreground text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity">
+                    {painting.title}
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Buttons */}
+        <div className="flex flex-col sm:flex-row gap-4 justify-center mt-10">
+          <Button size="lg" onClick={onExplore} className="gap-2">
+            Explore Collection
+            <ArrowRight className="h-4 w-4" />
+          </Button>
+          <Button size="lg" variant="outline" onClick={onRetake}>
+            Retake Quiz
+          </Button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function QuizPage() {
   const navigate = useNavigate();
   const [currentQuestion, setCurrentQuestion] = useState(0);

@@ -274,48 +274,17 @@ export default function QuizPage() {
     const playlist = playlistData[recommendedSlug];
 
     return (
-      <div className="min-h-[80vh] flex items-center justify-center py-12 animate-fade-in">
-        <div className="container px-4">
-          <div className="max-w-2xl mx-auto text-center">
-            <h1 className="font-serif text-3xl md:text-4xl font-bold text-foreground mb-2">
-              Your Perfect Match Found!
-            </h1>
-
-            <p className="text-lg text-muted-foreground mb-2">
-              We recommend the <span className="text-primary font-semibold">{collectionNames[recommendedSlug]}</span> collection
-            </p>
-
-            <p className="text-sm text-muted-foreground mb-8">
-              Press play to listen to <span className="italic">{playlist.name}</span>
-            </p>
-
-            <VinylPlayer
-              playlistName={playlist.name}
-              tracks={playlist.tracks}
-              spotifyUri={playlist.spotifyUri}
-            />
-
-            <div className="flex flex-col sm:flex-row gap-4 justify-center mt-8">
-              <Button size="lg" onClick={() => navigate(`/gallery/${recommendedSlug}`)} className="gap-2">
-                Explore Collection
-                <ArrowRight className="h-4 w-4" />
-              </Button>
-              <Button
-                size="lg"
-                variant="outline"
-                onClick={() => {
-                  setCurrentQuestion(0);
-                  setAnswers([]);
-                  setSelectedOption(null);
-                  setShowResult(false);
-                }}
-              >
-                Retake Quiz
-              </Button>
-            </div>
-          </div>
-        </div>
-      </div>
+      <QuizResults
+        recommendedSlug={recommendedSlug}
+        playlist={playlist}
+        onExplore={() => navigate(`/gallery/${recommendedSlug}`)}
+        onRetake={() => {
+          setCurrentQuestion(0);
+          setAnswers([]);
+          setSelectedOption(null);
+          setShowResult(false);
+        }}
+      />
     );
   }
 

@@ -79,6 +79,7 @@ const questions: Question[] = [
 const playlistData: Record<string, PlaylistData> = {
   "abstract-expressions": {
     name: "Emotional Chaos: Abstract Echoes",
+    spotifyUri: "08urlAbX1qSQyN0yYQ6w0z",
     tracks: [
       { name: "The Workshop", artist: "Francesco Giovannangelo", duration: "1:29" },
       { name: "Snows Of Stillness", artist: "Craig McConnell", duration: "3:03" },
@@ -104,6 +105,7 @@ const playlistData: Record<string, PlaylistData> = {
   },
   "cultural-chronicles": {
     name: "Heritage Harmonies: Global Tales",
+    spotifyUri: "0NC3PaztFNHJDBt78XFzj0",
     tracks: [
       { name: "March", artist: "Haxhigeaszy", duration: "2:24" },
       { name: "From Rusholme with Love", artist: "Mint Royale", duration: "5:06" },
@@ -154,6 +156,7 @@ const playlistData: Record<string, PlaylistData> = {
   },
   "natures-palette": {
     name: "Earth's Symphony: Natural Rhythms",
+    spotifyUri: "5vKWPUDiP1QdsjJOjFbCLN",
     tracks: [
       { name: "Pleasant Cricket Chorus", artist: "Pamela Grand Nature Collective", duration: "2:24" },
       { name: "Chilled White Noise", artist: "Larry Hill Club Nature", duration: "1:44" },

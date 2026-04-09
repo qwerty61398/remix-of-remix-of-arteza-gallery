@@ -24,91 +24,117 @@ export default function VinylPlayer({ playlistName, tracks, spotifyUri }: VinylP
 
   return (
     <div className="flex flex-col items-center gap-6">
-      {/* Vinyl Disk */}
-      <div className="relative w-[250px] h-[250px] md:w-[280px] md:h-[280px]">
-        {/* Vinyl record */}
+      {/* Vinyl + Tonearm container */}
+      <div className="relative w-[300px] h-[280px] md:w-[340px] md:h-[310px]">
+        {/* Tonearm */}
         <div
           className={cn(
-            "w-full h-full rounded-full relative",
-            "vinyl-disk",
-            isPlaying && "vinyl-spinning"
+            "tonearm absolute top-0 right-[60px] md:right-[68px] z-20",
+            isPlaying && "tonearm--playing"
           )}
           style={{
-            background: `
-              radial-gradient(circle at center, 
-                hsl(var(--primary)) 0%, 
-                hsl(var(--primary)) 18%, 
-                hsl(var(--primary) / 0.8) 18.5%, 
-                hsl(0 0% 8%) 19%, 
-                hsl(0 0% 12%) 20%, 
-                hsl(0 0% 8%) 21%, 
-                hsl(0 0% 12%) 24%, 
-                hsl(0 0% 8%) 25%, 
-                hsl(0 0% 12%) 28%, 
-                hsl(0 0% 8%) 29%, 
-                hsl(0 0% 12%) 32%, 
-                hsl(0 0% 8%) 33%, 
-                hsl(0 0% 12%) 36%, 
-                hsl(0 0% 8%) 37%, 
-                hsl(0 0% 12%) 40%, 
-                hsl(0 0% 8%) 41%, 
-                hsl(0 0% 12%) 44%, 
-                hsl(0 0% 8%) 45%, 
-                hsl(0 0% 12%) 48%, 
-                hsl(0 0% 8%) 49%, 
-                hsl(0 0% 10%) 50%, 
-                hsl(0 0% 8%) 90%, 
-                hsl(0 0% 5%) 100%
-              )
-            `,
-            boxShadow: "0 4px 30px hsl(0 0% 0% / 0.4), inset 0 0 20px hsl(0 0% 0% / 0.3)",
+            transformOrigin: "top center",
+            width: "4px",
+            height: "140px",
           }}
         >
-          {/* Shine effect */}
-          <div
-            className="absolute inset-0 rounded-full pointer-events-none"
-            style={{
-              background: "linear-gradient(135deg, hsl(0 0% 100% / 0.08) 0%, transparent 50%, hsl(0 0% 0% / 0.1) 100%)",
-            }}
-          />
-
-          {/* Center label */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[36%] h-[36%] rounded-full bg-primary flex items-center justify-center p-2">
-            <span className="text-primary-foreground text-[9px] md:text-[10px] font-medium text-center leading-tight line-clamp-3">
-              {playlistName}
-            </span>
-          </div>
-
-          {/* Center hole */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-3 h-3 rounded-full bg-background border border-border" />
+          {/* Pivot point */}
+          <div className="absolute -top-1.5 -left-1.5 w-4 h-4 rounded-full bg-muted-foreground border-2 border-border" />
+          {/* Arm shaft */}
+          <div className="absolute top-3 left-0 w-1 h-[100px] bg-muted-foreground rounded-full" />
+          {/* Headshell */}
+          <div className="absolute bottom-0 -left-1 w-2.5 h-5 bg-muted-foreground rounded-b-sm" />
+          {/* Cartridge / stylus tip */}
+          <div className="absolute -bottom-1.5 left-0 w-0.5 h-2 bg-foreground rounded-full mx-auto" style={{ marginLeft: '2px' }} />
         </div>
 
-        {/* Play/Pause button overlay */}
-        <button
-          onClick={togglePlay}
-          className={cn(
-            "absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10",
-            "w-16 h-16 rounded-full flex items-center justify-center",
-            "bg-background/60 backdrop-blur-sm border border-border/50",
-            "hover:bg-background/80 transition-all duration-200",
-            "hover:scale-110 active:scale-95"
-          )}
-        >
-          {isPlaying ? (
-            <Pause className="h-6 w-6 text-foreground" />
-          ) : (
-            <Play className="h-6 w-6 text-foreground ml-1" />
-          )}
-        </button>
+        {/* Vinyl record */}
+        <div className="absolute bottom-0 left-0">
+          <div className="relative w-[250px] h-[250px] md:w-[280px] md:h-[280px]">
+            <div
+              className={cn(
+                "w-full h-full rounded-full relative",
+                "vinyl-disk",
+                isPlaying && "vinyl-spinning"
+              )}
+              style={{
+                background: `
+                  radial-gradient(circle at center, 
+                    hsl(var(--primary)) 0%, 
+                    hsl(var(--primary)) 18%, 
+                    hsl(var(--primary) / 0.8) 18.5%, 
+                    hsl(0 0% 8%) 19%, 
+                    hsl(0 0% 12%) 20%, 
+                    hsl(0 0% 8%) 21%, 
+                    hsl(0 0% 12%) 24%, 
+                    hsl(0 0% 8%) 25%, 
+                    hsl(0 0% 12%) 28%, 
+                    hsl(0 0% 8%) 29%, 
+                    hsl(0 0% 12%) 32%, 
+                    hsl(0 0% 8%) 33%, 
+                    hsl(0 0% 12%) 36%, 
+                    hsl(0 0% 8%) 37%, 
+                    hsl(0 0% 12%) 40%, 
+                    hsl(0 0% 8%) 41%, 
+                    hsl(0 0% 12%) 44%, 
+                    hsl(0 0% 8%) 45%, 
+                    hsl(0 0% 12%) 48%, 
+                    hsl(0 0% 8%) 49%, 
+                    hsl(0 0% 10%) 50%, 
+                    hsl(0 0% 8%) 90%, 
+                    hsl(0 0% 5%) 100%
+                  )
+                `,
+                boxShadow: "0 4px 30px hsl(0 0% 0% / 0.4), inset 0 0 20px hsl(0 0% 0% / 0.3)",
+              }}
+            >
+              {/* Shine effect */}
+              <div
+                className="absolute inset-0 rounded-full pointer-events-none"
+                style={{
+                  background: "linear-gradient(135deg, hsl(0 0% 100% / 0.08) 0%, transparent 50%, hsl(0 0% 0% / 0.1) 100%)",
+                }}
+              />
+
+              {/* Center label */}
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[36%] h-[36%] rounded-full bg-primary flex items-center justify-center p-2">
+                <span className="text-primary-foreground text-[9px] md:text-[10px] font-medium text-center leading-tight line-clamp-3">
+                  {playlistName}
+                </span>
+              </div>
+
+              {/* Center hole */}
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-3 h-3 rounded-full bg-background border border-border" />
+            </div>
+
+            {/* Play/Pause button overlay */}
+            <button
+              onClick={togglePlay}
+              className={cn(
+                "absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10",
+                "w-16 h-16 rounded-full flex items-center justify-center",
+                "bg-background/60 backdrop-blur-sm border border-border/50",
+                "hover:bg-background/80 transition-all duration-200",
+                "hover:scale-110 active:scale-95"
+              )}
+            >
+              {isPlaying ? (
+                <Pause className="h-6 w-6 text-foreground" />
+              ) : (
+                <Play className="h-6 w-6 text-foreground ml-1" />
+              )}
+            </button>
+          </div>
+        </div>
       </div>
 
-      {/* Spotify embed (hidden, ready for future URI) */}
+      {/* Spotify embed */}
       {spotifyUri && (
         <iframe
-          className="hidden"
+          className={cn("rounded-xl transition-all duration-300", isPlaying ? "h-[80px] opacity-100" : "h-0 opacity-0 overflow-hidden")}
           src={`https://open.spotify.com/embed/playlist/${spotifyUri}?utm_source=generator&theme=0`}
-          width="0"
-          height="0"
+          width="100%"
+          style={{ maxWidth: "400px" }}
           allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
           loading="lazy"
           title="Spotify playlist"

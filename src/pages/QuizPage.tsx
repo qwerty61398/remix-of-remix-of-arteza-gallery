@@ -164,6 +164,7 @@ const playlistData: Record<string, PlaylistData> = {
     name: "Earth's Symphony: Natural Rhythms",
     spotifyUri: "5vKWPUDiP1QdsjJOjFbCLN",
     coverImage: "https://image-cdn-ak.spotifycdn.com/image/ab67706c0000da8470d229cb865e8b81ab7a39ad",
+    tracks: [
       { name: "Pleasant Cricket Chorus", artist: "Pamela Grand Nature Collective", duration: "2:24" },
       { name: "Chilled White Noise", artist: "Larry Hill Club Nature", duration: "1:44" },
       { name: "Glorious Fire Harmonies", artist: "Lylou Olegovich Nature Collection", duration: "2:28" },

@@ -1,18 +1,38 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Play, Pause } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface VinylPlayerProps {
   playlistName: string;
   spotifyUri?: string;
+  coverImage?: string;
 }
 
-export default function VinylPlayer({ playlistName, spotifyUri }: VinylPlayerProps) {
+export default function VinylPlayer({ playlistName, spotifyUri, coverImage }: VinylPlayerProps) {
   const [isPlaying, setIsPlaying] = useState(false);
+  const [iframeSrc, setIframeSrc] = useState("");
   const iframeRef = useRef<HTMLIFrameElement>(null);
 
+  const playlistId = spotifyUri;
+
+  useEffect(() => {
+    if (playlistId) {
+      setIframeSrc(
+        `https://open.spotify.com/embed/playlist/${playlistId}?utm_source=generator&theme=0`
+      );
+    }
+  }, [playlistId]);
+
   const togglePlay = () => {
-    setIsPlaying(!isPlaying);
+    const next = !isPlaying;
+    setIsPlaying(next);
+
+    if (playlistId) {
+      // Reload iframe with autoplay toggled
+      setIframeSrc(
+        `https://open.spotify.com/embed/playlist/${playlistId}?utm_source=generator&theme=0${next ? "&autoplay=1" : ""}`
+      );
+    }
   };
 
   return (
@@ -92,11 +112,13 @@ export default function VinylPlayer({ playlistName, spotifyUri }: VinylPlayerPro
                 }}
               />
 
-              {/* Center label */}
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[36%] h-[36%] rounded-full bg-primary flex items-center justify-center p-2">
-                <span className="text-primary-foreground text-[8px] md:text-[10px] font-medium text-center leading-tight line-clamp-3">
-                  {playlistName}
-                </span>
+              {/* Center label — cover image or plain */}
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[36%] h-[36%] rounded-full overflow-hidden bg-primary flex items-center justify-center">
+                {coverImage ? (
+                  <img src={coverImage} alt={playlistName} className="w-full h-full object-cover" />
+                ) : (
+                  <div className="w-full h-full bg-primary" />
+                )}
               </div>
 
               {/* Center hole */}
@@ -124,13 +146,13 @@ export default function VinylPlayer({ playlistName, spotifyUri }: VinylPlayerPro
         </div>
       </div>
 
-      {/* Spotify embed - always visible when URI exists */}
+      {/* Spotify embed — visible and interactable */}
       {spotifyUri && (
         <iframe
           ref={iframeRef}
           className="rounded-xl w-full"
-          style={{ maxWidth: "300px", height: "80px" }}
-          src={`https://open.spotify.com/embed/playlist/${spotifyUri}?utm_source=generator&theme=0`}
+          style={{ maxWidth: "300px", height: "152px" }}
+          src={iframeSrc}
           allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
           loading="lazy"
           title="Spotify playlist"

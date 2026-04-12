@@ -24,6 +24,7 @@ interface PlaylistData {
   name: string;
   tracks: Track[];
   spotifyUri?: string;
+  coverImage?: string;
 }
 
 const questions: Question[] = [

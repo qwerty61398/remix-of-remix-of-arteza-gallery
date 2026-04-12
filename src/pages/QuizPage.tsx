@@ -84,7 +84,7 @@ const playlistData: Record<string, PlaylistData> = {
   "abstract-expressions": {
     name: "Emotional Chaos: Abstract Echoes",
     spotifyUri: "08urlAbX1qSQyN0yYQ6w0z",
-    tracks: [
+    coverImage: "https://image-cdn-ak.spotifycdn.com/image/ab67706c0000da84c48d436c8676a68c04eb7f4a",
       { name: "The Workshop", artist: "Francesco Giovannangelo", duration: "1:29" },
       { name: "Snows Of Stillness", artist: "Craig McConnell", duration: "3:03" },
       { name: "Wandering In The Deep", artist: "Francesco Giovannangelo", duration: "3:12" },
@@ -110,7 +110,7 @@ const playlistData: Record<string, PlaylistData> = {
   "cultural-chronicles": {
     name: "Heritage Harmonies: Global Tales",
     spotifyUri: "0NC3PaztFNHJDBt78XFzj0",
-    tracks: [
+    coverImage: "https://image-cdn-ak.spotifycdn.com/image/ab67706c0000da84b6e3b8b0e36461412a6f4856",
       { name: "March", artist: "Haxhigeaszy", duration: "2:24" },
       { name: "From Rusholme with Love", artist: "Mint Royale", duration: "5:06" },
       { name: "Zeina", artist: "Petrol Bomb Samosa", duration: "4:49" },
@@ -161,7 +161,7 @@ const playlistData: Record<string, PlaylistData> = {
   "natures-palette": {
     name: "Earth's Symphony: Natural Rhythms",
     spotifyUri: "5vKWPUDiP1QdsjJOjFbCLN",
-    tracks: [
+    coverImage: "https://image-cdn-ak.spotifycdn.com/image/ab67706c0000da8470d229cb865e8b81ab7a39ad",
       { name: "Pleasant Cricket Chorus", artist: "Pamela Grand Nature Collective", duration: "2:24" },
       { name: "Chilled White Noise", artist: "Larry Hill Club Nature", duration: "1:44" },
       { name: "Glorious Fire Harmonies", artist: "Lylou Olegovich Nature Collection", duration: "2:28" },
@@ -257,6 +257,7 @@ function QuizResults({
             <VinylPlayer
               playlistName={playlist.name}
               spotifyUri={playlist.spotifyUri}
+              coverImage={playlist.coverImage}
             />
           </div>
 

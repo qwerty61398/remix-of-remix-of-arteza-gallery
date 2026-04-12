@@ -1,43 +1,35 @@
 
 
-## Plan: Vinyl Disk Animation with Spotify Playlist on Quiz Results
+## Plan: Fix Build Error + Vinyl Player Enhancements
 
-### Overview
-Add a vinyl record animation to the quiz results page. Each collection gets a playlist name, track list, and a spinning vinyl disk with a play button. When clicked, the vinyl spins and (once Spotify URLs are added) plays the embedded playlist. For now, the vinyl animation and track list will be visual, with placeholder Spotify URIs ready to swap in later.
+### 1. Fix CSS Build Error
+**File: `src/index.css` (line 377)**
+Remove the stray `}` after the `mosaic-float` keyframe. The keyframe closes on line 376 but there's an extra `}` on line 377 that breaks the CSS parser.
 
-### Data Structure
-Add playlist data (name, tracks, placeholder Spotify URI) for each collection slug directly in `QuizPage.tsx`.
+### 2. Replace Center Label with Playlist Cover Image
+**File: `src/components/quiz/VinylPlayer.tsx`**
+- Add a `coverImage` prop to VinylPlayer
+- Replace the center purple circle text with a circular image showing each playlist's cover art
+- Use Spotify's CDN to extract cover images from playlist IDs: `https://mosaic.scdn.co/...` — since we can't reliably extract from the embed, we'll use the Spotify oEmbed API (`https://open.spotify.com/oembed?url=...`) or hardcode cover image URLs
+- For playlists without a Spotify URI, show the primary-colored circle with no text
 
-### Vinyl Component
-Create `src/components/quiz/VinylPlayer.tsx`:
-- A vinyl disk with grooves rendered via CSS (radial gradients, concentric circles)
-- Center label showing the playlist name
-- Play/Pause button overlay in the center
-- CSS `@keyframes spin` animation that activates when "playing"
-- Hidden Spotify iframe embed (loaded via iFrame API) that will be controllable once real URLs are provided
-- Track list displayed below the vinyl in a scrollable list
+### 3. Make Embed Visible and Interactable
+**File: `src/components/quiz/VinylPlayer.tsx`**
+- Make the Spotify embed always visible (not hidden) with a reasonable height (~152px for compact player)
+- Remove the track list display entirely (already done)
 
-### Quiz Results Page Changes
+### 4. Sync Vinyl Play Button with Embed
+Due to iframe security restrictions, we cannot programmatically control the Spotify embed's play/pause. However, we can use Spotify's embed API approach:
+- Use `https://open.spotify.com/embed/playlist/{id}?utm_source=generator&theme=0&autoplay=1` — when the vinyl is clicked, reload the iframe with `autoplay=1` to trigger playback
+- When paused, reload without autoplay or remove the src temporarily
+
+### 5. Add Cover Images to Playlist Data
 **File: `src/pages/QuizPage.tsx`**
-- Add playlist data mapping (collection slug → playlist name + tracks)
-- Replace the check icon with the VinylPlayer component
-- Keep existing "Explore Collection" and "Retake Quiz" buttons below
-- Show playlist name as a subtitle (e.g. "Emotional Chaos: Abstract Echoes")
+- Add a `coverImage` field to each playlist entry, using the Spotify oEmbed endpoint or a static fallback
+- Pass `coverImage` to VinylPlayer
 
-### CSS Additions
-**File: `src/index.css`**
-- Add `@keyframes vinyl-spin` (continuous rotation)
-- Vinyl grooves via layered box-shadows or radial gradients
-- Tonearm animation (optional subtle lift/drop)
-
-### Visual Design
-- Vinyl disk: ~250px diameter, dark with subtle groove lines, primary-colored center label
-- Play button: white triangle in a translucent circle at center
-- Spinning: smooth 2s rotation when playing
-- Track list: scrollable container below vinyl, showing track name, artist, duration
-
-### Files to create/modify
-1. **Create** `src/components/quiz/VinylPlayer.tsx` — vinyl disk + play/pause + track list
-2. **Modify** `src/pages/QuizPage.tsx` — integrate playlist data and VinylPlayer into results
-3. **Modify** `src/index.css` — add vinyl spin animation
+### Files to modify
+1. `src/index.css` — remove stray `}` on line 377
+2. `src/components/quiz/VinylPlayer.tsx` — add cover image prop, sync play with embed autoplay, ensure embed is visible
+3. `src/pages/QuizPage.tsx` — pass cover image URLs to VinylPlayer
 

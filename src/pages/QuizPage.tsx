@@ -269,6 +269,10 @@ function QuizResults({
                   i === 0 && "col-span-2 row-span-2",
                   i === 3 && "col-span-2"
                 )}
+                style={{
+                  animation: `mosaic-float ${3 + (i % 3) * 0.5}s ease-in-out infinite`,
+                  animationDelay: `${i * 0.3}s`,
+                }}
               >
                 <ImageWithSkeleton
                   src={painting.image}

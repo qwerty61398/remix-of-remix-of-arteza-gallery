@@ -85,6 +85,7 @@ const playlistData: Record<string, PlaylistData> = {
     name: "Emotional Chaos: Abstract Echoes",
     spotifyUri: "08urlAbX1qSQyN0yYQ6w0z",
     coverImage: "https://image-cdn-ak.spotifycdn.com/image/ab67706c0000da84c48d436c8676a68c04eb7f4a",
+    tracks: [
       { name: "The Workshop", artist: "Francesco Giovannangelo", duration: "1:29" },
       { name: "Snows Of Stillness", artist: "Craig McConnell", duration: "3:03" },
       { name: "Wandering In The Deep", artist: "Francesco Giovannangelo", duration: "3:12" },

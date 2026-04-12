@@ -112,6 +112,7 @@ const playlistData: Record<string, PlaylistData> = {
     name: "Heritage Harmonies: Global Tales",
     spotifyUri: "0NC3PaztFNHJDBt78XFzj0",
     coverImage: "https://image-cdn-ak.spotifycdn.com/image/ab67706c0000da84b6e3b8b0e36461412a6f4856",
+    tracks: [
       { name: "March", artist: "Haxhigeaszy", duration: "2:24" },
       { name: "From Rusholme with Love", artist: "Mint Royale", duration: "5:06" },
       { name: "Zeina", artist: "Petrol Bomb Samosa", duration: "4:49" },

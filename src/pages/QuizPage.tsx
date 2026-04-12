@@ -24,6 +24,7 @@ interface PlaylistData {
   name: string;
   tracks: Track[];
   spotifyUri?: string;
+  coverImage?: string;
 }
 
 const questions: Question[] = [
@@ -83,6 +84,7 @@ const playlistData: Record<string, PlaylistData> = {
   "abstract-expressions": {
     name: "Emotional Chaos: Abstract Echoes",
     spotifyUri: "08urlAbX1qSQyN0yYQ6w0z",
+    coverImage: "https://image-cdn-ak.spotifycdn.com/image/ab67706c0000da84c48d436c8676a68c04eb7f4a",
     tracks: [
       { name: "The Workshop", artist: "Francesco Giovannangelo", duration: "1:29" },
       { name: "Snows Of Stillness", artist: "Craig McConnell", duration: "3:03" },
@@ -109,6 +111,7 @@ const playlistData: Record<string, PlaylistData> = {
   "cultural-chronicles": {
     name: "Heritage Harmonies: Global Tales",
     spotifyUri: "0NC3PaztFNHJDBt78XFzj0",
+    coverImage: "https://image-cdn-ak.spotifycdn.com/image/ab67706c0000da84b6e3b8b0e36461412a6f4856",
     tracks: [
       { name: "March", artist: "Haxhigeaszy", duration: "2:24" },
       { name: "From Rusholme with Love", artist: "Mint Royale", duration: "5:06" },
@@ -160,6 +163,7 @@ const playlistData: Record<string, PlaylistData> = {
   "natures-palette": {
     name: "Earth's Symphony: Natural Rhythms",
     spotifyUri: "5vKWPUDiP1QdsjJOjFbCLN",
+    coverImage: "https://image-cdn-ak.spotifycdn.com/image/ab67706c0000da8470d229cb865e8b81ab7a39ad",
     tracks: [
       { name: "Pleasant Cricket Chorus", artist: "Pamela Grand Nature Collective", duration: "2:24" },
       { name: "Chilled White Noise", artist: "Larry Hill Club Nature", duration: "1:44" },
@@ -256,6 +260,7 @@ function QuizResults({
             <VinylPlayer
               playlistName={playlist.name}
               spotifyUri={playlist.spotifyUri}
+              coverImage={playlist.coverImage}
             />
           </div>
 

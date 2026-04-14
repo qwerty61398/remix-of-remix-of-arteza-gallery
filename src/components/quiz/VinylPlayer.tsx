@@ -34,10 +34,10 @@ export default function VinylPlayer({ playlistName, spotifyUri, coverImage }: Vi
             height: "120px",
           }}
         >
-          <div className="absolute -top-1.5 -left-1.5 w-4 h-4 rounded-full bg-muted/80 border-2 border-muted-foreground/40" />
-          <div className="absolute top-3 left-0 w-1 h-[85px] bg-muted/70 rounded-full" />
-          <div className="absolute bottom-0 -left-1 w-2.5 h-5 bg-muted/70 rounded-b-sm" />
-          <div className="absolute -bottom-1.5 left-0 w-0.5 h-2 bg-muted-foreground/60 rounded-full mx-auto" style={{ marginLeft: '2px' }} />
+          <div className="absolute -top-1.5 -left-1.5 w-4 h-4 rounded-full bg-zinc-400 border-2 border-zinc-300" />
+          <div className="absolute top-3 left-0 w-1 h-[85px] bg-zinc-400 rounded-full" />
+          <div className="absolute bottom-0 -left-1 w-2.5 h-5 bg-zinc-400 rounded-b-sm" />
+          <div className="absolute -bottom-1.5 left-0 w-0.5 h-2 bg-zinc-300 rounded-full mx-auto" style={{ marginLeft: '2px' }} />
         </div>
 
         {/* Vinyl record — always spinning */}

@@ -268,15 +268,11 @@ function QuizResults({
           </div>
 
           {/* Right: Paintings Mosaic */}
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-2 auto-rows-[140px]">
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
             {displayPaintings.map((painting, i) => (
               <div
                 key={painting.id}
-                className={cn(
-                  "rounded-lg overflow-hidden relative group",
-                  i === 0 && "col-span-2 row-span-2",
-                  i === 3 && "col-span-2"
-                )}
+                className="rounded-lg overflow-hidden relative group"
                 style={{
                   animation: `mosaic-float ${3 + (i % 3) * 0.5}s ease-in-out infinite`,
                   animationDelay: `${i * 0.3}s`,
@@ -285,7 +281,7 @@ function QuizResults({
                 <ImageWithSkeleton
                   src={painting.image}
                   alt={painting.title}
-                  className="w-full h-full object-cover"
+                  className="w-full h-auto object-contain"
                 />
                 <div className="absolute inset-0 bg-foreground/0 group-hover:bg-foreground/30 transition-colors duration-300 flex items-end p-2">
                   <span className="text-primary-foreground text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity">

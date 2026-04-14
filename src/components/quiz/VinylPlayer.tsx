@@ -151,7 +151,7 @@ export default function VinylPlayer({ playlistName, spotifyUri, coverImage }: Vi
         <iframe
           ref={iframeRef}
           className="rounded-xl w-full"
-          style={{ maxWidth: "300px", height: "152px" }}
+          style={{ maxWidth: "300px", height: "80px" }}
           src={iframeSrc}
           allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
           loading="lazy"

@@ -7,6 +7,9 @@ import VinylPlayer from "@/components/quiz/VinylPlayer";
 import { usePaintingsByCollection } from "@/hooks/use-paintings";
 import { ImageWithSkeleton } from "@/components/ImageWithSkeleton";
 import { CollectionType } from "@/data/paintings";
+import coverNaturesPalette from "@/assets/cover-natures-palette.jpg";
+import coverCulturalChronicles from "@/assets/cover-cultural-chronicles.jpg";
+import coverAbstractExpressions from "@/assets/cover-abstract-expressions.png";
 
 interface Question {
   id: number;
@@ -84,7 +87,7 @@ const playlistData: Record<string, PlaylistData> = {
   "abstract-expressions": {
     name: "Emotional Chaos: Abstract Echoes",
     spotifyUri: "08urlAbX1qSQyN0yYQ6w0z",
-    coverImage: "https://image-cdn-ak.spotifycdn.com/image/ab67706c0000da84c48d436c8676a68c04eb7f4a",
+    coverImage: coverAbstractExpressions,
     tracks: [
       { name: "The Workshop", artist: "Francesco Giovannangelo", duration: "1:29" },
       { name: "Snows Of Stillness", artist: "Craig McConnell", duration: "3:03" },
@@ -111,7 +114,7 @@ const playlistData: Record<string, PlaylistData> = {
   "cultural-chronicles": {
     name: "Heritage Harmonies: Global Tales",
     spotifyUri: "0NC3PaztFNHJDBt78XFzj0",
-    coverImage: "https://image-cdn-ak.spotifycdn.com/image/ab67706c0000da84b6e3b8b0e36461412a6f4856",
+    coverImage: coverCulturalChronicles,
     tracks: [
       { name: "March", artist: "Haxhigeaszy", duration: "2:24" },
       { name: "From Rusholme with Love", artist: "Mint Royale", duration: "5:06" },
@@ -163,7 +166,7 @@ const playlistData: Record<string, PlaylistData> = {
   "natures-palette": {
     name: "Earth's Symphony: Natural Rhythms",
     spotifyUri: "5vKWPUDiP1QdsjJOjFbCLN",
-    coverImage: "https://image-cdn-ak.spotifycdn.com/image/ab67706c0000da8470d229cb865e8b81ab7a39ad",
+    coverImage: coverNaturesPalette,
     tracks: [
       { name: "Pleasant Cricket Chorus", artist: "Pamela Grand Nature Collective", duration: "2:24" },
       { name: "Chilled White Noise", artist: "Larry Hill Club Nature", duration: "1:44" },

@@ -3,6 +3,7 @@ import { Header } from "./Header";
 import { Footer } from "./Footer";
 import { PageTransition } from "@/components/animations/PageTransition";
 import { ScrollToTop } from "@/components/ScrollToTop";
+import { StickyQuizButton } from "@/components/StickyQuizButton";
 
 interface LayoutProps {
   children: ReactNode;
@@ -17,6 +18,7 @@ export function Layout({ children }: LayoutProps) {
       </main>
       <Footer />
       <ScrollToTop />
+      <StickyQuizButton />
     </div>
   );
 }

@@ -1,35 +1,83 @@
+## Homepage restructure
 
+New section order (top → bottom):
 
-## Plan: Fix Build Error + Vinyl Player Enhancements
+```text
+1. Hero (shorter, simplified)
+2. Meet the Artist (moved up from bottom)
+3. Featured Artworks — dynamic rotating carousel
+4. Explore Collections
+5. Instagram / Social feed
+6. Newsletter signup
++ Sticky "Find Your Style" quiz button (floating, bottom-right)
+```
 
-### 1. Fix CSS Build Error
-**File: `src/index.css` (line 377)**
-Remove the stray `}` after the `mosaic-float` keyframe. The keyframe closes on line 376 but there's an extra `}` on line 377 that breaks the CSS parser.
+The standalone "Light Up Your Art Journey" full-width quiz block is removed; quiz access becomes a small sticky element + a subtle link in the hero.
 
-### 2. Replace Center Label with Playlist Cover Image
-**File: `src/components/quiz/VinylPlayer.tsx`**
-- Add a `coverImage` prop to VinylPlayer
-- Replace the center purple circle text with a circular image showing each playlist's cover art
-- Use Spotify's CDN to extract cover images from playlist IDs: `https://mosaic.scdn.co/...` — since we can't reliably extract from the embed, we'll use the Spotify oEmbed API (`https://open.spotify.com/oembed?url=...`) or hardcode cover image URLs
-- For playlists without a Spotify URI, show the primary-colored circle with no text
+---
 
-### 3. Make Embed Visible and Interactable
-**File: `src/components/quiz/VinylPlayer.tsx`**
-- Make the Spotify embed always visible (not hidden) with a reasonable height (~152px for compact player)
-- Remove the track list display entirely (already done)
+### 1. Hero — shorter & simplified
 
-### 4. Sync Vinyl Play Button with Embed
-Due to iframe security restrictions, we cannot programmatically control the Spotify embed's play/pause. However, we can use Spotify's embed API approach:
-- Use `https://open.spotify.com/embed/playlist/{id}?utm_source=generator&theme=0&autoplay=1` — when the vinyl is clicked, reload the iframe with `autoplay=1` to trigger playback
-- When paused, reload without autoplay or remove the src temporarily
+- Reduce height from `min-h-[90vh]` → `min-h-[60vh]`.
+- Keep the parallax background image, typewriter headline, and tagline.
+- CTAs: keep only **"Explore Collection"** as the single primary button. Remove the secondary "Get Inspired" button (quiz access moves to the sticky element).
+- Keep the small stats row (Original Paintings · 20+ Artworks).
 
-### 5. Add Cover Images to Playlist Data
-**File: `src/pages/QuizPage.tsx`**
-- Add a `coverImage` field to each playlist entry, using the Spotify oEmbed endpoint or a static fallback
-- Pass `coverImage` to VinylPlayer
+### 2. Meet the Artist (moved here)
 
-### Files to modify
-1. `src/index.css` — remove stray `}` on line 377
-2. `src/components/quiz/VinylPlayer.tsx` — add cover image prop, sync play with embed autoplay, ensure embed is visible
-3. `src/pages/QuizPage.tsx` — pass cover image URLs to VinylPlayer
+- Move the existing "Meet the Artist" two-column block (image + bio + button) to immediately after the hero. Content unchanged.
+- Remove it from the bottom of the page.
 
+### 3. Featured Artworks — dynamic carousel
+
+Replace the current static 4-card masonry grid with a rotating carousel:
+
+- Use the existing `@/components/ui/carousel` (Embla) component.
+- Source: first ~8 paintings from `usePaintings()` (later can be filtered by `is_featured` if desired — out of scope for now).
+- Show 1 card on mobile, 2 on `md`, 3 on `lg` per view; auto-advance every ~5s with pause on hover; arrow + dot navigation.
+- Each slide reuses `ArtworkCard` (already includes title, price, "Add" button → cart). The card already links to `/shop/:id` for quick-view → no new component required.
+- Section header keeps the "View All" link to `/shop`.
+
+### 4. Explore Collections
+
+Keep current implementation (3 + 2 grid of `CollectionCard`). No changes.
+
+### 5. Instagram / Social feed (new)
+
+- New `InstagramFeed` section component under `src/components/home/`.
+- Static MVP: a 6-image responsive grid (`grid-cols-3 md:grid-cols-6`) sourced from the most recent paintings as placeholder thumbnails (no Instagram API integration yet — flagged so we can wire to a real handle later).
+- Each tile links out to the Instagram profile URL stored in the existing social links config (read from the footer/social-links memory; fallback `https://instagram.com/`).
+- Section heading: "Follow @upasna_art on Instagram" with a subtitle and an outline button "View on Instagram".
+
+### 6. Newsletter signup (new)
+
+- New `NewsletterSignup` section component under `src/components/home/`.
+- Centered card: heading "Join the studio newsletter", short copy, single email input + Subscribe button.
+- Submit handler stores nothing yet — shows a success toast ("Thanks! We'll be in touch."). Backend wiring (table + edge function) is **out of scope for this restructure**; we'll add a TODO comment so we can attach it later.
+
+### 7. Sticky "Find Your Style" quiz button
+
+- New `StickyQuizButton` component, fixed `bottom-6 right-6`, z-50.
+- Pill-shaped button with `Lightbulb` icon + "Find Your Style", links to `/quiz`.
+- Subtle entrance animation; hidden on `/quiz` route itself.
+- Mounted from `Layout.tsx` so it appears across the site (or homepage-only — see open question below).
+
+---
+
+## Files touched
+
+- `src/pages/HomePage.tsx` — re-order sections, swap featured grid for carousel, drop quiz CTA section & bottom artist preview, add Instagram + Newsletter sections.
+- `src/components/home/FeaturedCarousel.tsx` *(new)* — Embla carousel of `ArtworkCard`s with autoplay.
+- `src/components/home/InstagramFeed.tsx` *(new)*
+- `src/components/home/NewsletterSignup.tsx` *(new)*
+- `src/components/StickyQuizButton.tsx` *(new)*
+- `src/components/layout/Layout.tsx` — mount `StickyQuizButton` (hidden on `/quiz`).
+- May add `embla-carousel-autoplay` dependency for autoplay behavior.
+
+No database, no edge function, no routing changes.
+
+---
+
+## Open question
+
+The sticky "Find Your Style" button — show it **site-wide** (so it follows users everywhere) or **homepage-only** (less intrusive on shop/checkout pages)? Default in plan: site-wide, hidden on `/quiz` and `/checkout`. Let me know if you'd prefer homepage-only.

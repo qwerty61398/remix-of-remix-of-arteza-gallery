@@ -357,7 +357,7 @@ All colors MUST be HSL.
 }
 
 .vinyl-spinning {
-  animation: vinyl-spin 2s linear infinite;
+  animation: vinyl-spin 2.4s linear infinite;
 }
 
 .vinyl-glow {

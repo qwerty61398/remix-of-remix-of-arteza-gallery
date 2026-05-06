@@ -47,48 +47,48 @@ export default function VinylPlayer({ playlistName, spotifyUri, coverImage }: Vi
             <div className="absolute inset-[-12px] rounded-full opacity-100 vinyl-glow pointer-events-none" />
 
             <div
-              className="w-full h-full rounded-full relative vinyl-disk vinyl-spinning"
+              className="w-full h-full rounded-full relative vinyl-disk vinyl-spinning overflow-hidden"
               style={{
-                background: `
-                  radial-gradient(circle at center, 
-                    hsl(var(--primary)) 0%, 
-                    hsl(var(--primary)) 18%, 
-                    hsl(var(--primary) / 0.8) 18.5%, 
-                    hsl(0 0% 8%) 19%, 
-                    hsl(0 0% 12%) 20%, 
-                    hsl(0 0% 8%) 21%, 
-                    hsl(0 0% 12%) 24%, 
-                    hsl(0 0% 8%) 25%, 
-                    hsl(0 0% 12%) 28%, 
-                    hsl(0 0% 8%) 29%, 
-                    hsl(0 0% 12%) 32%, 
-                    hsl(0 0% 8%) 33%, 
-                    hsl(0 0% 12%) 36%, 
-                    hsl(0 0% 8%) 37%, 
-                    hsl(0 0% 12%) 40%, 
-                    hsl(0 0% 8%) 41%, 
-                    hsl(0 0% 12%) 44%, 
-                    hsl(0 0% 8%) 45%, 
-                    hsl(0 0% 12%) 48%, 
-                    hsl(0 0% 8%) 49%, 
-                    hsl(0 0% 10%) 50%, 
-                    hsl(0 0% 8%) 90%, 
-                    hsl(0 0% 5%) 100%
-                  )
-                `,
                 boxShadow: "0 4px 30px hsl(0 0% 0% / 0.4), inset 0 0 20px hsl(0 0% 0% / 0.3)",
               }}
             >
+              {/* Marble-textured base from the cover image (blurred & desaturated for a stone-like feel) */}
+              {coverImage ? (
+                <img
+                  src={coverImage}
+                  alt=""
+                  aria-hidden="true"
+                  className="absolute inset-0 w-full h-full object-cover"
+                  style={{ filter: "blur(8px) contrast(1.1) saturate(0.7) brightness(0.55)", transform: "scale(1.15)" }}
+                />
+              ) : (
+                <div className="absolute inset-0 bg-[hsl(0_0%_10%)]" />
+              )}
+
+              {/* Groove rings overlay — transparent so the marble cover shows through */}
+              <div
+                className="absolute inset-0 rounded-full pointer-events-none"
+                style={{
+                  background: `repeating-radial-gradient(circle at center,
+                    hsl(0 0% 0% / 0.55) 0px,
+                    hsl(0 0% 0% / 0.55) 1px,
+                    hsl(0 0% 100% / 0.04) 1px,
+                    hsl(0 0% 100% / 0.04) 3px)`,
+                  maskImage: "radial-gradient(circle at center, transparent 0%, transparent 26%, black 27%, black 100%)",
+                  WebkitMaskImage: "radial-gradient(circle at center, transparent 0%, transparent 26%, black 27%, black 100%)",
+                }}
+              />
+
               {/* Shine effect */}
               <div
                 className="absolute inset-0 rounded-full pointer-events-none"
                 style={{
-                  background: "linear-gradient(135deg, hsl(0 0% 100% / 0.08) 0%, transparent 50%, hsl(0 0% 0% / 0.1) 100%)",
+                  background: "linear-gradient(135deg, hsl(0 0% 100% / 0.10) 0%, transparent 50%, hsl(0 0% 0% / 0.18) 100%)",
                 }}
               />
 
-              {/* Center label — cover image or plain */}
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[36%] h-[36%] rounded-full overflow-hidden bg-primary flex items-center justify-center">
+              {/* Center label — larger cover image */}
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[52%] h-[52%] rounded-full overflow-hidden bg-primary flex items-center justify-center ring-2 ring-black/40">
                 {coverImage ? (
                   <img src={coverImage} alt={playlistName} className="w-full h-full object-cover" />
                 ) : (
@@ -97,7 +97,7 @@ export default function VinylPlayer({ playlistName, spotifyUri, coverImage }: Vi
               </div>
 
               {/* Center hole */}
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-3 h-3 rounded-full bg-background border border-border" />
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-3 h-3 rounded-full bg-background border border-border z-10" />
             </div>
           </div>
         </div>

@@ -103,17 +103,18 @@ export default function VinylPlayer({ playlistName, spotifyUri, coverImage }: Vi
         </div>
       </div>
 
-      {/* Spotify embed — visible and interactable */}
+      {/* Spotify embed — responsive via aspect ratio so the play button scales correctly */}
       {spotifyUri && (
-        <iframe
-          ref={iframeRef}
-          className="rounded-xl w-full"
-          style={{ maxWidth: "320px", height: "152px" }}
-          src={iframeSrc}
-          allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-          loading="lazy"
-          title="Spotify playlist"
-        />
+        <div className="w-full max-w-[420px]" style={{ aspectRatio: "420 / 152" }}>
+          <iframe
+            ref={iframeRef}
+            className="rounded-xl w-full h-full"
+            src={iframeSrc}
+            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+            loading="lazy"
+            title="Spotify playlist"
+          />
+        </div>
       )}
     </div>
   );

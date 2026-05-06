@@ -53,6 +53,28 @@ Deno.serve(async (req) => {
       });
     }
 
+    // Validate painting collection to prevent quiz mismatches
+    const ALLOWED_COLLECTIONS = [
+      "Abstract Expressions",
+      "Cultural Chronicles",
+      "Dreamscapes",
+      "Nature's Palette",
+      "Portraits and Personalities",
+    ];
+    if (table === "paintings" && (action === "insert" || action === "update")) {
+      const rows = Array.isArray(data) ? data : [data];
+      for (const row of rows) {
+        if (row && row.collection !== undefined && !ALLOWED_COLLECTIONS.includes(row.collection)) {
+          return new Response(
+            JSON.stringify({
+              error: `Invalid collection "${row.collection}". Must be one of: ${ALLOWED_COLLECTIONS.join(", ")}`,
+            }),
+            { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } },
+          );
+        }
+      }
+    }
+
     let result;
 
     switch (action) {

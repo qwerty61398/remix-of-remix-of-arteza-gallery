@@ -87,7 +87,7 @@ export default function HomePage() {
                 <span>Original Paintings</span>
               </div>
               <div>
-                <span className="font-semibold text-foreground">20+</span> Artworks Available
+                <span className="font-semibold text-foreground">100+</span> Artworks Available
               </div>
             </div>
           </div>

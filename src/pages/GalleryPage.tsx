@@ -27,14 +27,19 @@ export default function GalleryPage() {
           </div>
         </ScrollReveal>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-14 place-items-center">
           {collections.map((collection, i) => (
             <StaggerItem key={collection.slug} index={i}>
-              <CollectionCard
-                name={collection.name}
-                description={collection.description}
-                slug={collection.slug}
-              />
+              <div
+                className="animate-float"
+                style={{ animationDelay: `${(i % 5) * 0.4}s`, animationDuration: `${5 + (i % 3)}s` }}
+              >
+                <CollectionCard
+                  name={collection.name}
+                  description={collection.description}
+                  slug={collection.slug}
+                />
+              </div>
             </StaggerItem>
           ))}
         </div>

@@ -14,7 +14,8 @@ const HERO_PHRASES = ["the Future", "Your Potential", "a Better World", "the Noi
 
 export default function HomePage() {
   const { data: paintings = [], isLoading } = usePaintings();
-  const featuredPaintings = paintings.slice(0, 4);
+  const featuredPaintings = paintings;
+  const kioskItems = featuredPaintings.length > 0 ? [...featuredPaintings, ...featuredPaintings] : [];
   const heroImage = paintings[4]?.image; // Azure Veil
   const { text } = useTypewriter({ words: HERO_PHRASES });
   const heroRef = useRef<HTMLElement>(null);

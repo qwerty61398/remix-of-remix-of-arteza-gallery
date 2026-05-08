@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
 import { useEffect, useRef } from "react";
-import { ArrowRight, Lightbulb, Palette } from "lucide-react";
+import { ArrowRight, ArrowUpRight, Lightbulb, Palette } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { ArtworkCard } from "@/components/artwork/ArtworkCard";
 import { CollectionCard } from "@/components/artwork/CollectionCard";
+import { ImageWithSkeleton } from "@/components/ImageWithSkeleton";
 import { collections } from "@/data/paintings";
 import { usePaintings } from "@/hooks/use-paintings";
 import { useTypewriter } from "@/hooks/use-typewriter";

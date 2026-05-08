@@ -63,7 +63,7 @@ export default function HomePage() {
               </div>
               <p className="text-lg text-muted-foreground leading-relaxed animate-fade-up opacity-0 [animation-delay:800ms] [animation-fill-mode:forwards]">
                 Discover original paintings that capture emotion, culture, and the breathtaking
-                beauty of our world. Each piece is handcrafted with love by artist Upasna.
+                beauty of our world. Each piece is handcrafted with love
               </p>
             </div>
 

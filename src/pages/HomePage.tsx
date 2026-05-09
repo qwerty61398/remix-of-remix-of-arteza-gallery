@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
 import { useEffect, useRef } from "react";
-import { ArrowRight, ArrowUpRight, Lightbulb, Palette } from "lucide-react";
+import { ArrowRight, Lightbulb, Palette } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { ArtworkCard } from "@/components/artwork/ArtworkCard";
 import { CollectionCard } from "@/components/artwork/CollectionCard";
-import { ImageWithSkeleton } from "@/components/ImageWithSkeleton";
 import { collections } from "@/data/paintings";
 import { usePaintings } from "@/hooks/use-paintings";
 import { useTypewriter } from "@/hooks/use-typewriter";
@@ -14,8 +14,7 @@ const HERO_PHRASES = ["the Future", "Your Potential", "a Better World", "the Noi
 
 export default function HomePage() {
   const { data: paintings = [], isLoading } = usePaintings();
-  const featuredPaintings = paintings;
-  const kioskItems = featuredPaintings.length > 0 ? [...featuredPaintings, ...featuredPaintings] : [];
+  const featuredPaintings = paintings.slice(0, 4);
   const heroImage = paintings[4]?.image; // Azure Veil
   const { text } = useTypewriter({ words: HERO_PHRASES });
   const heroRef = useRef<HTMLElement>(null);
@@ -63,7 +62,7 @@ export default function HomePage() {
               </div>
               <p className="text-lg text-muted-foreground leading-relaxed animate-fade-up opacity-0 [animation-delay:800ms] [animation-fill-mode:forwards]">
                 Discover original paintings that capture emotion, culture, and the breathtaking
-                beauty of our world. Each piece is handcrafted with love
+                beauty of our world. Each piece is handcrafted with love by artist Upasna.
               </p>
             </div>
 
@@ -118,41 +117,22 @@ export default function HomePage() {
           </ScrollReveal>
 
           {isLoading ? (
-            <div className="flex gap-6 overflow-hidden">
-              {Array.from({ length: 6 }).map((_, i) => (
-                <Skeleton key={i} className="w-64 h-64 rounded-lg flex-shrink-0" />
+            <div className="columns-1 sm:columns-2 lg:columns-4 gap-6 space-y-6">
+              {Array.from({ length: 4 }).map((_, i) => (
+                <div key={i} className="break-inside-avoid space-y-4">
+                  <Skeleton className="w-full aspect-square rounded-lg" />
+                  <Skeleton className="h-5 w-3/4" />
+                  <Skeleton className="h-4 w-1/2" />
+                </div>
               ))}
             </div>
           ) : (
-            <div className="kiosk relative overflow-hidden -mx-4 px-4">
-              <div
-                className="kiosk-track flex gap-6 w-max"
-                style={{ animation: `kiosk-scroll ${Math.max(40, featuredPaintings.length * 6)}s linear infinite` }}
-              >
-                {kioskItems.map((painting, i) => (
-                  <Link
-                    key={`${painting.id}-${i}`}
-                    to={`/shop/${painting.id}`}
-                    className="kiosk-item group relative flex-shrink-0 w-56 sm:w-64 aspect-square rounded-lg overflow-hidden shadow-md ring-1 ring-border/40 transition-all duration-300 hover:shadow-2xl hover:ring-primary/40 hover:scale-[1.03]"
-                    aria-label={`View ${painting.title}`}
-                  >
-                    <ImageWithSkeleton
-                      src={painting.image}
-                      alt={painting.title}
-                      className="absolute inset-0 h-full w-full object-cover"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-background/0 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                    <div className="absolute top-3 right-3 h-9 w-9 rounded-full bg-background/90 backdrop-blur-sm flex items-center justify-center text-foreground opacity-0 -translate-y-1 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 shadow-md">
-                      <ArrowUpRight className="h-4 w-4" />
-                    </div>
-                    <div className="absolute inset-x-0 bottom-0 p-3 opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300">
-                      <h3 className="font-serif text-sm font-medium text-foreground line-clamp-1 drop-shadow-sm">
-                        {painting.title}
-                      </h3>
-                    </div>
-                  </Link>
-                ))}
-              </div>
+            <div className="columns-1 sm:columns-2 lg:columns-4 gap-6 space-y-6">
+              {featuredPaintings.map((painting, i) => (
+                <StaggerItem key={painting.id} index={i} className="break-inside-avoid">
+                  <ArtworkCard painting={painting} variant="compact" />
+                </StaggerItem>
+              ))}
             </div>
           )}
         </div>
@@ -172,19 +152,26 @@ export default function HomePage() {
             </div>
           </ScrollReveal>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-14 place-items-center">
-            {collections.map((collection, i) => (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {collections.slice(0, 3).map((collection, i) => (
               <StaggerItem key={collection.slug} index={i}>
-                <div
-                  className="animate-float"
-                  style={{ animationDelay: `${(i % 5) * 0.4}s`, animationDuration: `${5 + (i % 3)}s` }}
-                >
-                  <CollectionCard
-                    name={collection.name}
-                    description={collection.description}
-                    slug={collection.slug}
-                  />
-                </div>
+                <CollectionCard
+                  name={collection.name}
+                  description={collection.description}
+                  slug={collection.slug}
+                />
+              </StaggerItem>
+            ))}
+          </div>
+
+          <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+            {collections.slice(3).map((collection, i) => (
+              <StaggerItem key={collection.slug} index={i + 3}>
+                <CollectionCard
+                  name={collection.name}
+                  description={collection.description}
+                  slug={collection.slug}
+                />
               </StaggerItem>
             ))}
           </div>
